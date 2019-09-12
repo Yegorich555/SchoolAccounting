@@ -4,7 +4,6 @@ const CleanPlugin = require("clean-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const dev = require("./webpack.dev.js");
-const mockApi = require("./src/api/mock.js");
 
 module.exports = (env, argv) => {
   const devConfig = dev(env, argv);
@@ -33,8 +32,7 @@ module.exports = (env, argv) => {
       }, // it enables HTML5 mode: https://developer.mozilla.org/en-US/docs/Web/API/History
       stats: {
         children: false // disable console.info for node_modules/*
-      },
-      before: mockApi
+      }
     }
   });
 

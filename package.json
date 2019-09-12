@@ -1,5 +1,5 @@
 {
-  "name": "fromscratch_react",
+  "name": "school_accounting",
   "version": "0.0.1",
   "description": "Basic src-project with config for React and Webpack 4",
   "main": "main.jsx",
@@ -16,7 +16,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Yegorich555/FromScratch_React.git"
+    "url": "git+https://github.com/Yegorich555/SchoolAccounting.git"
   },
   "keywords": [
     "React",
@@ -27,9 +27,9 @@
   "author": "Yegor.Golubchyk",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Yegorich555/FromScratch_React/issues"
+    "url": "https://github.com/Yegorich555/SchoolAccounting/issues"
   },
-  "homepage": "https://github.com/Yegorich555/FromScratch_React#readme",
+  "homepage": "https://github.com/Yegorich555/SchoolAccounting#readme",
   "devDependencies": {
     "@babel/core": "^7.5.4",
     "@babel/plugin-proposal-class-properties": "^7.5.5",
