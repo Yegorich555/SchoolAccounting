@@ -2,6 +2,7 @@ import "./styles/main.scss";
 import ReactDom from "react-dom";
 import { Component } from "react";
 import TheError from "./components/theError";
+import TheGrages from "./components/theGrades";
 
 class AppContainer extends Component {
   constructor(props) {
@@ -30,7 +31,7 @@ class AppContainer extends Component {
             onClosed={this.resetError}
           />
         ) : null}
-        Everything will be here
+        <TheGrages />
       </>
     );
   }

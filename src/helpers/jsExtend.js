@@ -16,14 +16,16 @@ function update(getterKey, newItem) {
 const arrayFunctions = { remove, addIfNotExists, update };
 export { arrayFunctions };
 
+function twoDigits(v) {
+  return (v < 10 ? "0" : "") + v;
+}
+
 export function DateToString(v) {
   if (!v || !(v instanceof Date)) return v;
   const year = v.getFullYear();
   const month = v.getMonth() + 1;
   const date = v.getDate();
-  return `${year}-${month < 10 ? "0" : ""}${month}-${
-    date < 10 ? "0" : ""
-  }${date}`;
+  return `${twoDigits(date)}.${twoDigits(month)}.${year}`;
 }
 
 function PromiseDelay(ms) {

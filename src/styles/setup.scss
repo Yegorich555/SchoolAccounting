@@ -4,21 +4,21 @@ $primaryTextColor: #3b3e45;
 $secondaryTextColor: #67666c;
 
 $basicBackground: white;
-$borderRadius: 3px;
+$borderRadius: 0;
 $borderInputColor: #bdcad9;
 $focusColor: #f18a1c;
 $starsColor: #f18a1c;
 $errorColor: #b70000;
 $successColor: #007522;
 
-$tableHeaderColor: #26608e;
-$tableSelectBackColor: #aecfea;
+$tableHeaderColor: #41b08a;
+$tableSelectBackColor: #aadac9;
 $tableSelectColor: black;
-$tableSortActiveColor: cyan;
+$tableSortActiveColor: #3d4a5d;
 $tableSortDefaultColor: #aecfea;
 
 $btnFont: initial;
-$btnBorder: 1px solid #26608e;
+$btnBorder: none;
 
 $primaryBtnColor: white;
 $primaryBtnBackground: #50a5be;
@@ -29,6 +29,12 @@ $secondaryBtnColor: #50a5be;
 $secondaryBtnBackground: white;
 $secondaryBtnHoverBackground: #d1f2fc;
 $secondaryBtnHoverColor: #408498;
+
+$navBtnColor: white;
+$navBtnBackground: #3d4a5d;
+$navBtnHoverBackground: #657a9a;
+
+$navBtnSelectedBackground: #2f7f63;
 
 $linkColor: #26608e;
 $linkHoverColor: #00a5d4;

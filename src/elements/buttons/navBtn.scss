@@ -1,0 +1,10 @@
+.btn {
+  color: $navBtnColor;
+  background: $navBtnBackground;
+  &[aria-selected="true"] {
+    background: $navBtnSelectedBackground;
+  }
+  &:hover {
+    background: $navBtnHoverBackground;
+  }
+}
