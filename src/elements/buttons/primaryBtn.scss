@@ -1,0 +1,8 @@
+.btn {
+  color: $primaryBtnColor;
+  background: $primaryBtnBackground;
+  &:hover {
+    color: $primaryBtnHoverColor;
+    background: $primaryBtnHoverBackground;
+  }
+}

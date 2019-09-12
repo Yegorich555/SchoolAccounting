@@ -1,0 +1,54 @@
+@import "~fonts/icomoon/variables.scss";
+
+$primaryTextColor: #3b3e45;
+$secondaryTextColor: #67666c;
+
+$basicBackground: white;
+$borderRadius: 3px;
+$borderInputColor: #bdcad9;
+$focusColor: #f18a1c;
+$starsColor: #f18a1c;
+$errorColor: #b70000;
+$successColor: #007522;
+
+$tableHeaderColor: #26608e;
+$tableSelectBackColor: #aecfea;
+$tableSelectColor: black;
+$tableSortActiveColor: cyan;
+$tableSortDefaultColor: #aecfea;
+
+$btnFont: initial;
+$btnBorder: 1px solid #26608e;
+
+$primaryBtnColor: white;
+$primaryBtnBackground: #50a5be;
+$primaryBtnHoverBackground: #408498;
+$primaryBtnHoverColor: white;
+
+$secondaryBtnColor: #50a5be;
+$secondaryBtnBackground: white;
+$secondaryBtnHoverBackground: #d1f2fc;
+$secondaryBtnHoverColor: #408498;
+
+$linkColor: #26608e;
+$linkHoverColor: #00a5d4;
+
+@mixin iconBefore($name) {
+  &:before {
+    font-family: "#{$icomoon-font-family}" !important;
+    content: $name;
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+@mixin iconAfter($name) {
+  &:after {
+    font-family: "#{$icomoon-font-family}" !important;
+    content: $name;
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}

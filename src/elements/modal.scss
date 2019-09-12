@@ -1,0 +1,52 @@
+.container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1050;
+  outline: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  display: flex;
+}
+
+.overlay {
+  z-index: 1040;
+  opacity: 0.5;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #000;
+}
+
+.body {
+  margin: auto;
+  position: relative;
+  width: fit-content;
+  background: white;
+  border-radius: $borderRadius;
+  overflow: auto;
+  max-height: 100vh;
+}
+
+.close {
+  position: absolute;
+  right: 4px;
+  top: 4px;
+  z-index: 1;
+  background: none;
+  border: none;
+  padding: 4px;
+  color: #8f8e8e;
+  &:hover {
+    color: black;
+  }
+  @include iconBefore($icon-close);
+  &:before {
+    display: block;
+  }
+  font-size: 22px;
+}

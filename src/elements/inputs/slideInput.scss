@@ -1,0 +1,56 @@
+$height: 32px;
+$padding: 2px;
+$border: 1px;
+.wrapper {
+  position: relative;
+  display: inline-block;
+  background-color: white;
+  border-radius: 28px;
+  height: $height;
+  width: $height * 2;
+  padding: $padding;
+  border: $border solid $borderInputColor;
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0pt 2px $focusColor;
+  }
+
+  $markSize: $height - $padding * 2 - $border * 4;
+  $reduceSize: 4px;
+  .mark {
+    transition: transform 0.4s;
+    display: inline-block;
+    border: $border solid $borderInputColor;
+    box-sizing: content-box;
+    font-size: $markSize - $reduceSize;
+    line-height: $markSize;
+    height: $markSize;
+    width: $markSize;
+    border-radius: 50%;
+    background-color: $primaryBtnColor;
+    color: $primaryBtnBackground;
+    font-weight: lighter;
+    @include iconBefore($icon-check);
+    &:before {
+      padding: $reduceSize / 2;
+    }
+  }
+  &[aria-checked="true"] .mark {
+    transform: translateX($height);
+    background-color: $primaryBtnBackground;
+    color: $primaryBtnColor;
+    border-color: $primaryBtnBackground;
+  }
+}
+
+.control {
+  display: flex;
+  align-items: center;
+  > span,
+  > fieldset {
+    margin: 0;
+  }
+  > span {
+    padding-right: 10px;
+  }
+}

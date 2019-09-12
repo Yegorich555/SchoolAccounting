@@ -1,0 +1,120 @@
+$headerHeight: 50px;
+$cellHeight: 60px;
+$cellLeftPadding: 16px;
+$cellTopPadding: 8px;
+
+.tableContainer {
+  background: $tableHeaderColor;
+  padding-top: $headerHeight;
+  margin: auto;
+  margin-top: 20px;
+  font-size: 12px;
+  border-top-right-radius: $borderRadius;
+  border-top-left-radius: $borderRadius;
+  border: 1px solid $tableHeaderColor;
+  position: relative;
+  overflow: auto;
+  max-width: fit-content;
+
+  .scrollContainer {
+    max-height: 400px;
+    min-height: 40px;
+    overflow-y: overlay;
+    overflow-x: visible;
+    width: fit-content;
+  }
+
+  table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    vertical-align: middle;
+  }
+
+  td,
+  th {
+    padding: $cellTopPadding $cellLeftPadding;
+    line-height: 1.61539;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  tbody,
+  tr,
+  td,
+  th,
+  thead {
+    vertical-align: inherit;
+  }
+
+  tr:nth-of-type(odd):not(.selected) {
+    background-color: #f0f0f0;
+  }
+  tr:nth-of-type(even):not(.selected) {
+    background-color: white;
+  }
+  tbody tr {
+    height: $cellHeight;
+    cursor: pointer;
+  }
+  tr.selected {
+    background-color: $tableSelectBackColor;
+    color: $tableSelectColor;
+    a {
+      color: #183b59;
+      &:hover {
+        color: black;
+      }
+    }
+  }
+  $sortIcontSize: 26px;
+  th {
+    font-weight: bold;
+    height: 0;
+    line-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    color: transparent !important;
+    border: none;
+    white-space: nowrap;
+    overflow: visible;
+    padding-right: $sortIcontSize;
+  }
+  th > span {
+    user-select: none;
+    z-index: -1;
+  }
+  th > div {
+    position: absolute;
+    background: transparent;
+    z-index: 100;
+    top: 0;
+    line-height: 1.61539;
+    color: white;
+    display: flex;
+    align-items: center;
+    text-align: left;
+    height: $headerHeight;
+    padding-left: $cellLeftPadding;
+    margin-left: -$cellLeftPadding;
+    /* sort-cell*/
+    cursor: pointer;
+    @include iconAfter($icon-triangle-down); //sort by desc
+    &:after {
+      color: $tableSortDefaultColor;
+      padding-left: 10px;
+    }
+    &:focus {
+      outline: 0;
+    }
+    &.currentSort {
+      &:after {
+        color: $tableSortActiveColor;
+      }
+      &.sortAsc {
+        &:after {
+          content: $icon-triangle-up;
+        }
+      }
+    }
+    /*end sort-cell*/
+  }
+}

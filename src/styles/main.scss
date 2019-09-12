@@ -1,0 +1,57 @@
+@import "normalize.css";
+@import "sanitize.css";
+@import "fontface.scss";
+
+body {
+  font: 14px "Proxima";
+  color: $primaryTextColor;
+  background: $basicBackground;
+}
+
+::placeholder {
+  text-overflow: ellipsis;
+}
+
+*:focus {
+  outline: 2px solid $focusColor;
+  outline-offset: -2px;
+}
+
+a {
+  color: $linkColor;
+  &:hover {
+    color: $linkHoverColor;
+  }
+  &:focus {
+    outline-offset: 2px;
+  }
+}
+
+input,
+button {
+  font: inherit;
+  border-radius: $borderRadius;
+}
+
+button,
+.btn,
+input[type="button"],
+input[type="reset"],
+input[type="submit"],
+[tabIndex="0"] {
+  cursor: pointer;
+}
+
+button[disabled],
+.btn[disabled],
+input[disabled],
+.input[disabled] {
+  cursor: default;
+  cursor: not-allowed;
+}
+
+input[placeholder]:not([type="textarea"]) {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

@@ -1,0 +1,41 @@
+.page {
+  padding: 80px 80px 40px;
+  text-align: center;
+
+  .errCode {
+    color: #fff;
+    font-weight: bold;
+    margin-top: 60px;
+  }
+
+  .subheader {
+    font-size: 50px;
+    margin-bottom: 60px;
+  }
+
+  .subheader,
+  .message {
+    color: rgba(0, 0, 0, 0.7);
+    font-weight: bold;
+  }
+}
+
+.modal [role="dialog"] {
+  > button {
+    color: white;
+    right: 14px;
+    top: 14px;
+    &:focus {
+      outline-color: black;
+    }
+    &:hover {
+      color: black;
+    }
+  }
+}
+.isWarning [role="dialog"] {
+  background-color: #f4ab43;
+}
+.isCritical [role="dialog"] {
+  background-color: #e46050;
+}

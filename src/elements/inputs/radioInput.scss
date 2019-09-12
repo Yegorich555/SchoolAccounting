@@ -1,0 +1,33 @@
+$borderSize: 2px;
+$radioSize: 20px;
+
+.radioGroup {
+  display: flex;
+  border: 1px $borderInputColor solid;
+  border-radius: $borderRadius;
+  width: 100%;
+  > div {
+    padding: 2px 8px;
+    margin: auto;
+    > div {
+      position: relative;
+      margin: 4px auto;
+      height: $radioSize;
+      width: $radioSize;
+      border: $borderSize solid $primaryBtnBackground;
+      border-radius: 50%;
+    }
+    &[aria-checked="true"] > div::before {
+      position: absolute;
+      transform: translateX(-50%);
+      left: 50%;
+      top: $borderSize;
+      display: block;
+      content: " ";
+      height: $radioSize - $borderSize * 4;
+      width: $radioSize - $borderSize * 4;
+      background: $primaryBtnBackground;
+      border-radius: 50%;
+    }
+  }
+}
