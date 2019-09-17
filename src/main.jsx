@@ -2,7 +2,7 @@ import "./styles/main.scss";
 import ReactDom from "react-dom";
 import { Component } from "react";
 import TheError from "./components/theError";
-import Classes from "./components/Classes";
+import Classes from "./components/classes";
 import TheHeader, { headerConfig } from "./components/theHeader";
 
 class AppContainer extends Component {
@@ -19,11 +19,16 @@ class AppContainer extends Component {
     this.setState({ errorCode: null, error: null });
   };
 
+  onSelected = v => {
+    this.setState({ selected: v });
+  };
+
   componentDidCatch() {
     this.setState({ errorCode: true });
   }
 
   render() {
+    const Current = this.state.selected.component;
     return (
       <>
         {this.state.errorCode ? (
@@ -34,10 +39,11 @@ class AppContainer extends Component {
           />
         ) : null}
         <TheHeader
-          onSelected={this.onHandleSelected}
+          onSelected={this.onSelected}
           selected={this.state.selected}
         />
-        <Classes />
+
+        <Current />
       </>
     );
   }

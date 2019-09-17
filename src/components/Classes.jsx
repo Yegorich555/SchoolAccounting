@@ -1,7 +1,7 @@
 import { useState } from "react";
 import memoizeOne from "memoize-one";
 import NavBtn from "@/elements/buttons/navBtn";
-import styles from "./Classes.scss";
+import styles from "./classes.scss";
 import DataTable from "@/elements/dataTable";
 import { DateToString } from "@/helpers/jsExtend";
 
