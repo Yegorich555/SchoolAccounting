@@ -2,7 +2,7 @@ import "./styles/main.scss";
 import ReactDom from "react-dom";
 import { Component } from "react";
 import TheError from "./components/theError";
-import TheGrages from "./components/theGrades";
+import Classes from "./components/Classes";
 import TheHeader, { headerConfig } from "./components/theHeader";
 
 class AppContainer extends Component {
@@ -37,7 +37,7 @@ class AppContainer extends Component {
           onSelected={this.onHandleSelected}
           selected={this.state.selected}
         />
-        <TheGrages />
+        <Classes />
       </>
     );
   }

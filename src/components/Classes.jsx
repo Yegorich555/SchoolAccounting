@@ -1,7 +1,7 @@
 import { useState } from "react";
 import memoizeOne from "memoize-one";
 import NavBtn from "@/elements/buttons/navBtn";
-import styles from "./theGrades.scss";
+import styles from "./Classes.scss";
 import DataTable from "@/elements/dataTable";
 import { DateToString } from "@/helpers/jsExtend";
 
@@ -26,7 +26,7 @@ function getLearners(classNum) {
   }).call(this, arrLearners, classNum);
 }
 
-export default function TheGrages() {
+export default function Classes() {
   const [current, setCurrent] = useState(arrClasses[0]);
 
   return (
