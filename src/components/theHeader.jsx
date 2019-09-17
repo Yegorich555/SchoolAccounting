@@ -1,10 +1,10 @@
 import NavBtn from "@/elements/buttons/navBtn";
 import styles from "./theHeader.scss";
-import Classes from "./classes";
+import ClassesView from "./classes/view";
 import Personal from "./personal";
 
 export const headerConfig = [
-  { text: "Классы", component: Classes },
+  { text: "Классы", component: ClassesView },
   { text: "Персонал", component: Personal }
 ];
 

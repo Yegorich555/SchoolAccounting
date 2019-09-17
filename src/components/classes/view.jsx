@@ -1,9 +1,10 @@
 import { useState } from "react";
 import memoizeOne from "memoize-one";
 import NavBtn from "@/elements/buttons/navBtn";
-import styles from "./classes.scss";
+import styles from "./view.scss";
 import DataTable from "@/elements/dataTable";
 import { DateToString } from "@/helpers/jsExtend";
+import ClassSummary from "./classSummary";
 
 const now = new Date(Date.now());
 
@@ -26,7 +27,7 @@ function getLearners(classNum) {
   }).call(this, arrLearners, classNum);
 }
 
-export default function Classes() {
+export default function ClassesView() {
   const [current, setCurrent] = useState(arrClasses[0]);
 
   return (
@@ -41,14 +42,21 @@ export default function Classes() {
             {v}
           </NavBtn>
         ))}
+        <NavBtn
+          onClick={() => setCurrent("Sum")}
+          aria-selected={current === "Sum"}
+        >
+          Итого
+        </NavBtn>
       </div>
-      {!arrLearners.length ? null : (
+      {current === "Sum" || !arrLearners.length ? null : (
         <DataTable
           config={dtConfig}
           items={getLearners(current)}
           onSelected={null}
         />
       )}
+      {current !== "Sum" ? null : <ClassSummary items={arrLearners} />}
     </>
   );
 }

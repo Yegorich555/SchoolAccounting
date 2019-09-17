@@ -2,7 +2,6 @@ import "./styles/main.scss";
 import ReactDom from "react-dom";
 import { Component } from "react";
 import TheError from "./components/theError";
-import Classes from "./components/classes";
 import TheHeader, { headerConfig } from "./components/theHeader";
 
 class AppContainer extends Component {
