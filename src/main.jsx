@@ -3,13 +3,15 @@ import ReactDom from "react-dom";
 import { Component } from "react";
 import TheError from "./components/theError";
 import TheGrages from "./components/theGrades";
+import TheHeader, { headerConfig } from "./components/theHeader";
 
 class AppContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
       errorCode: null,
-      error: null
+      error: null,
+      selected: headerConfig[0]
     };
   }
 
@@ -31,6 +33,10 @@ class AppContainer extends Component {
             onClosed={this.resetError}
           />
         ) : null}
+        <TheHeader
+          onSelected={this.onHandleSelected}
+          selected={this.state.selected}
+        />
         <TheGrages />
       </>
     );
