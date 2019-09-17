@@ -1,11 +1,8 @@
-$marginBetween: 3px;
 .box {
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
-  margin: -$marginBetween;
-  padding-top: 20px;
-  > * {
-    margin: $marginBetween;
-  }
+  margin: 20px auto;
+  width: fit-content;
+  background: $navBtnBackground;
 }
