@@ -1,10 +1,11 @@
 import NavBtn from "@/elements/buttons/navBtn";
 import styles from "./theHeader.scss";
 import Classes from "./classes";
+import Personal from "./personal";
 
 export const headerConfig = [
   { text: "Классы", component: Classes },
-  { text: "Персонал", value: 2 }
+  { text: "Персонал", component: Personal }
 ];
 
 export default function TheHeader({ onSelected, selected }) {
