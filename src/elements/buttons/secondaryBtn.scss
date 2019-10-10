@@ -1,6 +1,7 @@
 .btn {
   color: $secondaryBtnColor;
   background: $secondaryBtnBackground;
+  border: 1px solid $secondaryBtnColor;
   &:hover {
     color: $secondaryBtnHoverColor;
     background: $secondaryBtnHoverBackground;
