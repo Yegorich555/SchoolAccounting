@@ -6,13 +6,30 @@ import DataTable from "@/elements/dataTable";
 import { DateToString } from "@/helpers/jsExtend";
 import ClassSummary from "./classSummary";
 
-const now = new Date(Date.now());
+// const now = new Date(Date.now());
 
-const arrClasses = ["1А", "1Б"];
+const arrClasses = ["1А", "1Б", "2А"];
 const arrLearners = [
-  { name: "Name 1", dob: now, classNum: arrClasses[0] },
-  { name: "Name 2", dob: now, classNum: arrClasses[0] },
-  { name: "Name 3", dob: now, classNum: arrClasses[0] }
+  {
+    name: "Рудак Мария Ивановна",
+    dob: new Date(2011, 10, 1),
+    classNum: arrClasses[0]
+  },
+  {
+    name: "Степенюк Игорь Андреевич",
+    dob: new Date(2012, 10, 1),
+    classNum: arrClasses[0]
+  },
+  {
+    name: "Зыль Игорь Андреевич",
+    dob: new Date(2013, 10, 1),
+    classNum: arrClasses[1]
+  },
+  {
+    name: "Курик Анна Алексеевна",
+    dob: new Date(2013, 10, 2),
+    classNum: arrClasses[2]
+  }
 ];
 const dtConfig = {
   headerKeys: [
