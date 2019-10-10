@@ -1,0 +1,8 @@
+.btn {
+  color: $warningBtnColor;
+  background: $warningBtnBackground;
+  &:hover {
+    color: $warningBtnHoverColor;
+    background: $warningBtnHoverBackground;
+  }
+}
