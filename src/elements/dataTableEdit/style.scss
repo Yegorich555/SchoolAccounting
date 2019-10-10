@@ -1,8 +1,19 @@
+.askModal {
+  [role="dialog"] {
+    padding: 20px;
+  }
+  h2 {
+    margin-top: 20px;
+  }
+}
 .btnGroup {
   display: flex;
   justify-content: center;
   margin-top: 10px;
-  > * + * {
-    margin-left: 10px;
+  > * {
+    min-width: 80px;
+    + * {
+      margin-left: 10px;
+    }
   }
 }

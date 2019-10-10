@@ -10,6 +10,19 @@ const askTypes = {
   remove: 2
 };
 
+function getRusSuf(length) {
+  switch (length) {
+    case 1:
+      return "у";
+    case 2:
+    case 3:
+    case 4:
+      return "и";
+    default:
+      return "";
+  }
+}
+
 export default class DataTableEdit extends DataTable {
   constructor(props) {
     super(props);
@@ -94,15 +107,19 @@ export default class DataTableEdit extends DataTable {
       <>
         {super.render()}
         {this.state.isAsk === askTypes.paste ? (
-          <Modal onClosed={this.closeAskModal}>
+          <Modal onClosed={this.closeAskModal} className={styles.askModal}>
             <h2>
               {pasteItems.length
-                ? `Вы хотите вставить ${pasteItems.length} строк?`
+                ? `Вы хотите вставить ${pasteItems.length} строк${getRusSuf(
+                    pasteItems.length
+                  )}?`
                 : ``}
             </h2>
             <DataTable config={this.props.config} items={pasteItems} />
-            <PrimaryBtn onClick={this.closeAskModalYes}>Да</PrimaryBtn>
-            <SecondaryBtn onClick={this.closeAskModal}>Нет</SecondaryBtn>
+            <div className={styles.btnGroup}>
+              <PrimaryBtn onClick={this.closeAskModalYes}>Да</PrimaryBtn>
+              <SecondaryBtn onClick={this.closeAskModal}>Нет</SecondaryBtn>
+            </div>
           </Modal>
         ) : null}
         <div className={styles.btnGroup}>
