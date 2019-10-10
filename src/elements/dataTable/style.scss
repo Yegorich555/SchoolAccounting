@@ -13,7 +13,7 @@ $cellTopPadding: 4px;
   border: 1px solid $tableHeaderColor;
   position: relative;
   overflow: auto;
-  max-width: fit-content;
+  max-width: max-content;
 
   .scrollContainer {
     max-height: 600px;
@@ -115,5 +115,14 @@ $cellTopPadding: 4px;
       }
     }
     /*end sort-cell*/
+  }
+}
+
+.btnGroup {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  > * + * {
+    margin-left: 10px;
   }
 }

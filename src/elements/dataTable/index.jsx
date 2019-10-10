@@ -1,7 +1,18 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import { Component } from "react";
 import memoize from "memoize-one";
 import DateCompare from "ytech-js-extensions/lib/date/compareByDate";
 import styles from "./style.scss";
+import Modal from "../modal";
+import PrimaryBtn from "../buttons/primaryBtn";
+import SecondaryBtn from "../buttons/secondaryBtn";
+import WarningBtn from "../buttons/warningBtn";
+
+const askTypes = {
+  paste: 1,
+  remove: 2
+};
 
 export const DataTableHelper = {
   toUpperCaseFirst: v => v.charAt(0).toUpperCase() + v.slice(1),
@@ -83,6 +94,65 @@ export default class DataTable extends Component {
       DataTableHelper.sortByKey(arr, key, isAsk)
     ).call(this, this.props.items, this.state.sortKey, this.state.isSortAsk);
 
+  onPaste = e => {
+    const clipboardData =
+      e.clipboardData ||
+      window.clipboardData ||
+      (e.originalEvent && e.originalEvent.clipboardData);
+    const text = clipboardData.getData("text");
+    this.paste(text);
+  };
+
+  paste = text => {
+    const lines = text
+      .split(/[\r\n|\r|\n]/)
+      .filter(v => v)
+      .map(t => t.split(/[;,\t]/).map(val => val.trim()));
+
+    if (lines.length) {
+      const items = lines.map(line => {
+        const item = {};
+        this.headerKeys.forEach((h, i) => {
+          item[h.propName] = line[i];
+        });
+        return item;
+      });
+      this.setState({
+        isAsk: askTypes.paste,
+        pasteItems: items
+      });
+    }
+  };
+
+  onCopy = e => {
+    console.warn("copy", e.clipboardData);
+  };
+
+  onKeyDown = e => {
+    switch (e.keyCode) {
+      case 46:
+        this.onRemove();
+        break;
+      default:
+        break;
+    }
+  };
+
+  onRemove = () => {
+    if (this.props.onDelete && this.state.currentItem != null) {
+      this.props.onDelete(this.state.currentItem);
+    }
+  };
+
+  closeAskModal = () => {
+    this.setState({ isAsk: false, pasteItems: null });
+  };
+
+  closeAskModalYes = () => {
+    this.props.onPaste && this.props.onPaste(this.state.pasteItems);
+    this.closeAskModal();
+  };
+
   render() {
     let body;
     let header;
@@ -144,17 +214,54 @@ export default class DataTable extends Component {
       ));
     }
 
+    const { pasteItems } = this.state;
     return (
-      <div className={[styles.tableContainer, this.props.className]}>
-        <div className={styles.scrollContainer}>
-          <table>
-            <thead>
-              <tr>{header}</tr>
-            </thead>
-            <tbody>{body}</tbody>
-          </table>
+      <>
+        <div
+          ref={el => {
+            this.ref = el;
+          }}
+          className={[styles.tableContainer, this.props.className]}
+          onPaste={this.onPaste}
+          onKeyDown={this.onKeyDown}
+          onCopy={this.onCopy}
+          tabIndex="-1"
+        >
+          <div className={styles.scrollContainer}>
+            <table>
+              <thead>
+                <tr>{header}</tr>
+              </thead>
+              <tbody>{body}</tbody>
+            </table>
+          </div>
         </div>
-      </div>
+        {this.state.isAsk === askTypes.paste ? (
+          <Modal onClosed={this.closeAskModal}>
+            <h2>
+              {pasteItems.length
+                ? `Вы хотите вставить ${pasteItems.length} строк?`
+                : ``}
+            </h2>
+            <DataTable config={this.props.config} items={pasteItems} />
+            <PrimaryBtn onClick={this.closeAskModalYes}>Да</PrimaryBtn>
+            <SecondaryBtn onClick={this.closeAskModal}>Нет</SecondaryBtn>
+          </Modal>
+        ) : null}
+        <div className={styles.btnGroup}>
+          {navigator.clipboard ? (
+            <PrimaryBtn
+              onClick={() => {
+                navigator.clipboard.readText().then(this.paste);
+              }}
+            >
+              Вставить
+            </PrimaryBtn>
+          ) : null}
+          {/* <PrimaryBtn>Копировать</PrimaryBtn> */}
+          {/* <WarningBtn onClick={this.onRemove}>Удалить</WarningBtn> */}
+        </div>
+      </>
     );
   }
 }
