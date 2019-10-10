@@ -1,7 +1,7 @@
 $headerHeight: 50px;
-$cellHeight: 60px;
-$cellLeftPadding: 16px;
-$cellTopPadding: 8px;
+$cellHeight: 40px;
+$cellLeftPadding: 8px;
+$cellTopPadding: 4px;
 
 .tableContainer {
   background: $tableHeaderColor;
@@ -16,7 +16,7 @@ $cellTopPadding: 8px;
   max-width: fit-content;
 
   .scrollContainer {
-    max-height: 400px;
+    max-height: 600px;
     min-height: 40px;
     overflow-y: overlay;
     overflow-x: visible;
