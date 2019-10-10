@@ -45,7 +45,7 @@ function _getLearners(arr, num) {
 const getLearners = memoizeOne(_getLearners);
 
 export default function ClassesView() {
-  const [classes, updateClasses] = useState(Store.classes);
+  const { classes } = Store;
   const [currentClass, setCurrent] = useState(classes[0]);
   const [learners, updateLearners] = useState(Store.learners);
 
@@ -54,15 +54,15 @@ export default function ClassesView() {
       <div className={styles.box}>
         <NavBtn
           className={styles.addBtn}
-          onClick={() => updateClasses(Store.addClass("ХХХ"))}
+          onClick={() => setCurrent(Store.addClass("ХХХ"))}
         />
         {classes.map(v => (
           <NavBtn
-            key={v}
+            key={v.name}
             onClick={() => setCurrent(v)}
-            aria-selected={v === currentClass}
+            aria-selected={v.name === currentClass.name}
           >
-            {v}
+            {v.name}
           </NavBtn>
         ))}
         <NavBtn

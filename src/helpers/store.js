@@ -34,7 +34,9 @@ class StoreClass {
   }
 
   addClass(name) {
-    return this.update("classes", v => v.push({ name, teacher: null }));
+    const nClass = { name, teacher: null };
+    this.update("classes", v => v.push(nClass));
+    return nClass;
   }
 
   removeClass(item) {
