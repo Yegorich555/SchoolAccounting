@@ -36,7 +36,7 @@ function getRows(items) {
   const preparedItems = items.map(v => ({
     ...v,
     age: nowYear - v.dob.getFullYear(),
-    class: Number.parseInt(v.classNum.replace(/[А-я ]/g, ""), 10),
+    class: Number.parseInt(v.className.replace(/[А-я ]/g, ""), 10),
     isGirl: v.isGirl || v.name.endsWith("вна")
   }));
 
