@@ -2,9 +2,9 @@ import { useState } from "react";
 import memoizeOne from "memoize-one";
 import NavBtn from "@/elements/buttons/navBtn";
 import styles from "./view.scss";
-import DataTable from "@/elements/dataTable";
 import { DateToString } from "@/helpers/jsExtend";
 import ClassSummary from "./classSummary";
+import DataTableEdit from "@/elements/dataTableEdit";
 
 // const now = new Date(Date.now());
 
@@ -67,7 +67,7 @@ export default function ClassesView() {
         </NavBtn>
       </div>
       {current === "Sum" || !arrLearners.length ? null : (
-        <DataTable
+        <DataTableEdit
           config={dtConfig}
           items={getLearners(current)}
           onSelected={null}
