@@ -15,11 +15,11 @@ export default function baseFormConnector(WrappedComponent) {
           );
         }
       }
-      this.context.attachToForm(this);
+      this.context.attachToForm && this.context.attachToForm(this);
     }
 
     componentWillUnmount() {
-      this.context.detachFromForm(this);
+      this.context.detachFromForm && this.context.detachFromForm(this);
     }
 
     render() {

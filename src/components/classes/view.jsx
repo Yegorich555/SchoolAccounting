@@ -6,32 +6,9 @@ import styles from "./view.scss";
 import ClassSummary from "./classSummary";
 import DataTableEdit from "@/elements/dataTableEdit";
 import Store from "@/helpers/store";
+import TextInput from "@/elements/inputs/textInput";
+import Dropdown from "@/elements/inputs/dropdown";
 
-// const now = new Date(Date.now());
-
-// const arrClasses = ["1А", "1Б", "2А"];
-// const arrLearners = [
-//   {
-//     name: "Рудак Мария Ивановна",
-//     dob: new Date(2011, 10, 1),
-//     classNum: arrClasses[0]
-//   },
-//   {
-//     name: "Степенюк Игорь Андреевич",
-//     dob: new Date(2012, 10, 1),
-//     classNum: arrClasses[0]
-//   },
-//   {
-//     name: "Зыль Игорь Андреевич",
-//     dob: new Date(2013, 10, 1),
-//     classNum: arrClasses[1]
-//   },
-//   {
-//     name: "Курик Анна Алексеевна",
-//     dob: new Date(2013, 10, 2),
-//     classNum: arrClasses[2]
-//   }
-// ];
 const dtConfig = {
   headerKeys: [
     { propName: "name", text: "ФИО" },
@@ -44,10 +21,21 @@ function _getLearners(arr, num) {
 }
 const getLearners = memoizeOne(_getLearners);
 
+function useForceUpdate() {
+  const [_v, set] = useState(true);
+  return () => set(!_v);
+}
+
 export default function ClassesView() {
-  const { classes } = Store;
+  let { classes } = Store;
   const [currentClass, setCurrent] = useState(classes[0]);
   const [learners, updateLearners] = useState(Store.learners);
+
+  const forceUpdate = useForceUpdate();
+
+  function updateClass(obj) {
+    classes = Store.updateClass(Object.assign(currentClass, obj));
+  }
 
   return (
     <>
@@ -72,9 +60,28 @@ export default function ClassesView() {
           Итого
         </NavBtn>
       </div>
-      {currentClass === "Sum" || !Store.learners.length ? null : (
+      {currentClass === "Sum" || !currentClass ? null : (
         <>
-          <div>{currentClass && currentClass.teacher}</div>
+          <div className={styles.formBox}>
+            <TextInput
+              label="Класс"
+              placeholder=""
+              name="name"
+              defaultModel={currentClass}
+              onChange={v => {
+                updateClass({ name: v });
+                forceUpdate();
+              }}
+            />
+            <Dropdown
+              label="Учитель"
+              placeholder=""
+              name="teacher"
+              defaultModel={currentClass}
+              options={[]}
+              // onChange={v => updateClass({ teacher: v })}
+            />
+          </div>
           <DataTableEdit
             config={dtConfig}
             items={getLearners(learners, currentClass)}

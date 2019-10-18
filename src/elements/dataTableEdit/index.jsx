@@ -2,7 +2,6 @@ import styles from "./style.scss";
 import Modal from "../modal";
 import PrimaryBtn from "../buttons/primaryBtn";
 import SecondaryBtn from "../buttons/secondaryBtn";
-import WarningBtn from "../buttons/warningBtn";
 import DataTable from "../dataTable";
 
 const askTypes = {
@@ -132,8 +131,6 @@ export default class DataTableEdit extends DataTable {
               Вставить
             </PrimaryBtn>
           ) : null}
-          {/* <PrimaryBtn>Копировать</PrimaryBtn> */}
-          {/* <WarningBtn onClick={this.onRemove}>Удалить</WarningBtn> */}
         </div>
       </>
     );

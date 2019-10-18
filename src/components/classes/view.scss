@@ -8,3 +8,18 @@
 .addBtn {
   @include iconBefore($icon-add);
 }
+
+.formBox {
+  max-width: 400px;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  > * {
+    &:first-child {
+      max-width: 80px;
+    }
+    & + * {
+      margin-left: 20px;
+    }
+  }
+}
