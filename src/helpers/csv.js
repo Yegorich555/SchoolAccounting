@@ -24,7 +24,6 @@ const CSV = {
       });
       arr[i - 1] = obj;
     }
-    console.warn("read", arr);
     return arr;
   },
   stringify: (
@@ -59,15 +58,26 @@ const CSV = {
       for (let k = 0; k < lastInd; ++k) {
         lines[i] += v[keys[k]] + valueSplitter;
       }
-      lines[i] = v[keys[lastInd]];
+      lines[i] += v[keys[lastInd]];
     });
 
     const line1 = header.join(valueSplitter);
-    const str = line1 + lineSplitter + lines.join(valueSplitter);
+    const str = line1 + lineSplitter + lines.join(lineSplitter);
 
-    console.warn("write", str);
     return str;
   }
 };
+
+// console.warn(
+//   "test",
+//   CSV.parse(
+//     CSV.stringify([
+//       { text: "Text1", value: "value1" },
+//       { text: "Text2", value: "value2" },
+//       { text: "Text3", value: null },
+//       { value: null }
+//     ])
+//   )
+// );
 
 export default CSV;
