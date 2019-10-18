@@ -16,78 +16,59 @@ function nextId(arr) {
   return id;
 }
 
-class StoreClass {
-  save = (name, arr) => {
-    localStorage.setItem(name, CSV.stringify(arr));
-    const prop = `_${name}`;
-    this[prop] = JSON.parse(JSON.stringify(arr)) || [];
-    return this[prop];
-  };
+class DbSet {
+  constructor(name) {
+    this.name = name;
+  }
 
-  load = name => {
-    const prop = `_${name}`;
-    if (this[prop] === undefined) {
-      this[prop] = CSV.parse(localStorage.getItem(name)) || [];
+  get items() {
+    if (this._items === undefined) {
+      this._items = CSV.parse(localStorage.getItem(this.name)) || [];
     }
-    return this[prop];
+    return this._items;
+  }
+
+  submit = () => {
+    localStorage.setItem(this.name, CSV.stringify(this.items));
+    this._items = JSON.parse(JSON.stringify(this.items)) || [];
+    return this._items;
   };
 
-  update = (name, updateFn) => {
-    const v = this.load(name);
-    updateFn(v);
-    return this.save(name, v);
+  update = item => {
+    arrayFunctions.update.call(this.items, v => v.id, item);
+    this.submit();
+    return item;
   };
 
-  // class functions
-  get classes() {
-    return this.load("classes");
-  }
+  add = item => {
+    // eslint-disable-next-line no-param-reassign
+    item.id = nextId(this.items);
+    this._items.push(item);
+    this.submit();
+    return item;
+  };
 
-  set classes(v) {
-    this.save("classes", v);
-  }
-
-  addClass(name) {
-    const nClass = { id: nextId(this.classes), name, teacher: null };
-    this.update("classes", v => v.push(nClass));
-    return nClass;
-  }
-
-  removeClass(item) {
-    return this.update("classes", v =>
-      arrayFunctions.remove.call(v, a => a.id === item.id)
-    );
-  }
-
-  updateClass(item) {
-    return this.update("classes", v =>
-      arrayFunctions.update.call(v, a => a.id, item)
-    );
-  }
-
-  // learners functions
-  get learners() {
-    return this.load("learners");
-  }
-
-  set learners(v) {
-    this.save("learners", v);
-  }
-
-  addLearners(items, currentClass) {
-    if (currentClass) {
-      items.forEach(v => {
-        // eslint-disable-next-line no-param-reassign
-        v.classNum = currentClass.num;
-      });
-    }
-    return this.update("learners", v => v.push([...items]));
-  }
-
-  removeLearner(item) {
-    return this.update("classes", v => arrayFunctions.remove.call(v, item));
-  }
+  remove = item => {
+    arrayFunctions.remove.call(this.items, a => a.id === item.id);
+    this.submit();
+    return this._items;
+  };
 }
 
-const Store = new StoreClass();
+const Store = {
+  classes: new DbSet("classes"),
+  teachers: new DbSet("teacheres"),
+  learners: new DbSet("learners")
+
+  // addLearners(items, currentClass) {
+  //   if (currentClass) {
+  //     items.forEach(v => {
+  //       // eslint-disable-next-line no-param-reassign
+  //       v.classNum = currentClass.num;
+  //     });
+  //   }
+  //   return this.update("learners", v => v.push([...items]));
+  // }
+};
+
 export default Store;

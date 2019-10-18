@@ -17,7 +17,7 @@ const dtConfig = {
 };
 
 function _getLearners(arr, num) {
-  return arr.filter(a => a.classNum === num);
+  return arr.filter(a => a.classNum === num); // TODO fix this
 }
 const getLearners = memoizeOne(_getLearners);
 
@@ -27,14 +27,14 @@ function useForceUpdate() {
 }
 
 export default function ClassesView() {
-  let { classes } = Store;
+  let classes = Store.classes.items;
   const [currentClass, setCurrent] = useState(classes[0]);
-  const [learners, updateLearners] = useState(Store.learners);
+  const [learners, updateLearners] = useState(Store.learners.items);
 
   const forceUpdate = useForceUpdate();
 
   function updateClass(obj) {
-    classes = Store.updateClass(Object.assign(currentClass, obj));
+    classes = Store.classes.update(Object.assign(currentClass, obj));
   }
 
   return (
@@ -42,7 +42,7 @@ export default function ClassesView() {
       <div className={styles.box}>
         <NavBtn
           className={styles.addBtn}
-          onClick={() => setCurrent(Store.addClass("ХХХ"))}
+          onClick={() => setCurrent(Store.classes.add({ name: "ХХХ" }))}
         />
         {classes.map(v => (
           <NavBtn
@@ -85,8 +85,8 @@ export default function ClassesView() {
           <DataTableEdit
             config={dtConfig}
             items={getLearners(learners, currentClass)}
-            onPaste={v => updateLearners(Store.addLearners(v, currentClass))}
-            onRemove={v => updateLearners(Store.removeLearner(v))}
+            onPaste={v => updateLearners(Store.learners.add(v, currentClass))} // TODO fix this
+            onRemove={v => updateLearners(Store.learners.remove(v))}
             // onCopy={onCopy}
             onSelected={null}
           />
