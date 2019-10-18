@@ -2,6 +2,20 @@
 import CSV from "./csv";
 import { arrayFunctions } from "./jsExtend";
 
+function nextId(arr) {
+  if (!arr) {
+    return 1;
+  }
+  let id = 1;
+  arr.forEach(v => {
+    if (v.id >= id) {
+      id = v.id + 1;
+    }
+  });
+
+  return id;
+}
+
 class StoreClass {
   save = (name, arr) => {
     localStorage.setItem(name, CSV.stringify(arr));
@@ -34,13 +48,21 @@ class StoreClass {
   }
 
   addClass(name) {
-    const nClass = { name, teacher: null };
+    const nClass = { id: nextId(this.classes), name, teacher: null };
     this.update("classes", v => v.push(nClass));
     return nClass;
   }
 
   removeClass(item) {
-    return this.update("classes", v => arrayFunctions.remove.call(v, item));
+    return this.update("classes", v =>
+      arrayFunctions.remove.call(v, a => a.id === item.id)
+    );
+  }
+
+  updateClass(item) {
+    return this.update("classes", v =>
+      arrayFunctions.update.call(v, a => a.id, item)
+    );
   }
 
   // learners functions
