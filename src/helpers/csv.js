@@ -20,7 +20,11 @@ const CSV = {
       const values = lines[i].split(valueSplitter);
       const obj = {};
       keys.forEach((key, k) => {
-        obj[key] = values[k]; // TODO: ConvertFromString
+        let v = values[k];
+        if (v === "null") {
+          v = null;
+        }
+        obj[key] = v; // TODO: ConvertFromString
       });
       arr[i - 1] = obj;
     }
@@ -56,6 +60,10 @@ const CSV = {
       lines[i] = "";
       const lastInd = keys.length - 1;
       for (let k = 0; k < lastInd; ++k) {
+        let val = v[keys[k]];
+        if (val === undefined) {
+          val = "";
+        }
         lines[i] += v[keys[k]] + valueSplitter;
       }
       lines[i] += v[keys[lastInd]];
