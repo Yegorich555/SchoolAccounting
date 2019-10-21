@@ -40,25 +40,53 @@ class DbSet {
     return item;
   };
 
-  add = item => {
+  add(item) {
     // eslint-disable-next-line no-param-reassign
     item.id = nextId(this.items);
     this._items.push(item);
     this.submit();
     return item;
-  };
+  }
 
-  remove = item => {
-    arrayFunctions.remove.call(this.items, a => a.id === item.id);
+  remove = itemOrItems => {
+    let arr = [];
+    if (!Array.isArray(itemOrItems)) arr.push(itemOrItems);
+    else arr = itemOrItems;
+
+    arr.forEach(item => {
+      arrayFunctions.remove.call(this.items, a => a.id === item.id);
+    });
+
     this.submit();
     return this._items;
   };
 }
 
+class DbSetLearners extends DbSet {
+  constructor() {
+    super("learners");
+  }
+
+  add(itemOrItems, currentClass) {
+    let arr = [];
+    if (!Array.isArray(itemOrItems)) arr.push(itemOrItems);
+    else arr = itemOrItems;
+
+    arr.forEach(item => {
+      // eslint-disable-next-line no-param-reassign
+      item.classId = currentClass.id;
+      super.add(item);
+    });
+
+    this.submit();
+    return this._items;
+  }
+}
+
 const Store = {
   classes: new DbSet("classes"),
-  teachers: new DbSet("teacheres"),
-  learners: new DbSet("learners")
+  teachers: new DbSet("teachers"),
+  learners: new DbSetLearners()
 
   // addLearners(items, currentClass) {
   //   if (currentClass) {

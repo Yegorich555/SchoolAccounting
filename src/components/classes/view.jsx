@@ -16,8 +16,8 @@ const dtConfig = {
   ]
 };
 
-function _getLearners(arr, num) {
-  return arr.filter(a => a.classNum === num); // TODO fix this
+function _getLearners(arr, curClass) {
+  return arr.filter(a => a.classId === curClass.id);
 }
 const getLearners = memoizeOne(_getLearners);
 
@@ -85,7 +85,7 @@ export default function ClassesView() {
           <DataTableEdit
             config={dtConfig}
             items={getLearners(learners, currentClass)}
-            onPaste={v => updateLearners(Store.learners.add(v, currentClass))} // TODO fix this
+            onPaste={v => updateLearners(Store.learners.add(v, currentClass))}
             onRemove={v => updateLearners(Store.learners.remove(v))}
             // onCopy={onCopy}
             onSelected={null}
