@@ -5,12 +5,13 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CaseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin");
 const PreloadPlugin = require("preload-webpack-plugin");
 const FriendlyErrorsWebpackPlugin = require("friendly-errors-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+// const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CleanPlugin = require("clean-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const MinifyCssNames = require("mini-css-class-name/css-loader");
 const ObsoleteWebpackPlugin = require("obsolete-webpack-plugin");
 const ScriptExtHtmlWebpackPlugin = require("script-ext-html-webpack-plugin");
+const HtmlWebpackInlineSourcePlugin = require("html-webpack-inline-source-plugin");
 
 const path = require("path");
 const pathAlias = require("./webpack.alias");
@@ -37,34 +38,14 @@ module.exports = function(_env, argv) {
     },
     entry: path.resolve(srcPath, "main.jsx"), // entyPoint for webpack
     output: {
-      path: destPath,
-      filename: "[name].js",
-      chunkFilename: "[name].js",
-      publicPath: "/"
+      path: destPath
+      // filename: "[name].js",
+      // chunkFilename: "[name].js",
+      // publicPath: "/"
     },
     resolve: {
       alias: pathAlias,
       extensions: [".js", ".jsx", ".scss"]
-    },
-    optimization: {
-      splitChunks: {
-        minChunks: 1,
-        cacheGroups: {
-          vendors: {
-            name: "chunk-vendors", // move js-files from node_modules into splitted file [chunk-vendors].js
-            test: /[\\/]node_modules[\\/]/,
-            priority: -10,
-            chunks: "initial"
-          },
-          common: {
-            name: "chunk-common", // move reusable nested js-files into splitted file [chunk-common].js
-            minChunks: 2,
-            priority: -20,
-            chunks: "initial",
-            reuseExistingChunk: true
-          }
-        }
-      }
     },
     module: {
       rules: [
@@ -139,9 +120,7 @@ module.exports = function(_env, argv) {
             {
               exclude: /styles/, // every style file is css-module by default except styles folder
               use: [
-                isDevServer
-                  ? "style-loader" // it extracts style directly into html (MiniCssExtractPlugin works incorrect with hmr and modules architecture)
-                  : MiniCssExtractPlugin.loader, // it extracts styles into file *.css
+                "style-loader", // it extracts style directly into html (MiniCssExtractPlugin works incorrect with hmr and modules architecture)
                 // TODO: improve plugin for splitting by files for dev purpose
                 {
                   loader: "css-loader", // it interprets @import and url() like import/require() and it resolves them (you can use [import *.css] into *.js).
@@ -187,9 +166,7 @@ module.exports = function(_env, argv) {
             /* config .oneOf('normal') */
             {
               use: [
-                isDevServer
-                  ? "style-loader" // it extracts style directly into html (MiniCssExtractPlugin works incorrect with hmr and modules architecture)
-                  : MiniCssExtractPlugin.loader, // it extracts styles into file *.css
+                "style-loader", // it extracts style directly into html (MiniCssExtractPlugin works incorrect with hmr and modules architecture)
                 "css-loader", // it interprets @import and url() like import/require() and it resolves them (you can use [import *.css] into *.js).
                 {
                   loader: "sass-loader", // it compiles Sass to CSS, using Node Sass by default
@@ -219,6 +196,7 @@ module.exports = function(_env, argv) {
       new FriendlyErrorsWebpackPlugin(), // it provides user-friendly errors from webpack (since the last has ugly useless bug-report)
       new HtmlWebpackPlugin({
         // it creates *.html with injecting js and css into template
+        inlineSource: ".(js|css|ico)$",
         template: path.resolve(srcPath, "index.html"),
         minify: isDevMode
           ? false
@@ -230,23 +208,24 @@ module.exports = function(_env, argv) {
               removeScriptTypeAttributes: true
             }
       }),
-      new PreloadPlugin({
-        // it adds 'preload' tag for async js-files: https://developer.mozilla.org/en-US/docs/Web/HTML/Preloading_content
-        rel: "preload",
-        include: "initial",
-        fileBlacklist: [/\.map$/, /hot-update\.js$/, /obsolete\.js$/]
-      }),
-      new PreloadPlugin({
-        // it adds 'prefetch' tag for async js-files: https://developer.mozilla.org/en-US/docs/Web/HTTP/Link_prefetching_FAQ
-        rel: "prefetch",
-        include: "asyncChunks"
-      }),
-      new MiniCssExtractPlugin({
-        // it extracts css-code into different file
-        filename: isDevMode ? "[name].css" : "[name].[contenthash].css",
-        chunkFilename: isDevMode ? "[id].css" : "[id].[contenthash].css",
-        sourceMap: enableSourceMap
-      }),
+      new HtmlWebpackInlineSourcePlugin(),
+      // new PreloadPlugin({
+      //   // it adds 'preload' tag for async js-files: https://developer.mozilla.org/en-US/docs/Web/HTML/Preloading_content
+      //   rel: "preload",
+      //   include: "initial",
+      //   fileBlacklist: [/\.map$/, /hot-update\.js$/, /obsolete\.js$/]
+      // }),
+      // new PreloadPlugin({
+      //   // it adds 'prefetch' tag for async js-files: https://developer.mozilla.org/en-US/docs/Web/HTTP/Link_prefetching_FAQ
+      //   rel: "prefetch",
+      //   include: "asyncChunks"
+      // }),
+      // new MiniCssExtractPlugin({
+      //   // it extracts css-code into different file
+      //   filename: isDevMode ? "[name].css" : "[name].[contenthash].css",
+      //   chunkFilename: isDevMode ? "[id].css" : "[id].[contenthash].css",
+      //   sourceMap: enableSourceMap
+      // }),
       new CleanPlugin.CleanWebpackPlugin(), // it cleans output folder before extracting files
       new CopyWebpackPlugin([
         {
