@@ -105,7 +105,7 @@ export default function ClassesView() {
           />
         </>
       )}
-      {currentClass !== "Sum" ? null : <ClassSummary items={learners} />}
+      {currentClass !== "Sum" ? null : <ClassSummary />}
     </>
   );
 }

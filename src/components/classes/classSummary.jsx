@@ -1,4 +1,5 @@
 import DataTable from "@/elements/dataTable";
+import Store from "@/helpers/store";
 
 const dtConfig = {
   headerKeys: [
@@ -33,12 +34,19 @@ function getRows(items) {
   const now = getDateStart();
   const nowYear = now.getFullYear();
 
+  const classes = Store.classes.items;
+
   const preparedItems = items.map(v => ({
     ...v,
     age: nowYear - v.dob.getFullYear(),
-    class: Number.parseInt(v.className.replace(/[А-я ]/g, ""), 10),
+    class: Number.parseInt(
+      classes.find(a => a.id === v.classId).name.replace(/[А-я ]/g, ""),
+      10
+    ),
     isGirl: v.isGirl || v.name.endsWith("вна")
   }));
+
+  window.test = preparedItems;
 
   for (let i = 6; i <= 18; ++i) {
     const row = {
@@ -68,13 +76,13 @@ function getRows(items) {
         v.class === num && ++sum;
       });
       row[`class${num}`] = sum;
-      row.sum += sum;
     }
     rows.push(row);
   }
+
   return rows;
 }
 
-export default function ClassSummary({ items }) {
-  return <DataTable items={getRows(items)} config={dtConfig} />;
+export default function ClassSummary() {
+  return <DataTable items={getRows(Store.learners.items)} config={dtConfig} />;
 }

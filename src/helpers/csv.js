@@ -48,7 +48,6 @@ const CSV = {
       });
       arr[i - 1] = obj;
     }
-    console.warn(arr);
     return arr;
   },
   stringify: (
