@@ -4,6 +4,7 @@ import { Component } from "react";
 import memoize from "memoize-one";
 import DateCompare from "ytech-js-extensions/lib/date/compareByDate";
 import styles from "./style.scss";
+import { DateToString } from "@/helpers/jsExtend";
 
 export const DataTableHelper = {
   toUpperCaseFirst: v => v.charAt(0).toUpperCase() + v.slice(1),
@@ -18,7 +19,7 @@ export const DataTableHelper = {
     if (headerKey.type === "email")
       return <a href={`mailto:${value}`}>{value}</a>;
     if (value instanceof Date) {
-      return value.toLocaleDateString();
+      return DateToString(value); // value.toLocaleDateString();
     }
     return value;
   },

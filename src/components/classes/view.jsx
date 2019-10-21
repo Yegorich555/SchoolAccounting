@@ -9,10 +9,23 @@ import Store from "@/helpers/store";
 import TextInput from "@/elements/inputs/textInput";
 import Dropdown from "@/elements/inputs/dropdown";
 
+function dateFromExcel(v) {
+  if (!v || typeof v !== "string") return v;
+  if (/^(\d{2})-(\d{2})-(\d{2})/.test(v)) {
+    const dtArr = v.split("-").map(a => Number.parseInt(a, 10));
+    const dt = new Date(2000 + dtArr[2], dtArr[1] - 1, dtArr[0]);
+    if (Number.isNaN(dt)) return v;
+    return dt;
+  }
+  const dt = Date.parse(v);
+  if (Number.isNaN(dt)) return v;
+  return dt;
+}
+
 const dtConfig = {
   headerKeys: [
     { propName: "name", text: "ФИО" },
-    { propName: "dob", text: "Дата рождения" }
+    { propName: "dob", text: "Дата рождения", pasteFormat: dateFromExcel }
   ]
 };
 

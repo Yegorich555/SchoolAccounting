@@ -1,4 +1,5 @@
 /* eslint-disable no-underscore-dangle */
+import tryParseJSONDate from "ytech-js-extensions/lib/object/tryParseJSONDate";
 import CSV from "./csv";
 import { arrayFunctions } from "./jsExtend";
 
@@ -30,7 +31,8 @@ class DbSet {
 
   submit = () => {
     localStorage.setItem(this.name, CSV.stringify(this.items));
-    this._items = JSON.parse(JSON.stringify(this.items)) || [];
+    this._items =
+      tryParseJSONDate(JSON.parse(JSON.stringify(this.items))) || [];
     return this._items;
   };
 

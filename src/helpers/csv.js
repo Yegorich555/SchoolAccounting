@@ -1,6 +1,30 @@
 const defLineSplitter = "\r"; // or /[\r\n|\r|\n]/
 const defValueSplitter = "\t"; // tab-key
 
+function tryParseDate(value) {
+  if (typeof value !== "string") return value;
+
+  if (/^(\d{4})-(\d{2})-(\d{2})/.test(value)) {
+    const v = Date.parse(value);
+    if (!Number.isNaN(v)) return new Date(v);
+  }
+
+  return value;
+}
+
+function toString(v) {
+  if (v === undefined) return "";
+  if (!v || !(v instanceof Date)) return v;
+  return v.toISOString();
+}
+
+function fromString(v) {
+  if (v === "null") {
+    return null;
+  }
+  return tryParseDate(v);
+}
+
 const CSV = {
   parse: (
     text,
@@ -20,14 +44,11 @@ const CSV = {
       const values = lines[i].split(valueSplitter);
       const obj = {};
       keys.forEach((key, k) => {
-        let v = values[k];
-        if (v === "null") {
-          v = null;
-        }
-        obj[key] = v; // TODO: ConvertFromString
+        obj[key] = fromString(values[k]);
       });
       arr[i - 1] = obj;
     }
+    console.warn(arr);
     return arr;
   },
   stringify: (
@@ -60,13 +81,9 @@ const CSV = {
       lines[i] = "";
       const lastInd = keys.length - 1;
       for (let k = 0; k < lastInd; ++k) {
-        let val = v[keys[k]];
-        if (val === undefined) {
-          val = "";
-        }
-        lines[i] += v[keys[k]] + valueSplitter;
+        lines[i] += toString(v[keys[k]]) + valueSplitter;
       }
-      lines[i] += v[keys[lastInd]];
+      lines[i] += toString(v[keys[lastInd]]);
     });
 
     const line1 = header.join(valueSplitter);

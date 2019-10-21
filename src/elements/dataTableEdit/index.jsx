@@ -51,7 +51,7 @@ export default class DataTableEdit extends DataTable {
       const items = lines.map(line => {
         const item = {};
         this.headerKeys.forEach((h, i) => {
-          item[h.propName] = line[i];
+          item[h.propName] = h.pasteFormat ? h.pasteFormat(line[i]) : line[i];
         });
         return item;
       });
@@ -77,8 +77,8 @@ export default class DataTableEdit extends DataTable {
   };
 
   onRemove = () => {
-    if (this.props.onDelete && this.state.currentItem != null) {
-      this.props.onDelete(this.state.currentItem);
+    if (this.state.currentItem != null) {
+      this.props.onRemove && this.props.onRemove(this.state.currentItem);
     }
   };
 
