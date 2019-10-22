@@ -88,8 +88,13 @@ class DbSetLearners extends DbSet {
 const Store = {
   classes: new DbSet("classes"),
   teachers: new DbSet("teachers"),
-  learners: new DbSetLearners()
-
+  learners: new DbSetLearners(),
+  set currentPath(v) {
+    localStorage.setItem("curPath", v);
+  },
+  get currentPath() {
+    return localStorage.getItem("curPath");
+  }
   // addLearners(items, currentClass) {
   //   if (currentClass) {
   //     items.forEach(v => {

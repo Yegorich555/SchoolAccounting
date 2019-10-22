@@ -46,7 +46,17 @@ function useForceUpdate() {
 
 export default function ClassesView() {
   let classes = Store.classes.items;
-  const [currentClass, setCurrent] = useState(classes[0]);
+  const [currentClass, setItem] = useState(
+    classes.find(a => a.name === Store.currentPath) ||
+      (Store.currentPath === "Sum" && { name: "Sum" }) ||
+      classes[0]
+  );
+
+  function setCurrent(item) {
+    setItem(item);
+    Store.currentPath = (item && item.name) || "";
+  }
+
   const [learners, updateLearners] = useState(Store.learners.items);
 
   const forceUpdate = useForceUpdate();
@@ -77,13 +87,13 @@ export default function ClassesView() {
           </NavBtn>
         ))}
         <NavBtn
-          onClick={() => setCurrent("Sum")}
-          aria-selected={currentClass === "Sum"}
+          onClick={() => setCurrent({ name: "Sum" })}
+          aria-selected={currentClass.name === "Sum"}
         >
           Итого
         </NavBtn>
       </div>
-      {currentClass === "Sum" || !currentClass ? null : (
+      {!currentClass || currentClass.name === "Sum" ? null : (
         <>
           <div className={styles.formBox}>
             <TextInput
@@ -120,7 +130,7 @@ export default function ClassesView() {
           />
         </>
       )}
-      {currentClass !== "Sum" ? null : <ClassSummary />}
+      {!currentClass || currentClass.name !== "Sum" ? null : <ClassSummary />}
     </>
   );
 }
