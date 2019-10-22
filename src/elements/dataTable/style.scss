@@ -129,5 +129,6 @@ $cellTopPadding: 4px;
 
 .footer {
   padding: $cellTopPadding $cellLeftPadding;
-  color: white;
+  background-color: lighten($color: $tableHeaderColor, $amount: 15);
+  color: black;
 }

@@ -1,5 +1,5 @@
-import DataTable from "@/elements/dataTable";
 import Store from "@/helpers/store";
+import DataTableEdit from "@/elements/dataTableEdit";
 
 const dtConfig = {
   headerKeys: [
@@ -84,5 +84,7 @@ function getRows(items) {
 }
 
 export default function ClassSummary() {
-  return <DataTable items={getRows(Store.learners.items)} config={dtConfig} />;
+  return (
+    <DataTableEdit items={getRows(Store.learners.items)} config={dtConfig} />
+  );
 }

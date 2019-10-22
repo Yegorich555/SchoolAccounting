@@ -170,24 +170,35 @@ export default class DataTableEdit extends DataTable {
         <div className={styles.btnGroup}>
           {navigator.clipboard ? (
             <>
+              {this.props.onPaste ? (
+                <PrimaryBtn
+                  title="Вставить из буфер обмена"
+                  onClick={() => {
+                    navigator.clipboard.readText().then(this.paste);
+                  }}
+                >
+                  Вставить
+                </PrimaryBtn>
+              ) : null}
               <PrimaryBtn
-                onClick={() => {
-                  navigator.clipboard.readText().then(this.paste);
-                }}
+                title="Копировать в буфер обмена"
+                onClick={this.onCopy}
               >
-                Вставить
+                Копировать
               </PrimaryBtn>
-              <PrimaryBtn onClick={this.onCopy}>Копировать</PrimaryBtn>
             </>
           ) : null}
 
-          <WarningBtn
-            onClick={this.onRemove}
-            disabled={!this.state.currentItem}
-            messageSuf="выделенное"
-          >
-            Удалить
-          </WarningBtn>
+          {this.props.onRemove ? (
+            <WarningBtn
+              onClick={this.onRemove}
+              disabled={!this.state.currentItem}
+              messageSuf="выделенное"
+              title="Удалить выделенное"
+            >
+              Удалить
+            </WarningBtn>
+          ) : null}
         </div>
       </>
     );
