@@ -6,15 +6,19 @@ import Modal from "../modal";
 
 export default function WarningBtn(props) {
   const [isOpen, setOpen] = useState(false);
+
+  const elProps = Object.assign({}, props);
+  delete elProps.messageSuf;
+
   return (
     <>
       <BasicBtn
-        {...props}
+        {...elProps}
         className={[props.className, styles.btn]}
         onClick={() => setOpen(true)}
       >
         {props.children}
-      </BasicBtn>{" "}
+      </BasicBtn>
       {isOpen ? (
         <Modal onClosed={() => setOpen(false)}>
           <div className={styles.removeDialog}>
