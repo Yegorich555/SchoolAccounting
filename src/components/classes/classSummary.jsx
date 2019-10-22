@@ -1,5 +1,8 @@
 import Store from "@/helpers/store";
 import DataTableEdit from "@/elements/dataTableEdit";
+import TextInput from "@/elements/inputs/textInput";
+import { DateToString } from "@/helpers/jsExtend";
+import styles from "./view.scss";
 
 const dtConfig = {
   headerKeys: [
@@ -58,8 +61,10 @@ function getRows(items) {
     let filter;
     if (i === 6) {
       filter = v => v.age <= i;
+      row.age += " и младше";
     } else if (i === 18) {
       filter = v => v.age >= i;
+      row.age += " и старше";
     } else {
       filter = v => v.age === i;
     }
@@ -85,6 +90,20 @@ function getRows(items) {
 
 export default function ClassSummary() {
   return (
-    <DataTableEdit items={getRows(Store.learners.items)} config={dtConfig} />
+    <div className={styles.summaryBox}>
+      <div>
+        <TextInput
+          name="data"
+          defaultValue={DateToString(getDateStart())}
+          label="Дата отсчета"
+          inputFor={{ readOnly: true }}
+          className={styles.dateInput}
+        />
+        <DataTableEdit
+          items={getRows(Store.learners.items)}
+          config={dtConfig}
+        />
+      </div>
+    </div>
   );
 }

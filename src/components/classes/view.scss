@@ -27,3 +27,15 @@
     min-height: 44px;
   }
 }
+
+.summaryBox {
+  display: flex;
+  > div {
+    margin: auto;
+    max-width: 100%;
+  }
+}
+
+.dateInput {
+  max-width: 150px;
+}
