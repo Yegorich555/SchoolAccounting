@@ -8,6 +8,7 @@ import DataTableEdit from "@/elements/dataTableEdit";
 import Store from "@/helpers/store";
 import TextInput from "@/elements/inputs/textInput";
 import Dropdown from "@/elements/inputs/dropdown";
+import WarningBtn from "@/elements/buttons/warningBtn";
 
 function dateFromExcel(v) {
   if (!v || typeof v !== "string") return v;
@@ -54,6 +55,11 @@ export default function ClassesView() {
     classes = Store.classes.update(Object.assign(currentClass, obj));
   }
 
+  function clickRemoveClass() {
+    const arr = Store.classes.remove(currentClass);
+    setCurrent(arr[0]);
+  }
+
   return (
     <>
       <div className={styles.box}>
@@ -98,6 +104,12 @@ export default function ClassesView() {
               options={[]}
               // onChange={v => updateClass({ teacher: v })}
             />
+            <WarningBtn
+              onClick={clickRemoveClass}
+              messageSuf={`класс ${currentClass.name}`}
+            >
+              Удалить класс
+            </WarningBtn>
           </div>
           <DataTableEdit
             config={dtConfig}

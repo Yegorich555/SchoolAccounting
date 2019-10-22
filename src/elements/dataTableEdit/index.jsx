@@ -184,6 +184,7 @@ export default class DataTableEdit extends DataTable {
           <WarningBtn
             onClick={this.onRemove}
             disabled={!this.state.currentItem}
+            messageSuf="выделенное"
           >
             Удалить
           </WarningBtn>

@@ -10,16 +10,20 @@
 }
 
 .formBox {
-  max-width: 400px;
   margin: auto;
   display: flex;
   justify-content: center;
+  align-items: flex-end;
   > * {
     &:first-child {
-      max-width: 80px;
+      max-width: 70px;
     }
     & + * {
       margin-left: 20px;
     }
+    margin-bottom: 0 !important;
+  }
+  > button {
+    min-height: 44px;
   }
 }

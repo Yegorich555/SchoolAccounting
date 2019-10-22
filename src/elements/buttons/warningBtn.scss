@@ -5,4 +5,16 @@
     color: $warningBtnHoverColor;
     background: $warningBtnHoverBackground;
   }
+  &:focus {
+    outline-color: cornflowerblue;
+  }
+}
+
+.removeDialog {
+  padding: 20px;
+  button {
+    margin: auto;
+    display: block;
+    min-width: 80px;
+  }
 }
