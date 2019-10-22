@@ -197,7 +197,7 @@ module.exports = function(_env, argv) {
       new HtmlWebpackPlugin({
         // it creates *.html with injecting js and css into template
         inlineSource: ".(js|css|ico)$",
-        template: path.resolve(srcPath, "index.html"),
+        template: path.resolve(srcPath, "SchoolAccounting.html"),
         minify: isDevMode
           ? false
           : {
