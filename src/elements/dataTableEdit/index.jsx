@@ -88,7 +88,7 @@ export default class DataTableEdit extends DataTable {
     }
   };
 
-  onCopy = e => {
+  onCopy = () => {
     const valueSeparator = "\t";
     const lineSeparator = "\r\n";
     const items = this.sort();

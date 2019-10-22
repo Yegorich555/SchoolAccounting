@@ -11,15 +11,19 @@ import Dropdown from "@/elements/inputs/dropdown";
 
 function dateFromExcel(v) {
   if (!v || typeof v !== "string") return v;
-  if (/^(\d{2})-(\d{2})-(\d{2})/.test(v)) {
-    const dtArr = v.split("-").map(a => Number.parseInt(a, 10));
-    const dt = new Date(2000 + dtArr[2], dtArr[1] - 1, dtArr[0]);
-    if (Number.isNaN(dt)) return v;
+  if (/^(\d{2})[-.](\d{2})[-.](\d{2,4})/.test(v)) {
+    const dtArr = v.split(/[-.]/).map(a => Number.parseInt(a, 10));
+    const dt = new Date(
+      dtArr[2] < 100 ? 2000 + dtArr[2] : dtArr[2],
+      dtArr[1] - 1,
+      dtArr[0]
+    );
+    if (Number.isNaN(dt)) return "";
     return dt;
   }
   const dt = Date.parse(v);
-  if (Number.isNaN(dt)) return v;
-  return dt;
+  if (Number.isNaN(dt) || dt < 0) return "";
+  return new Date(dt);
 }
 
 const dtConfig = {
@@ -100,8 +104,7 @@ export default function ClassesView() {
             items={getLearners(learners, currentClass)}
             onPaste={v => updateLearners(Store.learners.add(v, currentClass))}
             onRemove={v => updateLearners(Store.learners.remove(v))}
-            // onCopy={onCopy}
-            onSelected={null}
+            // onSelected={null}
           />
         </>
       )}
