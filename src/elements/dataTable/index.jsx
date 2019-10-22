@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-one-expression-per-line */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import { Component } from "react";
@@ -165,6 +166,7 @@ export default class DataTable extends Component {
             <tbody>{body}</tbody>
           </table>
         </div>
+        <div className={styles.footer}>Всего: {lst.length} </div>
       </div>
     );
   }

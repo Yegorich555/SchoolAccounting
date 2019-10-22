@@ -126,3 +126,8 @@ $cellTopPadding: 4px;
     margin-left: 10px;
   }
 }
+
+.footer {
+  padding: $cellTopPadding $cellLeftPadding;
+  color: white;
+}
