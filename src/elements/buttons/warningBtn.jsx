@@ -3,6 +3,7 @@ import { useState } from "react";
 import styles from "./warningBtn.scss";
 import BasicBtn from "./basicBtn";
 import Modal from "../modal";
+import PrimaryBtn from "./primaryBtn";
 
 export default function WarningBtn(props) {
   const [isOpen, setOpen] = useState(false);
@@ -23,7 +24,14 @@ export default function WarningBtn(props) {
         <Modal onClosed={() => setOpen(false)}>
           <div className={styles.removeDialog}>
             <h2>Удалить {props.messageSuf}?</h2>
-            <WarningBtn onClick={props.onClick}>Да</WarningBtn>
+            <PrimaryBtn
+              onClick={() => {
+                setOpen(false);
+                props.onClick();
+              }}
+            >
+              Да
+            </PrimaryBtn>
           </div>
         </Modal>
       ) : null}
