@@ -70,6 +70,14 @@ export default function ClassesView() {
     setCurrent(arr[0]);
   }
 
+  if (!currentClass) {
+    // prevent empty selection when forceUpdate happens
+    const cur = Store.currentPath || Store.classes.items[0];
+    if (cur) {
+      setCurrent(cur);
+    }
+  }
+
   return (
     <>
       <div className={styles.box}>
@@ -81,7 +89,7 @@ export default function ClassesView() {
           <NavBtn
             key={v.name}
             onClick={() => setCurrent(v)}
-            aria-selected={v.name === currentClass.name}
+            aria-selected={currentClass && v.name === currentClass.name}
           >
             {v.name}
           </NavBtn>

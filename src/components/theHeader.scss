@@ -9,3 +9,15 @@
     letter-spacing: 1px;
   }
 }
+
+.downloadBtn {
+  font-size: 24px;
+  line-height: 16px;
+  @include iconBefore($icon-save);
+}
+
+.uploadBtn {
+  font-size: 24px;
+  line-height: 16px;
+  @include iconBefore($icon-upload);
+}

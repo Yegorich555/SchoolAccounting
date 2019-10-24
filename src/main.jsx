@@ -3,6 +3,7 @@ import ReactDom from "react-dom";
 import { Component } from "react";
 import TheError from "./components/theError";
 import TheHeader, { headerConfig } from "./components/theHeader";
+import Store from "./helpers/store";
 
 class AppContainer extends Component {
   constructor(props) {
@@ -12,6 +13,9 @@ class AppContainer extends Component {
       error: null,
       selected: headerConfig[0]
     };
+    Store.onUploaded(() => {
+      this.forceUpdate();
+    });
   }
 
   resetError = () => {

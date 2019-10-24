@@ -29,6 +29,11 @@ class DbSet {
     return this._items;
   }
 
+  set items(v) {
+    this._items = v;
+    this.submit();
+  }
+
   submit = () => {
     localStorage.setItem(this.name, CSV.stringify(this.items));
     this._items =
@@ -94,16 +99,29 @@ const Store = {
   },
   get currentPath() {
     return localStorage.getItem("curPath");
+  },
+  toString() {
+    const obj = {
+      classes: this.classes.items,
+      teachers: this.teachers.items,
+      learners: this.learners.items,
+      curPath: this.currentPath
+    };
+    return JSON.stringify(obj);
+  },
+  parse(str) {
+    const obj = tryParseJSONDate(JSON.parse(str));
+    this.classes.items = obj.classes;
+    this.teachers.items = obj.teachers;
+    this.learners.items = obj.learners;
+    this.curPath = this.currentPath;
+  },
+  onUploaded(callback) {
+    this._onUploaded = callback;
+  },
+  uploaded() {
+    this._onUploaded();
   }
-  // addLearners(items, currentClass) {
-  //   if (currentClass) {
-  //     items.forEach(v => {
-  //       // eslint-disable-next-line no-param-reassign
-  //       v.classNum = currentClass.num;
-  //     });
-  //   }
-  //   return this.update("learners", v => v.push([...items]));
-  // }
 };
 
 export default Store;
