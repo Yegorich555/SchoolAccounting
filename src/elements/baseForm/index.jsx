@@ -35,9 +35,9 @@ class BaseForm extends Component {
       }
 
       const v = input.provideValue();
-      // model[input.props.name] = v;
-      if (v != null && v !== "") {
+      if (v !== undefined) {
         model = lodashSet(model, input.props.name, v); // set nested properties: model['a.b'] => model[a][b]
+        // model[input.props.name] = v;
         hasValues = true;
       }
       return false;
