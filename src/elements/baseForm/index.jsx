@@ -64,12 +64,14 @@ class BaseForm extends Component {
     if (this.props.onValidSubmit) {
       this.isPending = true;
       this.setState({ isPending: true });
-
-      PromiseWait(this.props.onValidSubmit(model)).finally(() => {
-        // TODO: show error in results
-        this.isPending = false;
-        !this.isUnMounted && this.setState({ isPending: false });
-      });
+      const maybePromise = this.props.onValidSubmit(model);
+      if (maybePromise && maybePromise.then) {
+        PromiseWait(maybePromise).finally(() => {
+          // TODO: show error in results
+          this.isPending = false;
+          !this.isUnMounted && this.setState({ isPending: false });
+        });
+      }
     } else if (DEBUG) {
       console.warn("props.onValidSubmit is not attached");
     }

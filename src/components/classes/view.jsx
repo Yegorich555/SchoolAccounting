@@ -148,7 +148,10 @@ export default function ClassesView() {
             removeBtn={item => (
               <AddEditLearnerBtn
                 item={item}
-                onSubmit={v => updateLearners(Store.learners.update(v))}
+                onSubmit={v => {
+                  Store.learners.update(v);
+                  updateLearners(Store.learners.items);
+                }}
               />
             )}
             // onSelected={null}

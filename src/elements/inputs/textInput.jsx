@@ -47,7 +47,7 @@ export class InsideTextInput extends BasicInput {
         type={this.props.type || "text"}
         name={this.props.htmlName}
         placeholder={placeholder}
-        value={value}
+        value={value || ""}
         onChange={this.handleInputChange}
         onBlur={this.handleInputBlur}
         maxLength={this.props.maxLength || 255}

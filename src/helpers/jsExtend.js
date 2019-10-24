@@ -12,7 +12,8 @@ Array.prototype.find =
   Array.prototype.find || require("ytech-js-extensions/lib/array/find");
 
 function update(getterKey, newItem) {
-  const item = this.find(v => getterKey(v));
+  const prop = getterKey(newItem);
+  const item = this.find(v => getterKey(v) === prop);
   Object.assign(item, newItem);
   return newItem;
 }

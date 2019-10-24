@@ -7,9 +7,14 @@ export default function ModalForm(props) {
   const modal = useRef(null);
   function onValidSubmit(model) {
     if (props.onValidSubmit) {
-      return props.onValidSubmit(model).finally(() => {
+      const maybePromise = props.onValidSubmit(model);
+      if (maybePromise && maybePromise.then) {
+        maybePromise.finally(() => {
+          modal.current && modal.current.close();
+        });
+      } else {
         modal.current && modal.current.close();
-      });
+      }
     }
     return props.onValidSubmit;
   }

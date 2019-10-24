@@ -1,0 +1,17 @@
+.modal {
+  min-width: 400px;
+  max-width: 100%;
+}
+.inputGroup {
+  display: flex;
+  > * {
+    margin-top: auto;
+    &:last-child {
+      margin-bottom: 14px;
+      width: 100%;
+    }
+    + * {
+      margin-left: 10px;
+    }
+  }
+}

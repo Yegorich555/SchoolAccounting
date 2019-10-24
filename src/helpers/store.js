@@ -90,8 +90,23 @@ class DbSetLearners extends DbSet {
   }
 }
 
+class DbSetClasses extends DbSet {
+  constructor(store) {
+    super("classes");
+    this._store = store;
+  }
+
+  remove(item) {
+    super.remove(item);
+    const removeItems = this._store.learners.items.filter(
+      v => v.classId === item.id
+    );
+    this._store.learners.remove(removeItems);
+  }
+}
+
 const Store = {
-  classes: new DbSet("classes"),
+  classes: new DbSetClasses(this),
   teachers: new DbSet("teachers"),
   learners: new DbSetLearners(),
   set currentPath(v) {
@@ -124,4 +139,5 @@ const Store = {
   }
 };
 
+window.myStore = Store;
 export default Store;
