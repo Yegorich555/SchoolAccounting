@@ -9,6 +9,8 @@ import Store from "@/helpers/store";
 import TextInput from "@/elements/inputs/textInput";
 import Dropdown from "@/elements/inputs/dropdown";
 import WarningBtn from "@/elements/buttons/warningBtn";
+import PrimaryBtn from "@/elements/buttons/primaryBtn";
+import RemoveLearnerBtn from "./editLearnerBtn";
 
 function dateFromExcel(v) {
   if (!v || typeof v !== "string") return v;
@@ -30,7 +32,9 @@ function dateFromExcel(v) {
 const dtConfig = {
   headerKeys: [
     { propName: "name", text: "ФИО" },
-    { propName: "dob", text: "Дата рождения", pasteFormat: dateFromExcel }
+    { propName: "dob", text: "Дата рождения", pasteFormat: dateFromExcel },
+    { propName: "removed", text: "Выбыл" },
+    { propName: "added", text: "Прибыл" }
   ]
 };
 
@@ -133,8 +137,14 @@ export default function ClassesView() {
           <DataTableEdit
             config={dtConfig}
             items={getLearners(learners, currentClass)}
+            // onAdd={v => updateLearners(Store.learners.add(v, currentClass))} // todo additional dialog
             onPaste={v => updateLearners(Store.learners.add(v, currentClass))}
-            onRemove={v => updateLearners(Store.learners.remove(v))}
+            removeBtn={item => (
+              <RemoveLearnerBtn
+                item={item}
+                onRemove={v => updateLearners(Store.learners.remove(v))}
+              />
+            )}
             // onSelected={null}
           />
         </>
