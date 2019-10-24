@@ -31,11 +31,13 @@ module.exports = {
       "error",
       { arrow: true, return: true, declaration: true }
     ],
+    "no-underscore-dangle": 0,
     "no-unused-expressions": ["error", { allowShortCircuit: true }],
     "no-console": process.env.NODE_ENV === "production" ? "error" : "off",
     "no-debugger": process.env.NODE_ENV === "production" ? "error" : "off",
     "no-alert": process.env.NODE_ENV === "production" ? "error" : "off",
     "no-plusplus": 0,
+    "class-methods-use-this": 0,
     "max-len": [
       "warn",
       {
