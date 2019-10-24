@@ -8,6 +8,8 @@ import SlideInput from "@/elements/inputs/slideInput";
 
 export default function EditLearnerBtn(props) {
   const [isOpen, setOpen] = useState(false);
+  const [isArrived, setArrived] = useState(!!props.added);
+  const [isRemoved, setRemoved] = useState(!!props.removed);
   const { item, isAdd } = props;
 
   const elProps = Object.assign({}, props);
@@ -18,8 +20,12 @@ export default function EditLearnerBtn(props) {
 
   return (
     <>
-      <SecondaryBtn {...elProps} disabled={!item} onClick={() => setOpen(true)}>
-        Редактировать
+      <SecondaryBtn
+        {...elProps}
+        disabled={!isAdd && !item}
+        onClick={() => setOpen(true)}
+      >
+        {isAdd ? "Добавить" : "Редактировать"}
       </SecondaryBtn>
       {isOpen ? (
         <ModalForm
@@ -44,12 +50,15 @@ export default function EditLearnerBtn(props) {
               <SlideInput
                 label="Выбыл"
                 name="isRemoved"
-                defaultValue={item.removed}
+                defaultValue={item && item.removed}
+                onChanged={v => setRemoved(v)}
               />
               <TextInput
                 label="Выбыл (примечание)"
                 name="removed"
+                placeholder=""
                 defaultModel={item}
+                disabled={!isRemoved}
               />
             </>
           ) : (
@@ -57,12 +66,15 @@ export default function EditLearnerBtn(props) {
               <SlideInput
                 label="Прибыл"
                 name="isAdded"
-                defaultValue={item.added}
+                defaultValue={item && item.added}
+                onChanged={v => setArrived(v)}
               />
               <TextInput
                 label="Прибыл (примечание)"
+                placeholder=""
                 name="added"
                 defaultModel={item}
+                disabled={!isArrived}
               />
             </>
           )}

@@ -9,8 +9,7 @@ import Store from "@/helpers/store";
 import TextInput from "@/elements/inputs/textInput";
 import Dropdown from "@/elements/inputs/dropdown";
 import WarningBtn from "@/elements/buttons/warningBtn";
-import PrimaryBtn from "@/elements/buttons/primaryBtn";
-import RemoveLearnerBtn from "./editLearnerBtn";
+import AddEditLearnerBtn from "./editLearnerBtn";
 
 function dateFromExcel(v) {
   if (!v || typeof v !== "string") return v;
@@ -137,12 +136,19 @@ export default function ClassesView() {
           <DataTableEdit
             config={dtConfig}
             items={getLearners(learners, currentClass)}
-            // onAdd={v => updateLearners(Store.learners.add(v, currentClass))} // todo additional dialog
+            addBtn={() => (
+              <AddEditLearnerBtn
+                isAdd
+                onSubmit={v =>
+                  updateLearners(Store.learners.add(v, currentClass))
+                }
+              />
+            )}
             onPaste={v => updateLearners(Store.learners.add(v, currentClass))}
             removeBtn={item => (
-              <RemoveLearnerBtn
+              <AddEditLearnerBtn
                 item={item}
-                onRemove={v => updateLearners(Store.learners.remove(v))}
+                onSubmit={v => updateLearners(Store.learners.update(v))}
               />
             )}
             // onSelected={null}
