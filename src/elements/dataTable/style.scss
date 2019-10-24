@@ -3,30 +3,49 @@ $cellHeight: 40px;
 $cellLeftPadding: 8px;
 $cellTopPadding: 4px;
 
+.centerContainer {
+  margin: 20px auto;
+  display: flex;
+}
+
+.fixBorder {
+  border-radius: $borderRadius;
+  border: 1px solid $tableHeaderColor;
+  overflow: hidden;
+  margin: auto;
+  max-width: 100%;
+  outline-offset: -1px;
+}
+
 .tableContainer {
   background: $tableHeaderColor;
   padding-top: $headerHeight;
-  margin: auto;
-  margin-top: 20px;
-  border-top-right-radius: $borderRadius;
-  border-top-left-radius: $borderRadius;
-  border: 1px solid $tableHeaderColor;
   position: relative;
-  overflow: auto;
-  max-width: max-content;
+  overflow-x: auto;
 
-  .scrollContainer {
-    max-height: 600px;
+  // fix unexpected padding in Browsers: because width is float value
+  margin: 0 -0.2px;
+  overflow-y: hidden;
+  // end fix
+
+  > div {
+    max-height: 500px;
+    max-height: calc(100vh - 400px);
     min-height: 40px;
-    overflow-y: overlay;
-    overflow-x: visible;
-    width: fit-content;
+    overflow-y: auto;
+    overflow-x: hidden; //fix unexpected scroll for FF
+    display: inline-block;
+    margin-bottom: -6px; //fix for some unexpected padding inside boxes
   }
 
   table {
     border-collapse: collapse;
     border-spacing: 0;
     vertical-align: middle;
+  }
+
+  th {
+    text-transform: capitalize;
   }
 
   td,
@@ -84,7 +103,7 @@ $cellTopPadding: 4px;
   th > div {
     position: absolute;
     background: transparent;
-    z-index: 100;
+    z-index: 10;
     top: 0;
     line-height: 1.61539;
     color: white;

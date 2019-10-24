@@ -1,6 +1,3 @@
-/* eslint-disable react/jsx-one-expression-per-line */
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import { Component } from "react";
 import memoize from "memoize-one";
 import DateCompare from "ytech-js-extensions/lib/date/compareByDate";
@@ -20,7 +17,7 @@ export const DataTableHelper = {
     if (headerKey.type === "email")
       return <a href={`mailto:${value}`}>{value}</a>;
     if (value instanceof Date) {
-      return DateToString(value); // value.toLocaleDateString();
+      return DateToString(value);
     }
     return value;
   },
@@ -30,6 +27,14 @@ export const DataTableHelper = {
       const v2 = isSortAsk ? a[sortKey] : b[sortKey];
       if (v1 instanceof Date) {
         return DateCompare(v1, v2);
+      }
+      if (typeof v1 === "string") {
+        // natural sorting can be different for browsers: https://stackoverflow.com/questions/51165/how-to-sort-strings-in-javascript
+        return v1.localeCompare(v2, undefined, {
+          sensitivity: "base",
+          ignorePunctuation: true,
+          numeric: true
+        });
       }
       return (v1 > v2) - (v1 < v2);
     });
@@ -87,6 +92,18 @@ export default class DataTable extends Component {
     });
   };
 
+  onTableClick = e => {
+    const { header } = e.target.dataset;
+    if (header != null) {
+      this.onHeaderClick(this.headerKeys[Number.parseInt(header, 10)]);
+    } else {
+      const { row } = e.target.closest("tr").dataset;
+      if (row != null) {
+        this.onRowClick(this.sort()[Number.parseInt(row, 10)]);
+      }
+    }
+  };
+
   sort = () =>
     memoize((arr, key, isAsk) =>
       DataTableHelper.sortByKey(arr, key, isAsk)
@@ -102,7 +119,7 @@ export default class DataTable extends Component {
     const { headerKeys } = this;
 
     if (lst) {
-      header = headerKeys.map(item => {
+      header = headerKeys.map((item, i) => {
         const text = DataTableHelper.getHeaderText(item);
         return (
           <th key={item.propName} style={{ minWidth: item.minWidth }}>
@@ -112,9 +129,7 @@ export default class DataTable extends Component {
             {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/interactive-supports-focus  */}
             <div
               role="button"
-              onClick={e => {
-                this.onHeaderClick(item, e);
-              }}
+              data-header={i}
               className={
                 this.state.sortKey === item.propName
                   ? [
@@ -133,8 +148,8 @@ export default class DataTable extends Component {
         <tr
           // eslint-disable-next-line react/no-array-index-key
           key={`${i}_${item[headerKeys[0]]}`} // TODO improve logic because it can provide bugs
-          onClick={() => this.onRowClick(item, i)}
           className={this.isRowSelected(item, i) ? styles.selected : null}
+          data-row={i}
         >
           {headerKeys.map(hItem => {
             const defValue = item[hItem.propName];
@@ -154,19 +169,28 @@ export default class DataTable extends Component {
     }
 
     return (
-      <div
-        className={[styles.tableContainer, this.props.className]}
-        {...this.insideProps}
-      >
-        <div className={styles.scrollContainer}>
-          <table>
-            <thead>
-              <tr>{header}</tr>
-            </thead>
-            <tbody>{body}</tbody>
-          </table>
+      <div className={styles.centerContainer}>
+        <div className={styles.fixBorder} {...this.insideProps}>
+          <div className={[styles.tableContainer, this.props.className]}>
+            <div>
+              {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions */}
+              <table
+                data-copy
+                onClick={this.onTableClick}
+                ref={el => {
+                  this.refEl = el;
+                }}
+              >
+                <thead>
+                  <tr>{header}</tr>
+                </thead>
+                <tbody>{body}</tbody>
+              </table>
+            </div>
+          </div>
+          {/* eslint-disable-next-line react/jsx-one-expression-per-line */}
+          <div className={styles.footer}>Всего: {lst.length} </div>
         </div>
-        <div className={styles.footer}>Всего: {lst.length} </div>
       </div>
     );
   }
