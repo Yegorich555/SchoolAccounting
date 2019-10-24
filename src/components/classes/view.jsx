@@ -88,7 +88,7 @@ export default function ClassesView() {
         ))}
         <NavBtn
           onClick={() => setCurrent({ name: "Sum" })}
-          aria-selected={currentClass.name === "Sum"}
+          aria-selected={currentClass && currentClass.name === "Sum"}
         >
           Итого
         </NavBtn>
