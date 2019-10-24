@@ -26,6 +26,8 @@ class InsideSlideInput extends BasicInput {
     }
 
     super.handleChange(newValue, e);
+
+    this.props.onChanged && this.props.onChanged(newValue);
   }
 
   handleLabelClick = () => {

@@ -56,7 +56,7 @@ label .btnOpen {
   }
 
   [data-style="now"] {
-    background: lighten($color: $tableHeaderColor, $amount: 50);
+    background: lighten($color: $tableHeaderColor, $amount: 30);
   }
 
   [data-style="cur"] {
