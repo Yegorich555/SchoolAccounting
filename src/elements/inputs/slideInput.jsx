@@ -10,15 +10,22 @@ class InsideSlideInput extends BasicInput {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this); // Such bind is important for inheritance and using super...(): https://stackoverflow.com/questions/46869503/es6-arrow-functions-trigger-super-outside-of-function-or-class-error
-    // TODO check if defaultValue is boolean
     this.toggle = this.toggle.bind(this);
   }
 
   toggle(e) {
-    const { value } = this.state;
     e.preventDefault();
     e.stopPropagation();
-    super.handleChange(!value, e);
+    const newValue = !this.state.value;
+
+    if (this.props.onChanging) {
+      const canBeChanged = this.props.onChanging(newValue);
+      if (canBeChanged === false) {
+        return;
+      }
+    }
+
+    super.handleChange(newValue, e);
   }
 
   handleLabelClick = () => {
@@ -32,7 +39,6 @@ class InsideSlideInput extends BasicInput {
     }
   };
 
-  // eslint-disable-next-line class-methods-use-this
   get controlClassName() {
     return styles.control;
   }

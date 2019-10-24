@@ -1,0 +1,6 @@
+label .btnOpen {
+  @include iconBefore($icon-calculator);
+  &[disabled] {
+    cursor: default;
+  }
+}

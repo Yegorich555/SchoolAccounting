@@ -45,12 +45,9 @@ $border: 1px;
 
 .control {
   display: flex;
-  align-items: center;
-  > span,
-  > fieldset {
-    margin: 0;
-  }
-  > span {
-    padding-right: 10px;
+  flex-direction: column;
+  align-items: left;
+  fieldset {
+    border: 0;
   }
 }

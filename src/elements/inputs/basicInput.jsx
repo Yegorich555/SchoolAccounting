@@ -1,4 +1,5 @@
 import { Component } from "react";
+import { get as lodashGet } from "lodash";
 import styles from "./basicInput.scss";
 
 import UnifyValidations from "./unifyValidations";
@@ -22,7 +23,7 @@ export default class BasicInput extends Component {
   }
 
   static get initValue() {
-    return "";
+    return null;
   }
 
   constructor(props) {
@@ -34,7 +35,10 @@ export default class BasicInput extends Component {
           : this.constructor.initValue,
       isValid: true
     };
-    this.props.provideValue && this.props.provideValue(() => this.state.value); // TODO return null if form required
+    this.provideValueCallback = this.provideValueCallback.bind(this); // Such bind is important for inheritance and using super...():
+
+    this.props.provideValue &&
+      this.props.provideValue(this.provideValueCallback);
     this.props.resetValue &&
       this.props.resetValue(() => {
         this.setState({ value: this.constructor.initValue });
@@ -47,7 +51,7 @@ export default class BasicInput extends Component {
   get defaultValue() {
     const { name, defaultModel, defaultValue } = this.props;
     if (name && defaultModel) {
-      return defaultModel[name];
+      return lodashGet(defaultModel, name);
     }
     return defaultValue;
   }
@@ -60,9 +64,13 @@ export default class BasicInput extends Component {
     return this.state.value;
   }
 
+  get validationProps() {
+    return this.props.validations;
+  }
+
   validate = value => {
-    const { validations: propsValidations, disableValidation } = this.props;
-    if (!propsValidations || disableValidation) {
+    const propsValidations = this.validationProps;
+    if (!propsValidations || this.props.disableValidation) {
       return true;
     }
 
@@ -99,9 +107,14 @@ export default class BasicInput extends Component {
     return isValid;
   };
 
-  handleChange(value, event) {
+  provideValueCallback() {
+    const v = this.currentValue;
+    return this.constructor.isEmpty(v) ? undefined : v;
+  }
+
+  handleChange(value, event, setStateCallback) {
     if (value !== this.state.value) {
-      this.setState({ value });
+      this.setState({ value }, setStateCallback);
       this.props.validateOnChange && this.validate(value);
       this.props.onChange && this.props.onChange(value, event);
     }
@@ -114,14 +127,13 @@ export default class BasicInput extends Component {
     }
   }
 
-  // eslint-disable-next-line class-methods-use-this
   renderInput() {
     if (DEBUG) return <span>Implement input</span>;
     return null;
   }
 
   render() {
-    const id = `${this.props.name}off`; // obfuscating id for preventing Chrome suggestions
+    const id = `${this.props.name}`;
     const labelId = `${id}label`;
     return (
       <label
@@ -134,8 +146,15 @@ export default class BasicInput extends Component {
           this.controlClassName
         ]}
         onClick={this.handleLabelClick}
+        {...this.controlProps}
       >
-        <span className={this.hasRequired ? styles.required : null}>
+        <span
+          className={
+            this.hasRequired && !this.props.hideRequiredMark
+              ? styles.required
+              : null
+          }
+        >
           {this.props.label}
         </span>
 

@@ -1,85 +1,104 @@
-import withClickOutside from "react-click-outside";
 import memoize from "memoize-one";
 import { connectForm } from "@/elements/baseForm";
-import BasicInput, { getPlaceholder } from "./basicInput";
 import styles from "./dropdown.scss";
+import DropdownBasic from "./dropdownBasic";
 
-class InsideDropdown extends BasicInput {
-  static isEmpty = v => v === undefined;
-
-  static get initValue() {
-    return undefined;
+function _filterOptions(arr, filterValue) {
+  if (!arr) {
+    return [];
   }
+  if (!filterValue) {
+    return arr;
+  }
+  const val = filterValue.toLowerCase();
+  return arr.filter(v => v && v.text && v.text.toLowerCase().startsWith(val));
+}
 
+export class InsideDropdown extends DropdownBasic {
   constructor(props) {
     super(props);
-    this.state.isOpen = false;
-    this.state.userInputValue = "";
+    this.filterOptions = memoize(_filterOptions);
   }
-
-  onClose = () => {
-    this.setState({ isOpen: false }, () => {
-      super.handleBlur(this.currentValue);
-    });
-  };
-
-  handleClickOutside() {
-    if (this.state.isOpen) {
-      this.onClose();
-    }
-  }
-
-  toggleOpen = () => {
-    if (this.state.isOpen) {
-      this.onClose();
-    } else {
-      this.setState({ isOpen: true, userInputValue: "" });
-    }
-  };
 
   handleMenuClick = e => {
-    e.preventDefault();
     const { id } = e.target.dataset;
-    if (id) {
-      this.setState({ userInputValue: "" });
-      super.handleChange(this.props.options[id].value, e);
+    this.onClose(id ? this.options[id].value : undefined);
+  };
+
+  parseInputValue = value => {
+    return (value && this.options[0] && this.options[0].value) || undefined; // TODO select if we have filter and this is isRequired?
+  };
+
+  get propsOptions() {
+    return this.props.options;
+  }
+
+  get options() {
+    // filter according to text in input
+    return this.filterOptions(this.propsOptions, this.userInputValue);
+  }
+
+  get menuClassName() {
+    return styles.menu;
+  }
+
+  get btnOpenClassName() {
+    return styles.btnOpen;
+  }
+
+  get propsInput() {
+    return {
+      ...super.propsInput,
+      "aria-autocomplete": "list",
+      role: "combobox",
+      "aria-haspopup": "listbox",
+      "aria-expanded": !!this.state.isOpen
+    };
+  }
+
+  get btnOpenProps() {
+    return {
+      "aria-label": `${this.state.isOpen ? "Close" : "Open"} listbox`,
+      "aria-haspopup": "true",
+      "aria-expanded": !!this.state.isOpen
+    };
+  }
+
+  getCurrentOption = currentValue =>
+    memoize((options, value) =>
+      (options || []).find(a => a.value === value)
+    ).call(this, this.props.options, currentValue);
+
+  getMenuKey = (v, i, arr) => {
+    if (this.props.getMenuKey) {
+      return this.props.getMenuKey(v, i, arr);
     }
-    this.toggleOpen();
+    return v.value;
   };
 
-  handleInputClick = () => {
-    const { isOpen } = this.state;
-    if (!isOpen) this.setState({ isOpen: true });
-  };
-
-  handleInputChange = e => {
-    const { value } = e.target;
-    this.setState({ userInputValue: value, isOpen: true });
-  };
-
-  handleInputBlur = () => {
-    if (this.state.userInputValue !== "") {
-      const option = this.options[0];
-      super.handleChange(option && option.value);
+  getInputText(value, userInputValue) {
+    if (userInputValue == null) {
+      const currentOption = this.getCurrentOption(value);
+      return currentOption != null ? currentOption.text : "";
     }
-    this.state.userInputValue = "";
-  };
+    return userInputValue;
+  }
 
-  renderMenu = (options, currentOption) => {
-    // TODO: scroll to current
+  renderMenu(value) {
+    const { options } = this;
+    const currentOption = this.getCurrentOption(value);
     return (
+      // eslint-disable-next-line jsx-a11y/click-events-have-key-events
       <ul
-        className={styles.menu}
         role="listbox"
+        aria-label="Options"
         onClick={this.handleMenuClick}
-        onKeyDown={this.handleMenuKeydown}
-        tabIndex={-1}
+        id={this.listBoxId}
       >
-        {(options &&
-          options.length &&
-          options.map((v, i) => (
+        {(options.length &&
+          options.map((v, i, arr) => (
             <li
-              key={v.value} // TODO: improve generating of this
+              key={this.getMenuKey(v, i, arr)}
               data-id={i}
               role="option"
               aria-selected={v === currentOption}
@@ -90,68 +109,8 @@ class InsideDropdown extends BasicInput {
           ))) || <li className={styles.noItems}>No Items</li>}
       </ul>
     );
-  };
-
-  // eslint-disable-next-line class-methods-use-this
-  get controlClassName() {
-    // TODO set static
-    return styles.control;
-  }
-
-  get options() {
-    // filter according to text in input
-    return memoize((arr, filterValue) => {
-      if (!filterValue) {
-        return arr;
-      }
-      const val = filterValue.toLowerCase();
-      return arr.filter(
-        v => v && v.text && v.text.toLowerCase().startsWith(val)
-      );
-    }).call(this, this.props.options, this.state.userInputValue);
-  }
-
-  renderInput(id, _labelId, value) {
-    let currentText = this.state.userInputValue;
-    let currentOption;
-    if (currentText === "") {
-      currentOption = this.options.find(a => a.value === value);
-      currentText = currentOption != null ? currentOption.text : "";
-    } else if (currentOption === undefined) {
-      [currentOption] = this.options;
-    }
-
-    return (
-      <>
-        <input
-          ref={ref => {
-            this.refInput = ref;
-          }}
-          id={id}
-          type="text"
-          placeholder={getPlaceholder(this.props)}
-          value={currentText}
-          onChange={this.handleInputChange}
-          onBlur={this.handleInputBlur}
-          onClick={this.handleInputClick}
-          autoComplete="off"
-          // TODO: disabled={this.props.disabled}
-        />
-        );
-        <button
-          className={styles.btnOpen}
-          type="button"
-          onClick={this.toggleOpen}
-          aria-expanded={this.state.isOpen}
-        />
-        {/* TODO: maybe portal for overriding? */}
-        {this.state.isOpen
-          ? this.renderMenu(this.options, currentOption)
-          : null}
-      </>
-    );
   }
 }
 
-const Dropdown = connectForm(withClickOutside(InsideDropdown));
+const Dropdown = connectForm(InsideDropdown);
 export default Dropdown;

@@ -1,52 +1,149 @@
-import TextInput from "./textInput";
-import UnifyValidations from "./unifyValidations";
+import memoize from "memoize-one";
+import DropdownBasic from "./dropdownBasic";
+import { connectForm } from "@/elements/baseForm";
+import styles from "./numberInput.scss";
 
-const defaultValidations = {
-  isNumber: v => /^\d+$/.test(v) || "Please provide a numeric value",
-  length: (v, setV, defFn) =>
-    defFn(v, setV) === true || `Length must be ${setV}-digits`, // use defFn() if you want to override just a message
-  minLength: (v, setV, defFn) =>
-    defFn(v, setV) === true || `Please provide at least ${setV}-digits`,
-  maxLength: (v, setV, defFn) =>
-    defFn(v, setV) === true || `Max length is ${setV}-digits`
-};
+const isFloatReg = /^\d+([.,]\d*)?$/;
+const separatorReplacement = /[,. ]/g;
+const separator = ".";
 
-export default function NumberInput(props) {
-  const validations = UnifyValidations(
-    Object.assign({ isNumber: true }, props.validations),
-    defaultValidations
-  );
+function toString(v) {
+  return typeof v === "number" ? v.toString() : v;
+}
 
-  let inputFor;
-  if (props.preventChars === true) {
-    const checkDigit = char => /[^\d]/gi.test(char);
-    const onPaste = e => {
-      const char = (e.clipboardData || window.clipboardData).getData("Text");
-      if (checkDigit(char)) {
-        e.preventDefault();
-      }
-      // TODO maybe bug in pure function if onKeyPress is changed dynamically
-      props.inputFor && props.inputFor.onPaste && props.inputFor.onPaste(e);
-    };
-    const onKeyPress = e => {
-      const char = String.fromCharCode(e.keyCode || e.which);
-      if (checkDigit(char)) {
-        e.preventDefault();
-      }
-      // TODO maybe bug in pure function if onKeyPress is changed dynamically
-      props.inputFor &&
-        props.inputFor.onKeyPress &&
-        props.inputFor.onKeyPress(e);
-    };
-    inputFor = Object.assign({}, props.inputFor, { onKeyPress, onPaste }); // TODO: props can't override default onKeyPress and onPaste
+class InsideNumberInput extends DropdownBasic {
+  static isEmpty = v => v == null || v === "";
+
+  static get initValue() {
+    return "";
   }
 
-  return (
-    <TextInput
-      validateOnChange
-      {...props}
-      inputFor={inputFor || props.inputFor}
-      validations={validations}
-    />
-  );
+  static get defaultValidations() {
+    return Object.assign(DropdownBasic.defaultValidations, {
+      isNumber: v => /^\d+$/.test(v) || __ln("Please provide a numeric value"),
+      length: (v, setV) =>
+        toString(v).length === setV || __ln(`Length must be ${setV} digits`),
+      minLength: (v, setV) =>
+        toString(v).length >= setV ||
+        __ln(`Please provide at least ${setV} digits`),
+      maxLength: (v, setV) =>
+        toString(v).length <= setV || __ln(`Max length is ${setV} digits`)
+    });
+  }
+
+  handleInputBlur = e => {
+    super.handleBlur(e.target.value, e);
+  };
+
+  handleInputChange(e) {
+    super.handleChange(e.target.value, e);
+  }
+
+  provideValueCallback() {
+    return this.parseInputValue(super.provideValueCallback());
+  }
+
+  parseInputValue = value => {
+    const isString = typeof value === "string";
+    const v = isString ? value.trim() : value;
+    if (isString && v) {
+      const parseFunction =
+        this.isFloat && isFloatReg.test(v)
+          ? Number.parseFloat
+          : Number.parseInt;
+
+      const result = parseFunction(v, 10);
+      if (!Number.isNaN(result)) {
+        return result;
+      }
+    }
+    return v || undefined;
+  };
+
+  get btnOpenClassName() {
+    return styles.btnOpen;
+  }
+
+  get btnOpenProps() {
+    return { disabled: true, "aria-haspopup": false, onClick: null };
+  }
+
+  get validationProps() {
+    const defValidations = { isNumber: true };
+
+    const lengthSet = this.lengthRestrictions;
+
+    if (lengthSet) {
+      if (lengthSet.length === 1) {
+        // eslint-disable-next-line prefer-destructuring
+        defValidations.maxLength = lengthSet[0];
+      } else {
+        defValidations.isNumber = false;
+
+        defValidations.isLengthSet = v => {
+          const isBroken = v.split(separatorReplacement).find((txt, i) => {
+            return !lengthSet[i] || txt.length > lengthSet[i];
+          });
+          return isBroken ? this.errFormatMessage : true;
+        };
+      }
+    }
+
+    return Object.assign(defValidations, this.props.validations);
+  }
+
+  get lengthRestrictions() {
+    const { maskLength } = this.props;
+
+    return memoize(mask => {
+      if (mask) {
+        return mask
+          .split(separator)
+          .map(s => Number.parseInt(s, 10))
+          .filter(v => v);
+      }
+      return null;
+    }).call(this, maskLength);
+  }
+
+  get errFormatMessage() {
+    const lengthSet = this.lengthRestrictions;
+    if (lengthSet && lengthSet.length > 1) {
+      return `${__ln("Expected format")}: ${lengthSet
+        .map(length => "#".repeat(length))
+        .join(separator)}`;
+    }
+    return null;
+  }
+
+  get placeholder() {
+    return this.props.placeholder || this.errFormatMessage || super.placeholder;
+  }
+
+  get isFloat() {
+    if (this.props.isFloat) {
+      return true;
+    }
+    const lengthSet = this.lengthRestrictions;
+    if (lengthSet && this.lengthRestrictions.length === 2) {
+      return true;
+    }
+    return false;
+  }
+
+  getInputText(value, userInputValue) {
+    if (userInputValue != null && this.isFloat) {
+      return userInputValue
+        .replace(separatorReplacement, separator)
+        .replace(new RegExp(`${separator}+`, "g"), separator);
+    }
+    return userInputValue || value;
+  }
+
+  renderMenu() {
+    return undefined;
+  }
 }
+
+const NumberInput = connectForm(InsideNumberInput);
+export default NumberInput;

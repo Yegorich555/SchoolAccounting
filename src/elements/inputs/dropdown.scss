@@ -1,48 +1,26 @@
 $inputSize: 34px;
-
-.btnOpen {
-  position: absolute;
-  right: 0;
-  height: 100%;
-  background: whitesmoke;
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-  border: 1px solid $borderInputColor;
-  border-left: none;
-  @include iconBefore($icon-dropdown);
-  font-weight: bolder;
-  width: $inputSize;
-  &[aria-expanded="true"]:before {
-    display: inline-block;
-    transform: rotate(180deg);
+.menu {
+  max-height: $inputSize * 7;
+  ul {
+    margin: 0;
+    padding: 0;
+    > li {
+      list-style: none;
+      padding: 9px 12px;
+      &:hover:not(.noItems) {
+        background-color: #aecfea;
+      }
+      &[aria-selected="true"]:not(:hover) {
+        background-color: #d2e5f3;
+      }
+    }
   }
 }
 
-.control input {
-  width: calc(100% - #{$inputSize}); /*TODO improve button inside input*/
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-}
-
-.menu {
-  position: absolute;
-  z-index: 1000;
-  background: white;
-  width: 100%;
-  border: 1px solid $borderInputColor;
-  border-radius: $borderRadius;
-  margin: 0;
-  padding: 0;
-  overflow: auto;
-  max-height: $inputSize * 7;
-  > li {
-    list-style: none;
-    padding: 9px 12px;
-    &:hover:not(.noItems) {
-      background-color: #aecfea;
-    }
-    &[aria-selected="true"]:not(:hover) {
-      background-color: #d2e5f3;
-    }
+label .btnOpen {
+  font-weight: bolder;
+  &[aria-expanded="true"]:before {
+    display: inline-block;
+    transform: rotate(180deg);
   }
 }

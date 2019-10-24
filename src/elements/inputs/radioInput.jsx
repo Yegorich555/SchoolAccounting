@@ -28,7 +28,6 @@ class InsideRadioInput extends BasicInput {
     }
   };
 
-  // eslint-disable-next-line class-methods-use-this
   get controlClassName() {
     return styles.control;
   }
@@ -48,8 +47,8 @@ class InsideRadioInput extends BasicInput {
               onClick={e => this.handleChange(v, e)}
               onKeyDown={e => this.handleKeyDown(v, e)}
             >
-              {v.text}
               <div />
+              {v.text}
             </div>
           );
         })}

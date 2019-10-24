@@ -3,15 +3,17 @@ $radioSize: 20px;
 
 .radioGroup {
   display: flex;
-  border: 1px $borderInputColor solid;
-  border-radius: $borderRadius;
+  flex-wrap: wrap;
   width: 100%;
   > div {
-    padding: 2px 8px;
+    padding: 3px 8px;
     margin: auto;
+    display: flex;
+    align-items: center;
     > div {
       position: relative;
-      margin: 4px auto;
+      margin: 4px;
+      margin-left: 4px;
       height: $radioSize;
       width: $radioSize;
       border: $borderSize solid $primaryBtnBackground;
