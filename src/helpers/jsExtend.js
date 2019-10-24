@@ -1,6 +1,10 @@
 import remove from "ytech-js-extensions/lib/array/remove";
 import addIfNotExists from "ytech-js-extensions/lib/array/addIfNotExists";
 
+import addDays from "ytech-js-extensions/lib/date/addDays";
+import addMonths from "ytech-js-extensions/lib/date/addMonths";
+import addYears from "ytech-js-extensions/lib/date/addYears";
+
 // since babel doesn't compile node_modules by default (for compatibility with browsers without ES6)
 // eslint-disable-next-line no-extend-native
 Array.prototype.find =
@@ -13,8 +17,8 @@ function update(getterKey, newItem) {
   return newItem;
 }
 
-const arrayFunctions = { remove, addIfNotExists, update };
-export { arrayFunctions };
+export const arrayFunctions = { remove, addIfNotExists, update };
+export const dateFunctions = { addDays, addMonths, addYears };
 
 function twoDigits(v) {
   return (v < 10 ? "0" : "") + v;
@@ -27,6 +31,7 @@ export function DateToString(v) {
   const date = v.getDate();
   return `${twoDigits(date)}.${twoDigits(month)}.${year}`;
 }
+export const DateMask = "DD.MM.YYYY";
 
 function PromiseDelay(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));

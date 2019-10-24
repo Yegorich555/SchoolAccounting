@@ -188,7 +188,7 @@ export default class DataTableEdit extends DataTable {
               </PrimaryBtn>
             </>
           ) : null}
-
+          {this.props.removeBtn && this.props.removeBtn(this.state.currentItem)}
           {this.props.onRemove ? (
             <WarningBtn
               onClick={this.onRemove}

@@ -100,7 +100,7 @@ class InsideDatePicker extends DropdownBasic {
   }
 
   get placeholder() {
-    return this.props.placeholder || `${__ln("Expected format")}: ${DateMask}`;
+    return this.props.placeholder || `Ожидаемый формат: ${DateMask}`;
   }
 
   get propsInput() {

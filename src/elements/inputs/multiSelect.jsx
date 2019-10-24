@@ -118,7 +118,7 @@ class InsideMultiSelectInput extends InsideDropdown {
           <div key={v.value}>
             <span>{v.text}</span>
             <BasicIconBtn
-              aria-label={`${__ln("remove")} item '${v.text}'`}
+              aria-label={`remove item '${v.text}'`}
               data-key={i}
               className={styles.btnRemove}
             />

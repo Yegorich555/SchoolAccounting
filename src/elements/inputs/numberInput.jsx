@@ -20,14 +20,14 @@ class InsideNumberInput extends DropdownBasic {
 
   static get defaultValidations() {
     return Object.assign(DropdownBasic.defaultValidations, {
-      isNumber: v => /^\d+$/.test(v) || __ln("Please provide a numeric value"),
+      isNumber: v => /^\d+$/.test(v) || "Please provide a numeric value",
       length: (v, setV) =>
-        toString(v).length === setV || __ln(`Length must be ${setV} digits`),
+        toString(v).length === setV || `Length must be ${setV} digits`,
       minLength: (v, setV) =>
         toString(v).length >= setV ||
-        __ln(`Please provide at least ${setV} digits`),
+        `Please provide at least ${setV} digits`,
       maxLength: (v, setV) =>
-        toString(v).length <= setV || __ln(`Max length is ${setV} digits`)
+        toString(v).length <= setV || `Max length is ${setV} digits`
     });
   }
 
@@ -109,7 +109,7 @@ class InsideNumberInput extends DropdownBasic {
   get errFormatMessage() {
     const lengthSet = this.lengthRestrictions;
     if (lengthSet && lengthSet.length > 1) {
-      return `${__ln("Expected format")}: ${lengthSet
+      return `${"Expected format")}: ${lngthSet
         .map(length => "#".repeat(length))
         .join(separator)}`;
     }

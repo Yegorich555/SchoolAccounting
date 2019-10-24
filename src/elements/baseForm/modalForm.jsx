@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import BaseForm from "@/elements/baseForm";
 import Modal from "@/elements/modal";
+import styles from "./modalForm.scss";
 
 export default function ModalForm(props) {
   const modal = useRef(null);
@@ -15,7 +16,11 @@ export default function ModalForm(props) {
 
   return (
     <Modal ref={modal} onClosed={props.onClosed}>
-      <BaseForm {...props} onValidSubmit={onValidSubmit} />
+      <BaseForm
+        {...props}
+        className={[styles.modalForm, props.className]}
+        onValidSubmit={onValidSubmit}
+      />
     </Modal>
   );
 }

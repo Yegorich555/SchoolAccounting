@@ -4,13 +4,12 @@ import styles from "./basicInput.scss";
 
 import UnifyValidations from "./unifyValidations";
 
-const vowelRegex = /^[aieouAIEOU].*/;
 export function getPlaceholder({ placeholder, label }) {
   if (placeholder) {
     return placeholder;
   }
   if (placeholder === "" || !label || typeof label !== "string") return "";
-  return `Please provide a${vowelRegex.test(label) ? "n" : ""} ${label}`;
+  return `Заполните '${label}'`;
 }
 
 export default class BasicInput extends Component {
@@ -18,7 +17,7 @@ export default class BasicInput extends Component {
 
   static get defaultValidations() {
     return {
-      required: v => !this.isEmpty(v) || "This field is required"
+      required: v => !this.isEmpty(v) || "Это поле обязательно"
     };
   }
 
