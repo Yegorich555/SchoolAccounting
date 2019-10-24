@@ -3,6 +3,8 @@ import { useState } from "react";
 import SecondaryBtn from "@/elements/buttons/secondaryBtn";
 import ModalForm from "@/elements/baseForm/modalForm";
 import TextInput from "@/elements/inputs/textInput";
+import DatePicker from "@/elements/inputs/datePicker/datePicker";
+import SlideInput from "@/elements/inputs/slideInput";
 
 export default function EditLearnerBtn(props) {
   const [isOpen, setOpen] = useState(false);
@@ -31,6 +33,39 @@ export default function EditLearnerBtn(props) {
             defaultModel={item}
             validations={{ required: true }}
           />
+          <DatePicker
+            name="dob"
+            label="Дата рождения"
+            defaultModel={item}
+            validations={{ required: true }}
+          />
+          {isAdd ? (
+            <>
+              <SlideInput
+                label="Выбыл"
+                name="isRemoved"
+                defaultValue={item.removed}
+              />
+              <TextInput
+                label="Выбыл (примечание)"
+                name="removed"
+                defaultModel={item}
+              />
+            </>
+          ) : (
+            <>
+              <SlideInput
+                label="Прибыл"
+                name="isAdded"
+                defaultValue={item.added}
+              />
+              <TextInput
+                label="Прибыл (примечание)"
+                name="added"
+                defaultModel={item}
+              />
+            </>
+          )}
         </ModalForm>
       ) : null}
     </>
