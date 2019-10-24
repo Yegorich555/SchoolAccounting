@@ -83,6 +83,7 @@ export default function ClassesView() {
       <div className={styles.box}>
         <NavBtn
           className={styles.addBtn}
+          title="Добавить класс"
           onClick={() => setCurrent(Store.classes.add({ name: "ХХХ" }))}
         />
         {classes.map(v => (
