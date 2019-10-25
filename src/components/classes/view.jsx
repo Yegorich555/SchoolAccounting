@@ -154,6 +154,17 @@ export default function ClassesView() {
                 }}
               />
             )}
+            getFooter={lst =>
+              [
+                // prettier-ignore
+                `В классе: ${lst.reduce((total, v) => (!v.removed ? total + 1 : total), 0)}`,
+                // prettier-ignore
+                `Выбыло: ${lst.reduce((total, v) => (v.removed ? total + 1 : total), 0)}`,
+                // prettier-ignore
+                `Прибыло: ${lst.reduce((total, v) => (v.added ? total + 1 : total), 0)}`,
+                `Всего: ${lst.length}`
+              ].join("\t|\t")
+            }
             // onSelected={null}
           />
         </>

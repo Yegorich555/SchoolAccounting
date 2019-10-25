@@ -150,4 +150,5 @@ $cellTopPadding: 4px;
   padding: $cellTopPadding $cellLeftPadding;
   background-color: lighten($color: $tableHeaderColor, $amount: 15);
   color: black;
+  white-space: pre;
 }

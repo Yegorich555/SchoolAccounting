@@ -189,7 +189,10 @@ export default class DataTable extends Component {
             </div>
           </div>
           {/* eslint-disable-next-line react/jsx-one-expression-per-line */}
-          <div className={styles.footer}>Всего: {lst.length} </div>
+          <div className={styles.footer}>
+            {(this.props.getFooter && this.props.getFooter(lst)) ||
+              `Всего: ${lst.length}`}
+          </div>
         </div>
       </div>
     );
