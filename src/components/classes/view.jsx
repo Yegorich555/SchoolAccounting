@@ -134,6 +134,7 @@ export default function ClassesView() {
             </WarningBtn>
           </div>
           <DataTableEdit
+            className={styles.table}
             config={dtConfig}
             items={getLearners(learners, currentClass)}
             addBtn={() => (

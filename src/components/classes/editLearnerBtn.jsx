@@ -21,13 +21,14 @@ function EditLearnerForm(props) {
         if (!v.isNeedAdd) {
           v.added = null;
         }
-        if (!v.isRemove) {
+        if (!v.isNeedRemove) {
           v.removed = null;
         }
 
         delete v.isNeedAdd;
         delete v.isNeedRemove;
         v.id = item && item.id;
+
         props.onSubmit(v);
       }}
       onClosed={props.onClosed}
