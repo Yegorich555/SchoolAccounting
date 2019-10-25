@@ -39,15 +39,17 @@ function getRows(items) {
 
   const classes = Store.classes.items;
 
-  const preparedItems = items.map(v => ({
-    ...v,
-    age: nowYear - v.dob.getFullYear(),
-    class: Number.parseInt(
-      classes.find(a => a.id === v.classId).name.replace(/[А-я ]/g, ""),
-      10
-    ),
-    isGirl: v.isGirl || v.name.endsWith("вна")
-  }));
+  const preparedItems = items
+    .filter(v => !v.removed)
+    .map(v => ({
+      ...v,
+      age: nowYear - v.dob.getFullYear(),
+      class: Number.parseInt(
+        classes.find(a => a.id === v.classId).name.replace(/[А-я ]/g, ""),
+        10
+      ),
+      isGirl: v.isGirl || v.name.endsWith("вна")
+    }));
 
   window.test = preparedItems;
 
