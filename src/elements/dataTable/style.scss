@@ -18,24 +18,23 @@ $cellTopPadding: 4px;
 }
 
 .tableContainer {
+  // fix unexpected padding in Browsers: because width is float value
+  padding: 0.3px; //fix scroll in Edge
+  margin: -0.3px;
+  overflow-y: hidden;
+  // end fix
+
   background: $tableHeaderColor;
   padding-top: $headerHeight;
   position: relative;
   overflow-x: auto;
 
-  // fix unexpected padding in Browsers: because width is float value
-  margin: 0 -0.2px;
-  overflow-y: hidden;
-  // end fix
-
   > div {
     max-height: 500px;
     max-height: calc(100vh - 400px);
     min-height: 40px;
-    overflow-y: auto;
+    overflow-y: auto; //TODO: fix overlay scroll for FF
     overflow-x: hidden; //fix unexpected scroll for FF
-    display: inline-block;
-    margin-bottom: -6px; //fix for some unexpected padding inside boxes
   }
 
   table {
