@@ -6,6 +6,7 @@ import styles from "./view.scss";
 import ClassSummary from "./classSummary";
 import Store from "@/helpers/store";
 import ClassOrdinary from "./classOrdinary";
+import TableLearners from "./tableLearners";
 
 function useForceUpdate() {
   const [_v, set] = useState(true);
@@ -15,9 +16,21 @@ function useForceUpdate() {
 export default function ClassesView() {
   const classes = [
     ...Store.classes.items,
-    { name: "Added", label: "Прибыли" },
-    { name: "Removed", label: "Выбыли" },
-    { name: "Common", label: "Сводная" },
+    {
+      name: "Added",
+      label: "Прибыли",
+      render: () => (
+        <TableLearners items={Store.learners.items.filter(v => v.added)} />
+      )
+    },
+    {
+      name: "Removed",
+      label: "Выбыли",
+      render: () => (
+        <TableLearners items={Store.learners.items.filter(v => v.removed)} />
+      )
+    },
+    // { name: "Common", label: "Сводная" },
     { name: "Sum", label: "Итого", render: () => <ClassSummary /> }
   ];
 

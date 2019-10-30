@@ -6,45 +6,13 @@ import Dropdown from "@/elements/inputs/dropdown";
 import WarningBtn from "@/elements/buttons/warningBtn";
 import AddEditLearnerBtn from "./editLearnerBtn";
 import Store from "@/helpers/store";
-import DataTableEdit from "@/elements/dataTableEdit";
-import { DateToString } from "@/helpers/jsExtend";
+import TableLearners from "./tableLearners";
 
 function _getLearners(arr, curClass) {
   return arr.filter(a => a.classId === curClass.id);
 }
 
 const getLearners = memoizeOne(_getLearners);
-
-function dateFromExcel(v) {
-  if (!v || typeof v !== "string") return v;
-  if (/^(\d{2})[-.](\d{2})[-.](\d{2,4})/.test(v)) {
-    const dtArr = v.split(/[-.]/).map(a => Number.parseInt(a, 10));
-    const dt = new Date(
-      dtArr[2] < 100 ? 2000 + dtArr[2] : dtArr[2],
-      dtArr[1] - 1,
-      dtArr[0]
-    );
-    if (Number.isNaN(dt)) return "";
-    return dt;
-  }
-  const dt = Date.parse(v);
-  if (Number.isNaN(dt) || dt < 0) return "";
-  return new Date(dt);
-}
-
-const dtConfig = {
-  headerKeys: [
-    { propName: "name", text: "ФИО" },
-    {
-      propName: "dob",
-      text: "Дата рождения",
-      pasteFormat: dateFromExcel,
-      formatFn: v => DateToString(v) || `???${v}`
-    },
-    { propName: "removed", text: "Выбыл" },
-    { propName: "added", text: "Прибыл" }
-  ]
-};
 
 export default function ClassOrdinary({ currentClass, onChanged }) {
   const [learners, updateLearners] = useState(Store.learners.items);
@@ -86,9 +54,7 @@ export default function ClassOrdinary({ currentClass, onChanged }) {
           Удалить класс
         </WarningBtn>
       </div>
-      <DataTableEdit
-        className={styles.table}
-        config={dtConfig}
+      <TableLearners
         items={getLearners(learners, currentClass)}
         addBtn={() => (
           <AddEditLearnerBtn
