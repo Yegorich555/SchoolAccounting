@@ -10,6 +10,7 @@ import TextInput from "@/elements/inputs/textInput";
 import Dropdown from "@/elements/inputs/dropdown";
 import WarningBtn from "@/elements/buttons/warningBtn";
 import AddEditLearnerBtn from "./editLearnerBtn";
+import { DateToString } from "@/helpers/jsExtend";
 
 function dateFromExcel(v) {
   if (!v || typeof v !== "string") return v;
@@ -31,7 +32,12 @@ function dateFromExcel(v) {
 const dtConfig = {
   headerKeys: [
     { propName: "name", text: "ФИО" },
-    { propName: "dob", text: "Дата рождения", pasteFormat: dateFromExcel },
+    {
+      propName: "dob",
+      text: "Дата рождения",
+      pasteFormat: dateFromExcel,
+      formatFn: v => DateToString(v) || `???${v}`
+    },
     { propName: "removed", text: "Выбыл" },
     { propName: "added", text: "Прибыл" }
   ]

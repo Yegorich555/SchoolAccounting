@@ -33,78 +33,91 @@ function getDateStart() {
 }
 
 function getRows(items) {
-  const rows = [];
-  const now = getDateStart();
-  const nowYear = now.getFullYear();
+  try {
+    const rows = [];
+    const now = getDateStart();
+    const nowYear = now.getFullYear();
 
-  const classes = Store.classes.items;
+    const classes = Store.classes.items;
 
-  const preparedItems = items
-    .filter(v => !v.removed)
-    .map(v => ({
-      ...v,
-      age: nowYear - v.dob.getFullYear(),
-      class: Number.parseInt(
-        classes.find(a => a.id === v.classId).name.replace(/[А-я ]/g, ""),
-        10
-      ),
-      isGirl: v.isGirl || v.name.endsWith("вна")
-    }));
+    const preparedItems = items
+      .filter(v => !v.removed)
+      .map(v => ({
+        ...v,
+        age: nowYear - v.dob.getFullYear(),
+        class: Number.parseInt(
+          classes.find(a => a.id === v.classId).name.replace(/[А-я ]/g, ""),
+          10
+        ),
+        isGirl: v.isGirl || v.name.endsWith("вна")
+      }));
 
-  window.test = preparedItems;
+    window.test = preparedItems;
 
-  for (let i = 6; i <= 18; ++i) {
-    const row = {
-      age: i,
-      sum: 0,
-      sumGirls: 0
-    };
+    for (let i = 6; i <= 18; ++i) {
+      const row = {
+        age: i,
+        sum: 0,
+        sumGirls: 0
+      };
 
-    let filter;
-    if (i === 6) {
-      filter = v => v.age <= i;
-      row.age += " и младше";
-    } else if (i === 18) {
-      filter = v => v.age >= i;
-      row.age += " и старше";
-    } else {
-      filter = v => v.age === i;
-    }
+      let filter;
+      if (i === 6) {
+        filter = v => v.age <= i;
+        row.age += " и младше";
+      } else if (i === 18) {
+        filter = v => v.age >= i;
+        row.age += " и старше";
+      } else {
+        filter = v => v.age === i;
+      }
 
-    const ageFiltered = preparedItems.filter(filter);
-    row.sum = ageFiltered.length;
-    ageFiltered.forEach(v => {
-      v.isGirl && ++row.sumGirls;
-    });
-
-    for (let num = 1; num <= 11; ++num) {
-      let sum = 0;
+      const ageFiltered = preparedItems.filter(filter);
+      row.sum = ageFiltered.length;
       ageFiltered.forEach(v => {
-        v.class === num && ++sum;
+        v.isGirl && ++row.sumGirls;
       });
-      row[`class${num}`] = sum;
-    }
-    rows.push(row);
-  }
 
-  return rows;
+      for (let num = 1; num <= 11; ++num) {
+        let sum = 0;
+        ageFiltered.forEach(v => {
+          v.class === num && ++sum;
+        });
+        row[`class${num}`] = sum;
+      }
+      rows.push(row);
+    }
+
+    return rows;
+  } catch (ex) {
+    console.error(ex);
+    return null;
+  }
 }
 
 export default function ClassSummary() {
+  const rows = getRows(Store.learners.items);
+  if (!rows) {
+    return <div>Ошибка в данных</div>;
+  }
   return (
     <div className={styles.summaryBox}>
       <div>
-        <TextInput
-          name="data"
-          defaultValue={DateToString(getDateStart())}
-          label="Дата отсчета"
-          inputFor={{ readOnly: true }}
-          className={styles.dateInput}
-        />
-        <DataTableEdit
-          items={getRows(Store.learners.items)}
-          config={dtConfig}
-        />
+        <div className={styles.inline}>
+          <TextInput
+            name="data"
+            defaultValue={DateToString(getDateStart())}
+            label="Дата отсчета"
+            inputFor={{ readOnly: true }}
+            className={styles.dateInput}
+          />
+          <span>
+            Примечание: для подсчета девочек обязательно ФИО должно
+            {/* eslint-disable-next-line react/no-unescaped-entities */}
+            заканчиваться на 'вна'
+          </span>
+        </div>
+        <DataTableEdit items={rows} config={dtConfig} />
       </div>
     </div>
   );
