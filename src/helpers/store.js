@@ -41,11 +41,11 @@ class DbSet {
     return this._items;
   };
 
-  update = item => {
+  update(item) {
     arrayFunctions.update.call(this.items, v => v.id, item);
     this.submit();
     return item;
-  };
+  }
 
   add(item) {
     // eslint-disable-next-line no-param-reassign
@@ -55,7 +55,7 @@ class DbSet {
     return item;
   }
 
-  remove = itemOrItems => {
+  remove(itemOrItems) {
     let arr = [];
     if (!Array.isArray(itemOrItems)) arr.push(itemOrItems);
     else arr = itemOrItems;
@@ -66,7 +66,7 @@ class DbSet {
 
     this.submit();
     return this._items;
-  };
+  }
 }
 
 class DbSetLearners extends DbSet {
@@ -105,16 +105,21 @@ class DbSetClasses extends DbSet {
   }
 }
 
-const Store = {
-  classes: new DbSetClasses(this),
-  teachers: new DbSet("teachers"),
-  learners: new DbSetLearners(),
+class StoreInstance {
+  constructor() {
+    this.classes = new DbSetClasses(this);
+    this.teachers = new DbSet("teachers");
+    this.learners = new DbSetLearners();
+  }
+
   set currentPath(v) {
     localStorage.setItem("curPath", v);
-  },
+  }
+
   get currentPath() {
     return localStorage.getItem("curPath");
-  },
+  }
+
   toString() {
     const obj = {
       classes: this.classes.items,
@@ -123,21 +128,25 @@ const Store = {
       curPath: this.currentPath
     };
     return JSON.stringify(obj);
-  },
+  }
+
   parse(str) {
     const obj = tryParseJSONDate(JSON.parse(str));
     this.classes.items = obj.classes;
     this.teachers.items = obj.teachers;
     this.learners.items = obj.learners;
     this.curPath = this.currentPath;
-  },
+  }
+
   onUploaded(callback) {
     this._onUploaded = callback;
-  },
+  }
+
   uploaded() {
     this._onUploaded();
   }
-};
+}
 
+const Store = new StoreInstance();
 window.myStore = Store;
 export default Store;
