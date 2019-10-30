@@ -113,7 +113,6 @@ export default function ClassSummary() {
           />
           <span>
             Примечание: для подсчета девочек обязательно ФИО должно
-            {/* eslint-disable-next-line react/no-unescaped-entities */}
             заканчиваться на 'вна'
           </span>
         </div>
