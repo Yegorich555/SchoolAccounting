@@ -31,6 +31,7 @@ export default function ClassOrdinary({ currentClass, onChanged }) {
     <>
       <div className={styles.formBox}>
         <TextInput
+          updateId={currentClass.id}
           label="Класс"
           placeholder=""
           name="name"
@@ -40,6 +41,7 @@ export default function ClassOrdinary({ currentClass, onChanged }) {
           }}
         />
         <Dropdown
+          updateId={currentClass.id}
           label="Учитель"
           placeholder=""
           name="teacherId"

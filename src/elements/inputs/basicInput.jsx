@@ -47,12 +47,18 @@ export default class BasicInput extends Component {
     this.renderInput = this.renderInput.bind(this); // Such bind is important for inheritance and using super...(): https://stackoverflow.com/questions/46869503/es6-arrow-functions-trigger-super-outside-of-function-or-class-error
   }
 
-  get defaultValue() {
-    const { name, defaultModel, defaultValue } = this.props;
-    if (name && defaultModel) {
-      return lodashGet(defaultModel, name);
+  shouldComponentUpdate(nextProps) {
+    if (this.props.updateId !== nextProps.updateId) {
+      const nextDefValue = this.provideDefaultValue(nextProps);
+      if (this.defaultValue !== nextDefValue)
+        this.setState({ value: nextDefValue });
+      return false;
     }
-    return defaultValue;
+    return true;
+  }
+
+  get defaultValue() {
+    return this.provideDefaultValue(this.props);
   }
 
   get hasRequired() {
@@ -66,6 +72,13 @@ export default class BasicInput extends Component {
   get validationProps() {
     return this.props.validations;
   }
+
+  provideDefaultValue = ({ name, defaultModel, defaultValue }) => {
+    if (name && defaultModel) {
+      return lodashGet(defaultModel, name);
+    }
+    return defaultValue;
+  };
 
   validate = value => {
     const propsValidations = this.validationProps;
