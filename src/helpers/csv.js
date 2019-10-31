@@ -14,14 +14,24 @@ function tryParseDate(value) {
 
 function toString(v) {
   if (v === undefined) return "";
+  if (typeof v === "string") return `'${v}'`;
   if (!v || !(v instanceof Date)) return v;
   return v.toISOString();
 }
 
 function fromString(v) {
-  if (v === "null") {
-    return null;
+  if (typeof v === "string") {
+    if (v.startsWith("'") && v.endsWith("'")) {
+      return v.substring(1, v.length - 1);
+    }
+    if (v === "null") {
+      return null;
+    }
+    if (/^\d+$/.test(v)) {
+      return Number.parseInt(v, 10);
+    }
   }
+
   return tryParseDate(v);
 }
 
