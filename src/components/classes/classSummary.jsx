@@ -1,7 +1,8 @@
+/* eslint-disable react/no-unescaped-entities */
 import Store from "@/helpers/store";
 import DataTableEdit from "@/elements/dataTableEdit";
 import TextInput from "@/elements/inputs/textInput";
-import { DateToString } from "@/helpers/jsExtend";
+import { DateToString, ParseClassNumber } from "@/helpers/jsExtend";
 import styles from "./view.scss";
 
 const dtConfig = {
@@ -45,10 +46,7 @@ function getRows(items) {
       .map(v => ({
         ...v,
         age: nowYear - v.dob.getFullYear(),
-        class: Number.parseInt(
-          classes.find(a => a.id === v.classId).name.replace(/[А-я ]/g, ""),
-          10
-        ),
+        class: ParseClassNumber(classes.find(a => a.id === v.classId).name),
         isGirl: v.isGirl || v.name.endsWith("вна")
       }));
 

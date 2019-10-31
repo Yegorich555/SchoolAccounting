@@ -35,6 +35,7 @@ $cellTopPadding: 4px;
     min-height: 40px;
     overflow-y: auto; //TODO: fix overlay scroll for FF
     overflow-x: hidden; //fix unexpected scroll for FF
+    display: inline-flex;
   }
 
   table {

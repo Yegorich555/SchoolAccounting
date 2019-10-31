@@ -1,0 +1,14 @@
+.table {
+  th {
+    text-transform: none;
+  }
+  th:nth-child(3) {
+    width: 114px;
+    white-space: normal;
+    > div {
+      max-width: inherit;
+      width: inherit;
+      white-space: inherit;
+    }
+  }
+}

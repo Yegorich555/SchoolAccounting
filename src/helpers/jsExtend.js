@@ -43,3 +43,7 @@ export function PromiseWait(promiseFn, ms = 400) {
   return Promise.all([promiseFn, PromiseDelay(ms)]).then(arr => arr && arr[0]);
   // TODO: improve forceTimeout for exception-cases
 }
+
+export function ParseClassNumber(str) {
+  return Number.parseInt(str.replace(/[А-я ]/g, ""), 10);
+}
