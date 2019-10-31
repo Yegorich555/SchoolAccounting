@@ -42,10 +42,13 @@ export default function ClassOrdinary({ currentClass, onChanged }) {
         <Dropdown
           label="Учитель"
           placeholder=""
-          name="teacher"
+          name="teacherId"
           defaultModel={currentClass}
-          options={[]}
-          // onChange={v => updateClass({ teacher: v })}
+          options={Store.teachers.items.map(v => ({
+            text: v.name,
+            value: v.id
+          }))}
+          onChange={v => updateClass({ teacherId: v })}
         />
         <WarningBtn
           onClick={clickRemoveClass}

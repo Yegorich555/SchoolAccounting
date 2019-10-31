@@ -160,7 +160,11 @@ export default class DataTableEdit extends DataTable {
                   )}?`
                 : ``}
             </h2>
-            <DataTable config={this.props.config} items={pasteItems} />
+            <DataTable
+              className={this.props.className}
+              config={this.props.config}
+              items={pasteItems}
+            />
             <div className={styles.btnGroup}>
               <PrimaryBtn onClick={this.closeAskModalYes}>Да</PrimaryBtn>
               <SecondaryBtn onClick={this.closeAskModal}>Нет</SecondaryBtn>

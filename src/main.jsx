@@ -11,7 +11,8 @@ class AppContainer extends Component {
     this.state = {
       errorCode: null,
       error: null,
-      selected: headerConfig[0]
+      selected:
+        headerConfig.find(v => v.text === Store.currentPath) || headerConfig[0]
     };
     Store.onUploaded(() => {
       this.forceUpdate();
@@ -24,6 +25,7 @@ class AppContainer extends Component {
 
   onSelected = v => {
     this.setState({ selected: v });
+    Store.currentPath = v.text;
   };
 
   componentDidCatch() {

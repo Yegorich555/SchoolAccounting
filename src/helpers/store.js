@@ -112,6 +112,14 @@ class StoreInstance {
     this.learners = new DbSetLearners();
   }
 
+  set currentClassName(v) {
+    localStorage.setItem("curClassPath", v);
+  }
+
+  get currentClassName() {
+    return localStorage.getItem("curClassPath");
+  }
+
   set currentPath(v) {
     localStorage.setItem("curPath", v);
   }
@@ -125,7 +133,8 @@ class StoreInstance {
       classes: this.classes.items,
       teachers: this.teachers.items,
       learners: this.learners.items,
-      curPath: this.currentPath
+      currentClassName: this.currentClassName,
+      currentPath: this.currentPath
     };
     return JSON.stringify(obj);
   }
@@ -135,7 +144,8 @@ class StoreInstance {
     this.classes.items = obj.classes;
     this.teachers.items = obj.teachers;
     this.learners.items = obj.learners;
-    this.curPath = this.currentPath;
+    this.currentClassName = obj.currentClassName;
+    this.currentPath = obj.currentPath;
   }
 
   onUploaded(callback) {

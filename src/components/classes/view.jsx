@@ -35,19 +35,20 @@ export default function ClassesView() {
   ];
 
   const [currentClass, setItem] = useState(
-    classes.find(a => a.name === Store.currentPath) || Store.classes.items[0]
+    classes.find(a => a.name === Store.currentClassName) ||
+      Store.classes.items[0]
   );
 
   const forceUpdate = useForceUpdate();
 
   function setCurrent(item) {
     setItem(item);
-    Store.currentPath = (item && item.name) || "";
+    Store.currentClassName = (item && item.name) || "";
   }
 
   if (!currentClass) {
     // prevent empty selection when forceUpdate happens
-    const cur = Store.currentPath || Store.classes.items[0];
+    const cur = Store.currentClassName || Store.classes.items[0];
     if (cur) {
       setCurrent(cur);
     }
