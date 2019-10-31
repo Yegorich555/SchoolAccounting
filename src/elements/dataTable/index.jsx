@@ -138,6 +138,7 @@ export default class DataTable extends Component {
                     ]
                   : null
               }
+              title={item.title}
             >
               {text}
             </div>
