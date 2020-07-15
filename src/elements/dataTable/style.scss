@@ -14,7 +14,7 @@ $cellTopPadding: 4px;
   overflow: hidden;
   margin: auto;
   max-width: 100%;
-  outline-offset: -1px;
+  position: relative; //for spinner overflow
 }
 
 .tableContainer {
@@ -22,18 +22,29 @@ $cellTopPadding: 4px;
   padding-top: $headerHeight;
   position: relative;
   overflow-x: auto;
-  min-height: 40px;
 
-  // fix unexpected padding in Browsers: because width is float value
-  margin: 0 -0.2px;
-  overflow-y: hidden;
-  // end fix
+  @supports not (width: fit-content) {
+    //support: IE doesn't support '@supports'
+    font-size: 0;
+    letter-spacing: 0;
+    word-spacing: 0;
+  }
 
   > div {
-    max-height: 500px;
-    max-height: calc(100vh - 400px);
+    max-height: 400px;
+    min-height: 40px;
     overflow-y: auto;
+    overflow-y: overlay; //fix scroll issue for Chrome
     overflow-x: hidden; //fix unexpected scroll for FF
+    // stylelint-disable-next-line plugin/no-unsupported-browser-features
+    width: fit-content;
+
+    @supports not (width: fit-content) {
+      //support: IE doesn't support '@supports'
+      display: inline-block;
+      margin: 0;
+      padding: 0;
+    }
   }
 
   table {
@@ -67,10 +78,12 @@ $cellTopPadding: 4px;
   tr:nth-of-type(even):not(.selected) {
     background-color: white;
   }
+
   tbody tr {
     height: $cellHeight;
     cursor: pointer;
   }
+
   tr.selected {
     background-color: $tableSelectBackColor;
     color: $tableSelectColor;
@@ -81,23 +94,23 @@ $cellTopPadding: 4px;
       }
     }
   }
-  $sortIcontSize: 26px;
+
   th {
     font-weight: bold;
     height: 0;
     line-height: 0;
-    padding-top: 0;
-    padding-bottom: 0;
     color: transparent !important;
     border: none;
     white-space: nowrap;
     overflow: visible;
-    padding-right: $sortIcontSize;
+    padding: 0 $cellLeftPadding;
   }
+
   th > span {
     user-select: none;
     z-index: -1;
   }
+
   th > div {
     position: absolute;
     background: transparent;
@@ -109,38 +122,46 @@ $cellTopPadding: 4px;
     align-items: center;
     text-align: left;
     height: $headerHeight;
-    padding-left: $cellLeftPadding;
-    margin-left: -$cellLeftPadding;
-    /* sort-cell*/
+  }
+
+  /* sort-cell*/
+  th.sort {
     cursor: pointer;
-    @include iconAfter($icon-triangle-down); //sort by desc
-    &:after {
-      color: $tableSortDefaultColor;
-      padding-left: 10px;
-    }
-    &:focus {
-      outline: 0;
-    }
-    &.currentSort {
+
+    > div {
+      @include iconAfter($icon-triangle-down); //sort by desc
       &:after {
-        color: $tableSortActiveColor;
+        color: $tableSortDefaultColor;
+        padding-left: 0.5em;
       }
-      &.sortAsc {
+      &:focus {
+        outline: 0;
+      }
+      &.currentSort {
         &:after {
-          content: $icon-triangle-up;
+          color: $tableSortActiveColor;
+        }
+        &.sortAsc {
+          &:after {
+            content: $icon-triangle-up;
+          }
         }
       }
     }
-    /*end sort-cell*/
-  }
-}
 
-.btnGroup {
-  display: flex;
-  justify-content: center;
-  margin-top: 10px;
-  > * + * {
-    margin-left: 10px;
+    > span {
+      display: flex;
+      @include iconAfter($icon-triangle-down);
+      &:after {
+        padding-left: 0.5em;
+      }
+    }
+  }
+  /*end sort-cell*/
+
+  th:last-child {
+    //required for correction paddings in the table when the main part of header is hidden
+    padding-right: 1em;
   }
 }
 
