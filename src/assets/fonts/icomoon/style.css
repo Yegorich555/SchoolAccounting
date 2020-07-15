@@ -1,9 +1,9 @@
 @font-face {
   font-family: 'icomoon';
   src:
-    url('fonts/icomoon.ttf?4whjob') format('truetype'),
-    url('fonts/icomoon.woff?4whjob') format('woff'),
-    url('fonts/icomoon.svg?4whjob#icomoon') format('svg');
+    url('fonts/icomoon.ttf?ivs9je') format('truetype'),
+    url('fonts/icomoon.woff?ivs9je') format('woff'),
+    url('fonts/icomoon.svg?ivs9je#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -25,7 +25,13 @@
 }
 
 .icon-search:before {
-  content: "\e90e";
+  content: "\e90f";
+}
+.icon-upload:before {
+  content: "\e904";
+}
+.icon-save:before {
+  content: "\e900";
 }
 .icon-calendar:before {
   content: "\e905";
@@ -35,12 +41,6 @@
 }
 .icon-check:before {
   content: "\e903";
-}
-.icon-upload:before {
-  content: "\e904";
-}
-.icon-save:before {
-  content: "\e900";
 }
 .icon-dropdown:before {
   content: "\e90c";
