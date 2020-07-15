@@ -3,7 +3,7 @@
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CaseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin");
-const PreloadPlugin = require("preload-webpack-plugin");
+// const PreloadPlugin = require("preload-webpack-plugin");
 const FriendlyErrorsWebpackPlugin = require("friendly-errors-webpack-plugin");
 // const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CleanPlugin = require("clean-webpack-plugin");
