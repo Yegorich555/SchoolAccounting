@@ -34,7 +34,6 @@ $cellTopPadding: 4px;
     max-height: calc(100vh - 400px);
     overflow-y: auto;
     overflow-x: hidden; //fix unexpected scroll for FF
-    display: inline-flex;
   }
 
   table {
