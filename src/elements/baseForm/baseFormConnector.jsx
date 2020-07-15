@@ -7,7 +7,8 @@ export default function baseFormConnector(WrappedComponent) {
     componentDidMount() {
       if (DEBUG) {
         if (!this.props.name) {
-          throw new Error("Form Input requires a name property when used");
+          // throw new Error("Form Input requires a name property when used");
+          return;
         }
         if (!this.provideValue) {
           throw new Error(

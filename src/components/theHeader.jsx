@@ -3,10 +3,11 @@ import styles from "./theHeader.scss";
 import ClassesView from "./classes/view";
 import Personal from "./personal";
 import Store from "@/helpers/store";
+import Search from "./search";
 
 export const headerConfig = [
   { text: "Классы", component: ClassesView },
-  { text: "Персонал", component: Personal }
+  { text: "Персонал", component: Personal },
 ];
 
 function download() {
@@ -48,6 +49,7 @@ function upload() {
 export default function TheHeader({ onSelected, selected }) {
   return (
     <header className={styles.box}>
+      <Search />
       {headerConfig.map(v => (
         <NavBtn
           key={v.text}

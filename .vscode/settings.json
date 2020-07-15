@@ -10,10 +10,6 @@
   "less.validate": false,
   "scss.validate": false,
 
-  //watch: eslintIntegration is false because VSCode extension prettier has bug: https://github.com/prettier/prettier-vscode/issues/867
-  "prettier.tslintIntegration": false,
-  "prettier.eslintIntegration": false,
-  "prettier.stylelintIntegration": true,
   //TODO: disalbe all eslint rules as prettier rules will be fixed
   "eslint.validate": [
     "javascript",
