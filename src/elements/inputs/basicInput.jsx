@@ -17,7 +17,7 @@ export default class BasicInput extends Component {
 
   static get defaultValidations() {
     return {
-      required: v => !this.isEmpty(v) || "Это поле обязательно"
+      required: v => !this.isEmpty(v) || "Это поле обязательно",
     };
   }
 
@@ -32,7 +32,7 @@ export default class BasicInput extends Component {
         this.defaultValue !== undefined
           ? this.defaultValue
           : this.constructor.initValue,
-      isValid: true
+      isValid: true,
     };
     this.provideValueCallback = this.provideValueCallback.bind(this); // Such bind is important for inheritance and using super...():
 
@@ -97,7 +97,7 @@ export default class BasicInput extends Component {
       self.setState({
         isValid: false,
         errorMessage:
-          message === "" ? null : message || "Please provide a valid value"
+          message === "" ? null : message || "Please provide a valid value",
       });
     }
 
@@ -155,7 +155,7 @@ export default class BasicInput extends Component {
           styles.control,
           !this.state.isValid ? styles.isInvalid : null,
           this.props.className,
-          this.controlClassName
+          this.controlClassName,
         ]}
         onClick={this.handleLabelClick}
         {...this.controlProps}

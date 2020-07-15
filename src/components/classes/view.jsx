@@ -21,17 +21,17 @@ export default function ClassesView() {
       label: "Прибыли",
       render: () => (
         <TableLearners items={Store.learners.items.filter(v => v.added)} />
-      )
+      ),
     },
     {
       id: "removed",
       label: "Выбыли",
       render: () => (
         <TableLearners items={Store.learners.items.filter(v => v.removed)} />
-      )
+      ),
     },
     { id: "common", label: "Итого", render: () => <ClassCommon /> },
-    { id: "sum", label: "Сводная", render: () => <ClassSummary /> }
+    { id: "sum", label: "Сводная", render: () => <ClassSummary /> },
   ];
 
   const [currentClass, setItem] = useState(

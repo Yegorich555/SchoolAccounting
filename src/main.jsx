@@ -12,7 +12,7 @@ class AppContainer extends Component {
       errorCode: null,
       error: null,
       selected:
-        headerConfig.find(v => v.text === Store.currentPath) || headerConfig[0]
+        headerConfig.find(v => v.text === Store.currentPath) || headerConfig[0],
     };
     Store.onUploaded(() => {
       this.forceUpdate();

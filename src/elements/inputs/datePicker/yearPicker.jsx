@@ -6,7 +6,7 @@ export default function YearPicker({
   value,
   selected,
   onSelected,
-  onCalendarChanged
+  onCalendarChanged,
 }) {
   const [curDate, setDate] = useState(selected);
 

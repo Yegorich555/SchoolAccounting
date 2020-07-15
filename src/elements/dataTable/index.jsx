@@ -33,13 +33,13 @@ export const DataTableHelper = {
         return v1.localeCompare(v2, undefined, {
           sensitivity: "base",
           ignorePunctuation: true,
-          numeric: true
+          numeric: true,
         });
       }
       return (v1 > v2) - (v1 < v2);
     });
   },
-  isEqual: (v1, v2) => v1 === v2
+  isEqual: (v1, v2) => v1 === v2,
 };
 
 export default class DataTable extends Component {
@@ -48,7 +48,7 @@ export default class DataTable extends Component {
     this.state = {
       sortKey: null,
       isSortAsk: false,
-      currentItem: null
+      currentItem: null,
     };
   }
 
@@ -88,7 +88,7 @@ export default class DataTable extends Component {
     const { isSortAsk, sortKey: prevSortKey } = this.state;
     this.setState({
       sortKey: item.propName,
-      isSortAsk: prevSortKey === item.propName ? !isSortAsk : false
+      isSortAsk: prevSortKey === item.propName ? !isSortAsk : false,
     });
   };
 
@@ -134,7 +134,7 @@ export default class DataTable extends Component {
                 this.state.sortKey === item.propName
                   ? [
                       styles.currentSort,
-                      this.state.isSortAsk ? styles.sortAsc : null
+                      this.state.isSortAsk ? styles.sortAsc : null,
                     ]
                   : null
               }

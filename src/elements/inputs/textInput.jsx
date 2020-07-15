@@ -15,7 +15,7 @@ export class InsideTextInput extends BasicInput {
       minLength: (v, setV) =>
         v.length >= setV || `Please provide at least ${setV}-characters`,
       maxLength: (v, setV) =>
-        v.length <= setV || `Max length is ${setV}-characters`
+        v.length <= setV || `Max length is ${setV}-characters`,
     });
   }
 

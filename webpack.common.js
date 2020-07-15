@@ -23,7 +23,7 @@ const filesThreshold = 8196; // (bytes) threshold for compression, url-loader pl
 let enableSourceMap = false;
 
 /* eslint-disable func-names */
-module.exports = function(_env, argv) {
+module.exports = function (_env, argv) {
   const isDevServer = argv.$0.indexOf("webpack-dev-server") !== -1;
   const mode = argv.mode || (isDevServer ? "development" : "production");
   const isDevMode = mode !== "production";
@@ -34,18 +34,18 @@ module.exports = function(_env, argv) {
   process.env.NODE_ENV = mode; // it resolves issues in postcss.config.js (since Define plugin is loaded only after reading config-files)
   const result = {
     stats: {
-      children: false // disable console.info for node_modules/*
+      children: false, // disable console.info for node_modules/*
     },
     entry: path.resolve(srcPath, "main.jsx"), // entyPoint for webpack
     output: {
-      path: destPath
+      path: destPath,
       // filename: "[name].js",
       // chunkFilename: "[name].js",
       // publicPath: "/"
     },
     resolve: {
       alias: pathAlias,
-      extensions: [".js", ".jsx", ".scss"]
+      extensions: [".js", ".jsx", ".scss"],
     },
     module: {
       rules: [
@@ -53,7 +53,7 @@ module.exports = function(_env, argv) {
           // rule for js, jsx files
           test: /\.(js|jsx)$/,
           exclude: /node_modules/,
-          use: ["babel-loader"] // babel-loader: transpile *.js, **.jsx to result according to .browserlistsrc and babel.config.js files
+          use: ["babel-loader"], // babel-loader: transpile *.js, **.jsx to result according to .browserlistsrc and babel.config.js files
           // optional: you can add 'eslint-loader' for providing lint-errors into wepback output
         },
         // rule for images
@@ -65,12 +65,12 @@ module.exports = function(_env, argv) {
               loader: "url-loader", // it converts images that have size less 'limit' option into inline base64-css-format
               options: {
                 name: "images/[name].[ext]",
-                limit: filesThreshold // if file-size more then limit, file-loader copies one into outputPath
+                limit: filesThreshold, // if file-size more then limit, file-loader copies one into outputPath
                 // by default it uses fallback: 'file-loader'
                 // TODO: add fallback: 'responsive-loader' //it converts image to multiple images using srcset (IE isn't supported): https://caniuse.com/#search=srcset
-              }
-            }
-          ]
+              },
+            },
+          ],
         },
         // rule for svg-images
         {
@@ -81,10 +81,10 @@ module.exports = function(_env, argv) {
               loader: "svg-url-loader", // despite url-loader that converts images into base64 format it converts images to native svg-css format
               options: {
                 limit: filesThreshold,
-                name: "images/[name].[ext]" // if file-size more then limit, [file-loader] copies ones into outputPath
-              }
-            }
-          ]
+                name: "images/[name].[ext]", // if file-size more then limit, [file-loader] copies ones into outputPath
+              },
+            },
+          ],
         },
         // rule for fonts
         {
@@ -94,10 +94,10 @@ module.exports = function(_env, argv) {
               loader: "url-loader",
               options: {
                 limit: filesThreshold,
-                name: "fonts/[name].[ext]" // if file-size more then limit,  [file-loader] copies ones into outputPath
-              }
-            }
-          ]
+                name: "fonts/[name].[ext]", // if file-size more then limit,  [file-loader] copies ones into outputPath
+              },
+            },
+          ],
         },
         // special rule for fonts in svg-format
         {
@@ -107,10 +107,10 @@ module.exports = function(_env, argv) {
               loader: "svg-url-loader", // despite url-loader that converts images into base64 format it converts images to native svg-css format
               options: {
                 limit: filesThreshold,
-                name: "fonts/[name].[ext]" // if file-size more then limit,  [file-loader] copies ones into outputPath
-              }
-            }
-          ]
+                name: "fonts/[name].[ext]", // if file-size more then limit,  [file-loader] copies ones into outputPath
+              },
+            },
+          ],
         },
         {
           // rules for style-files
@@ -149,19 +149,19 @@ module.exports = function(_env, argv) {
                         : MinifyCssNames(
                             // minify classNames for prod-build
                             { excludePattern: /[_dD]/gi } // exclude '_','d','D' because Adblock blocks '%ad%' classNames
-                          )
-                    }
-                  }
+                          ),
+                    },
+                  },
                 },
                 {
                   loader: "sass-loader", // it compiles Sass to CSS, using Node Sass by default
                   options: {
                     data: '@import "setup";', // inject this import by default in each scss-file
-                    includePaths: [path.resolve(__dirname, "src/styles")]
-                  }
+                    includePaths: [path.resolve(__dirname, "src/styles")],
+                  },
                 },
-                "postcss-loader" // it provides adding vendor prefixes to CSS rules using values from Can I Use (see postcss.config.js in the project)
-              ]
+                "postcss-loader", // it provides adding vendor prefixes to CSS rules using values from Can I Use (see postcss.config.js in the project)
+              ],
             },
             /* config .oneOf('normal') */
             {
@@ -172,15 +172,15 @@ module.exports = function(_env, argv) {
                   loader: "sass-loader", // it compiles Sass to CSS, using Node Sass by default
                   options: {
                     data: '@import "setup";', // inject this import by default in each scss-file
-                    includePaths: [path.resolve(__dirname, "src/styles")]
-                  }
+                    includePaths: [path.resolve(__dirname, "src/styles")],
+                  },
                 },
-                "postcss-loader" // it provides adding vendor prefixes to CSS rules using values from Can I Use (see postcss.config.js in the project)
-              ]
-            }
-          ]
-        }
-      ]
+                "postcss-loader", // it provides adding vendor prefixes to CSS rules using values from Can I Use (see postcss.config.js in the project)
+              ],
+            },
+          ],
+        },
+      ],
     },
     plugins: [
       new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/), // it adds force-ignoring unused parts of modules like moment/locale/*.js
@@ -188,9 +188,9 @@ module.exports = function(_env, argv) {
         // it adds custom Global definition to the project like BASE_URL for index.html
         "process.env": {
           NODE_ENV: JSON.stringify(mode),
-          BASE_URL: '"/"'
+          BASE_URL: '"/"',
         },
-        DEBUG: isDevMode
+        DEBUG: isDevMode,
       }),
       new CaseSensitivePathsPlugin(), // it fixes bugs between OS in caseSensitivePaths (since Windows isn't CaseSensitive but Linux is)
       new FriendlyErrorsWebpackPlugin(), // it provides user-friendly errors from webpack (since the last has ugly useless bug-report)
@@ -206,8 +206,8 @@ module.exports = function(_env, argv) {
               collapseWhitespace: true,
               removeAttributeQuotes: true,
               collapseBooleanAttributes: true,
-              removeScriptTypeAttributes: true
-            }
+              removeScriptTypeAttributes: true,
+            },
       }),
       new HtmlWebpackInlineSourcePlugin(),
       // new PreloadPlugin({
@@ -234,23 +234,23 @@ module.exports = function(_env, argv) {
           from: assetsPath,
           to: destPath,
           toType: "dir",
-          ignore: [".DS_Store"]
-        }
+          ignore: [".DS_Store"],
+        },
       ]),
       new webpack.ProgressPlugin(), // it shows progress of building
       new webpack.ProvidePlugin({
-        React: "react" // it adds 'import React from 'react' to every file
+        React: "react", // it adds 'import React from 'react' to every file
       }),
       new ObsoleteWebpackPlugin({
         // it creates alert-script for not-supported browsers according to .browserlistrc
         name: "obsolete",
-        promptOnNonTargetBrowser: true
+        promptOnNonTargetBrowser: true,
       }),
       new ScriptExtHtmlWebpackPlugin({
         // it adds to obsole-plugin-script 'async' tag (for perfomance puprpose)
-        async: "obsolete"
-      })
-    ]
+        async: "obsolete",
+      }),
+    ],
   };
 
   return result;

@@ -11,7 +11,7 @@ export const months = [
   "Сентябрь",
   "Октябрь",
   "Ноябрь",
-  "Декабрь"
+  "Декабрь",
 ];
 
 export const monthsShort = [
@@ -26,5 +26,5 @@ export const monthsShort = [
   "Сен",
   "Окт",
   "Ноя",
-  "Дек"
+  "Дек",
 ];

@@ -27,13 +27,13 @@ module.exports = (env, argv) => {
     devServer: {
       historyApiFallback: {
         rewrites: [
-          { from: /favicon.ico/, to: "public/favicon.ico" } // show favicon
-        ]
+          { from: /favicon.ico/, to: "public/favicon.ico" }, // show favicon
+        ],
       }, // it enables HTML5 mode: https://developer.mozilla.org/en-US/docs/Web/API/History
       stats: {
-        children: false // disable console.info for node_modules/*
-      }
-    }
+        children: false, // disable console.info for node_modules/*
+      },
+    },
   });
 
   return result;

@@ -146,7 +146,7 @@ export default class DropdownBasic extends BasicInput {
     if (!isOpen) {
       this.onOpen({
         enAutoFocus: false,
-        userInputValue: e.currentTarget.value
+        userInputValue: e.currentTarget.value,
       });
     } else {
       this.setState({ userInputValue: e.currentTarget.value });
@@ -196,7 +196,7 @@ export default class DropdownBasic extends BasicInput {
       onFocus: this.preventCloseByBlur,
       ref: el => {
         this.refControl = el;
-      }
+      },
     };
   }
 

@@ -6,9 +6,10 @@ export function getMonthInformation(year, month, isMondayFirst = true) {
   const date = new Date(year, month, 0);
   /* Get the total number of days in a month */
   const result = {
-    totalDays: date.getDate() /* End day of month. Like Saturday is end of month etc. 0 means Sunday and 6 means Saturday */,
+    /* End day of month. Like Saturday is end of month etc. 0 means Sunday and 6 means Saturday */
+    totalDays: date.getDate(),
     endDay: date.getDay(),
-    days: []
+    days: [],
   };
 
   date.setDate(isMondayFirst ? 0 : 1);
@@ -52,7 +53,7 @@ export function getYears(year) {
   const result = {
     start: start - 1,
     end: end + 1,
-    years: []
+    years: [],
   };
 
   let cur = result.start - 1;

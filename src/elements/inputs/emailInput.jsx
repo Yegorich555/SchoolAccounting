@@ -6,7 +6,7 @@ export default function EmailInput(props) {
   const validations = Object.assign(
     {
       isEmail: v =>
-        v === "" || EMAIL_REGEX.test(v) || "Please enter a valid email address"
+        v === "" || EMAIL_REGEX.test(v) || "Please enter a valid email address",
     },
     props.validations
   );

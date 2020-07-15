@@ -8,7 +8,7 @@ export default function DayPicker({
   selected,
   onSelected,
   onMonthClick,
-  onCalendarChanged
+  onCalendarChanged,
 }) {
   const [curDate, setDate] = useState(selected);
 

@@ -64,7 +64,7 @@ class InsideMultiSelectInput extends InsideDropdown {
       ...super.propsInput,
       contentEditable: true,
 
-      onInput: this.handleInputChange
+      onInput: this.handleInputChange,
       // TODO prevent Enter-behavior
       // TODO show first item as selected
     };

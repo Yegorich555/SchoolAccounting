@@ -11,7 +11,7 @@ class BaseForm extends Component {
     super(props);
     this.state = {
       isPending: false,
-      formError: null
+      formError: null,
     };
     this.inputs = [];
   }
@@ -92,7 +92,7 @@ class BaseForm extends Component {
 
   getContext = () => ({
     attachToForm: this.attachToForm,
-    detachFromForm: this.detachFromForm
+    detachFromForm: this.detachFromForm,
   });
 
   reset = () => {

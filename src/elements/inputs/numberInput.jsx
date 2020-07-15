@@ -24,10 +24,9 @@ class InsideNumberInput extends DropdownBasic {
       length: (v, setV) =>
         toString(v).length === setV || `Length must be ${setV} digits`,
       minLength: (v, setV) =>
-        toString(v).length >= setV ||
-        `Please provide at least ${setV} digits`,
+        toString(v).length >= setV || `Please provide at least ${setV} digits`,
       maxLength: (v, setV) =>
-        toString(v).length <= setV || `Max length is ${setV} digits`
+        toString(v).length <= setV || `Max length is ${setV} digits`,
     });
   }
 
@@ -109,7 +108,7 @@ class InsideNumberInput extends DropdownBasic {
   get errFormatMessage() {
     const lengthSet = this.lengthRestrictions;
     if (lengthSet && lengthSet.length > 1) {
-      return `${"Expected format")}: ${lngthSet
+      return `${"Expected format"}: ${lengthSet
         .map(length => "#".repeat(length))
         .join(separator)}`;
     }

@@ -20,8 +20,8 @@ const dtConfig = {
     { propName: "class8", text: "8 кл." },
     { propName: "class9", text: "9 кл." },
     { propName: "class10", text: "10 кл." },
-    { propName: "class11", text: "11 кл." }
-  ]
+    { propName: "class11", text: "11 кл." },
+  ],
 };
 
 function getDateStart() {
@@ -47,7 +47,7 @@ function getRows(items) {
         ...v,
         age: nowYear - v.dob.getFullYear(),
         class: ParseClassNumber(classes.find(a => a.id === v.classId).name),
-        isGirl: v.isGirl || v.name.endsWith("вна")
+        isGirl: v.isGirl || v.name.endsWith("вна"),
       }));
 
     window.test = preparedItems;
@@ -56,7 +56,7 @@ function getRows(items) {
       const row = {
         age: i,
         sum: 0,
-        sumGirls: 0
+        sumGirls: 0,
       };
 
       let filter;

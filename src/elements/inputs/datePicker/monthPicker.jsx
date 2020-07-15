@@ -7,7 +7,7 @@ export default function MonthPicker({
   selected,
   onSelected,
   onYearClick,
-  onCalendarChanged
+  onCalendarChanged,
 }) {
   const [curDate, setDate] = useState(selected);
 

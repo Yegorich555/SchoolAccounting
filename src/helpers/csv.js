@@ -99,7 +99,7 @@ const CSV = {
     const str = line1 + lineSplitter + lines.join(lineSplitter);
 
     return str;
-  }
+  },
 };
 
 // console.warn(

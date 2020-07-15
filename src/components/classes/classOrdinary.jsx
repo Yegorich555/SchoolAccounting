@@ -48,7 +48,7 @@ export default function ClassOrdinary({ currentClass, onChanged }) {
           defaultModel={currentClass}
           options={Store.teachers.items.map(v => ({
             text: v.name,
-            value: v.id
+            value: v.id,
           }))}
           onChange={v => updateClass({ teacherId: v })}
         />
@@ -85,7 +85,7 @@ export default function ClassOrdinary({ currentClass, onChanged }) {
             `Выбыло: ${lst.reduce((total, v) => (v.removed ? total + 1 : total), 0)}`,
             // prettier-ignore
             `Прибыло: ${lst.reduce((total, v) => (v.added ? total + 1 : total), 0)}`,
-            `Всего: ${lst.length}`
+            `Всего: ${lst.length}`,
           ].join("\t|\t")
         }
         // onSelected={null}

@@ -134,7 +134,7 @@ class StoreInstance {
       teachers: this.teachers.items,
       learners: this.learners.items,
       currentClassName: this.currentClassName,
-      currentPath: this.currentPath
+      currentPath: this.currentPath,
     };
     return JSON.stringify(obj);
   }

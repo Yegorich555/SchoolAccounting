@@ -52,7 +52,7 @@ export class InsideDropdown extends DropdownBasic {
       "aria-autocomplete": "list",
       role: "combobox",
       "aria-haspopup": "listbox",
-      "aria-expanded": !!this.state.isOpen
+      "aria-expanded": !!this.state.isOpen,
     };
   }
 
@@ -60,7 +60,7 @@ export class InsideDropdown extends DropdownBasic {
     return {
       "aria-label": `${this.state.isOpen ? "Close" : "Open"} listbox`,
       "aria-haspopup": "true",
-      "aria-expanded": !!this.state.isOpen
+      "aria-expanded": !!this.state.isOpen,
     };
   }
 

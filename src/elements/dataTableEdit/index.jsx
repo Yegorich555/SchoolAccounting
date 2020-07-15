@@ -7,7 +7,7 @@ import WarningBtn from "../buttons/warningBtn";
 
 const askTypes = {
   paste: 1,
-  remove: 2
+  remove: 2,
 };
 
 function getRusSuf(length) {
@@ -54,7 +54,7 @@ export default class DataTableEdit extends DataTable {
     this.state = {
       sortKey: null,
       isSortAsk: false,
-      currentItem: null
+      currentItem: null,
     };
   }
 
@@ -83,7 +83,7 @@ export default class DataTableEdit extends DataTable {
       });
       this.setState({
         isAsk: askTypes.paste,
-        pasteItems: items
+        pasteItems: items,
       });
     }
   };
@@ -142,7 +142,7 @@ export default class DataTableEdit extends DataTable {
       tabIndex: "-1",
       ref: el => {
         this.refEl = el;
-      }
+      },
     };
   }
 

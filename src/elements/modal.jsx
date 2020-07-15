@@ -49,7 +49,7 @@ export default class Modal extends Component {
     super(props);
 
     this.state = {
-      isOpen: props.isOpen != null ? this.props.isOpen : true
+      isOpen: props.isOpen != null ? this.props.isOpen : true,
     };
   }
 

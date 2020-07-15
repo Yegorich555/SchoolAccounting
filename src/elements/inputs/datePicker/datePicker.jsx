@@ -14,7 +14,7 @@ const openStates = {
   closed: 0,
   day: 1,
   month: 2,
-  year: 3
+  year: 3,
 };
 
 class InsideDatePicker extends DropdownBasic {
@@ -108,13 +108,13 @@ class InsideDatePicker extends DropdownBasic {
       ...super.propsInput,
       role: "combobox",
       "aria-haspopup": "menu",
-      "aria-expanded": !!this.state.isOpen
+      "aria-expanded": !!this.state.isOpen,
     };
   }
 
   get menuProps() {
     return {
-      tabIndex: null
+      tabIndex: null,
       // TODO 'data-helptext':
     };
   }

@@ -13,12 +13,12 @@ module.exports = (env, argv) => {
     devtool: common.enableSourceMap ? "source-map" : "none",
     output: {
       filename: "[name].[contenthash:8].js",
-      chunkFilename: "[name].[contenthash:8].js"
+      chunkFilename: "[name].[contenthash:8].js",
     },
     performance: {
       assetFilter: function assetFilter(assetFilename) {
         return !/(\.map$)|(fonts)|(images)/.test(assetFilename);
-      }
+      },
     },
     optimization: {
       minimizer: [
@@ -33,20 +33,20 @@ module.exports = (env, argv) => {
           parallel: true,
           terserOptions: {
             mangle: {
-              safari10: true // for preventing safari10 bugs
-            }
-          }
+              safari10: true, // for preventing safari10 bugs
+            },
+          },
         }),
-        new OptimizeCSSAssetsPlugin({}) // it minifies css and optimize it with cssnano: https://cssnano.co/guides/optimisations
-      ]
+        new OptimizeCSSAssetsPlugin({}), // it minifies css and optimize it with cssnano: https://cssnano.co/guides/optimisations
+      ],
     },
     plugins: [
       // additional config for plugins is placed in webpack.common.js
       new CompressionPlugin({
         // it creates gzipped (compressed) files in '[path].gz[query]'
-        threshold: common.filesThreshold // (bytes). Only assets bigger than this size are processed
-      })
-    ]
+        threshold: common.filesThreshold, // (bytes). Only assets bigger than this size are processed
+      }),
+    ],
   });
 
   // console.warn("merge-prod-result:\r\n", result);

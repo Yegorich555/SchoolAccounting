@@ -8,8 +8,8 @@ const dtConfig = {
     { propName: "className", text: "Класс" },
     { propName: "teacherName", text: "Руководитель" },
     { propName: "sumConcurrent", text: "Классов в параллели" },
-    { propName: "sumClass", text: "Всего", title: "На начало учебного года" }
-  ]
+    { propName: "sumClass", text: "Всего", title: "На начало учебного года" },
+  ],
 };
 
 function getRows() {
@@ -21,7 +21,7 @@ function getRows() {
       return v1.localeCompare(v2, undefined, {
         sensitivity: "base",
         ignorePunctuation: true,
-        numeric: true
+        numeric: true,
       });
     });
     const teachers = Store.teachers.items;
@@ -37,7 +37,7 @@ function getRows() {
         rows.push({
           className: prevNumber,
           sumConcurrent: curRows.length,
-          sumClass: curRows.reduce((s, v) => s + v.sumClass, 0)
+          sumClass: curRows.reduce((s, v) => s + v.sumClass, 0),
         });
 
         if (prevNumber === 4) {
@@ -46,7 +46,7 @@ function getRows() {
             sumClass: rows.reduce(
               (s, v) => (v.sumConcurrent ? s + v.sumClass : s),
               0
-            )
+            ),
           });
         } else if (prevNumber === 9) {
           rows.push({
@@ -55,7 +55,7 @@ function getRows() {
               (s, v) =>
                 v.classNum >= 5 && v.classNum <= 9 ? s + v.sumClass : s,
               0
-            )
+            ),
           });
         }
       }
@@ -69,7 +69,7 @@ function getRows() {
         sumClass: learners.reduce(
           (total, v) => (v.classId === cl.id ? total + 1 : total),
           0
-        )
+        ),
       };
       rows.push(row);
     });
@@ -79,22 +79,22 @@ function getRows() {
       sumClass: rows.reduce(
         (s, v) => (v.classNum >= 10 && v.classNum <= 11 ? s + v.sumClass : s),
         0
-      )
+      ),
     });
     rows.push({
       teacherName: "Всего V-XI",
       sumClass: rows.reduce(
         (s, v) => (v.classNum >= 5 && v.classNum <= 11 ? s + v.sumClass : s),
         0
-      )
+      ),
     });
     rows.push({
       teacherName: "Всего учащихся",
-      sumClass: rows.reduce((s, v) => (v.classNum ? s + v.sumClass : s), 0)
+      sumClass: rows.reduce((s, v) => (v.classNum ? s + v.sumClass : s), 0),
     });
     rows.push({
       teacherName: "Всего классов",
-      sumConcurrent: classes.length
+      sumConcurrent: classes.length,
     });
     return rows;
   } catch (ex) {

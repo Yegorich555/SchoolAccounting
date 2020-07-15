@@ -2,6 +2,6 @@ module.exports = {
   presets: ["@babel/preset-env", "@babel/preset-react"],
   plugins: [
     "@babel/plugin-proposal-class-properties",
-    "jsx-classnames-advanced"
-  ]
+    "jsx-classnames-advanced",
+  ],
 };
