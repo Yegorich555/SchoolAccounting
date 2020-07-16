@@ -154,7 +154,11 @@ export default class DataTable extends Component {
         <tr
           // eslint-disable-next-line react/no-array-index-key
           key={`${i}_${item[headerKeys[0]]}`} // TODO improve logic because it can provide bugs
-          className={this.isRowSelected(item, i) ? styles.selected : null}
+          className={
+            this.isRowSelected(item, i)
+              ? styles.selected
+              : this.props.getRowClassName && this.props.getRowClassName(item)
+          }
           data-row={i}
         >
           {headerKeys.map(hItem => {

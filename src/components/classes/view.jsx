@@ -27,7 +27,10 @@ export default function ClassesView() {
       id: "removed",
       label: "Выбыли",
       render: () => (
-        <TableLearners items={Store.learners.items.filter(v => v.removed)} />
+        <TableLearners
+          items={Store.learners.items.filter(v => v.removed)}
+          isRemoved
+        />
       ),
     },
     { id: "common", label: "Итого", render: () => <ClassCommon /> },

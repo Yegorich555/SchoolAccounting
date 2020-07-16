@@ -52,3 +52,7 @@
 .table {
   white-space: nowrap;
 }
+
+table > tbody > tr.removed {
+  background-color: #ffc3c3 !important;
+}

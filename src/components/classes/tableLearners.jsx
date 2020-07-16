@@ -37,6 +37,7 @@ export default function TableLearners(props) {
   return (
     <DataTableEdit
       className={styles.table}
+      getRowClassName={v => !props.isRemoved && v.removed && styles.removed}
       config={dtConfig}
       {...props}
       ref={el => {
