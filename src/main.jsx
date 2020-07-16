@@ -17,6 +17,8 @@ class AppContainer extends Component {
     Store.onUploaded(() => {
       this.forceUpdate();
     });
+    Store.selectLearners = () => this.onSelected(headerConfig[0]);
+    Store.selectPersonal = () => this.onSelected(headerConfig[1]);
   }
 
   resetError = () => {
@@ -24,6 +26,9 @@ class AppContainer extends Component {
   };
 
   onSelected = v => {
+    if (v === this.state.selected) {
+      return;
+    }
     this.setState({ selected: v });
     Store.currentPath = v.text;
   };

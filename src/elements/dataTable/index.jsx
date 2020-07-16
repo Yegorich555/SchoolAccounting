@@ -66,7 +66,12 @@ export default class DataTable extends Component {
   }
 
   select = item => {
-    this.setState({ currentItem: item });
+    this.setState({ currentItem: item }, () => {
+      const sortedList = this.sort();
+      const i = sortedList.findIndex(v => v === item);
+      const el = document.querySelector(`[data-row="${i}"]`);
+      el && el.scrollIntoViewIfNeeded();
+    });
   };
 
   onRowClick = item => {

@@ -62,6 +62,11 @@ export default function Personal() {
 
   return (
     <DataTableEdit
+      ref={el => {
+        Store.selectPerson = v => {
+          el.select(v);
+        };
+      }}
       config={dtConfig}
       items={items}
       className={styles.table}

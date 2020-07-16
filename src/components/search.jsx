@@ -2,16 +2,62 @@ import memoize from "memoize-one";
 import { connectForm } from "@/elements/baseForm";
 import styles from "./search.scss";
 import { InsideDropdown } from "@/elements/inputs/dropdown";
+import Store from "@/helpers/store";
+import { DateToString } from "@/helpers/jsExtend";
 
-function _filterOptions(arr, filterValue) {
-  if (!arr) {
+function _filterOptions(filterValue) {
+  if (!filterValue || filterValue.length < 2) {
     return [];
   }
-  if (!filterValue) {
-    return arr;
-  }
+
+  const cl = Store.classes.items;
   const val = filterValue.toLowerCase();
-  return arr.filter(v => v && v.text && v.text.toLowerCase().startsWith(val));
+  const getClass = learner => {
+    const clas = cl.find(c => c.id === learner.classId);
+    if (clas) {
+      return clas.name;
+    }
+    if (learner.removed) {
+      return "Выбыл";
+    }
+    return "--";
+  };
+  const arr1 = Store.learners.items
+    .filter(l =>
+      Object.keys(l).some(k => {
+        let v = l[k];
+        if (!v) {
+          return false;
+        }
+
+        if (v instanceof Date) {
+          v = DateToString(v);
+        } else {
+          v = v.toString();
+        }
+
+        return v.toLowerCase().includes(val);
+      })
+    )
+    .map(v => ({
+      value: `l${v.id}`,
+      text: `${getClass(v)} ${v.name} ${DateToString(v.dob)}`,
+      raw: v,
+    }));
+
+  const arr2 = Store.teachers.items
+    .filter(v =>
+      Object.keys(v).some(
+        k => v[k] && v[k].toString().toLowerCase().includes(val)
+      )
+    )
+    .map(v => ({
+      value: `t${v.id}`,
+      text: `${v.post || "Персонал"} ${v.name}`,
+      raw: v,
+      isPersonal: true,
+    }));
+  return arr1.concat(...arr2);
 }
 
 export class InsideSearch extends InsideDropdown {
@@ -21,13 +67,20 @@ export class InsideSearch extends InsideDropdown {
   }
 
   handleMenuClick = e => {
-    // const { id } = e.target.dataset;
-    // todo select here
+    const { id } = e.target.dataset;
+    const v = this.options[id];
+    if (v.isPersonal) {
+      Store.selectPersonal();
+    } else {
+      Store.selectLearners();
+      Store.selectClass(v.raw.classId);
+    }
+    setTimeout(() => Store.selectPerson(v.raw), 100);
+    this.onClose(undefined);
   };
 
   get options() {
-    // todo search according to text in input
-    return this.filterOptions(this.propsOptions, this.userInputValue);
+    return this.filterOptions(this.userInputValue);
   }
 
   get btnOpenClassName() {
@@ -36,22 +89,6 @@ export class InsideSearch extends InsideDropdown {
 
   get controlClassName() {
     return styles.search;
-  }
-
-  renderMenu() {
-    const { options } = this;
-    return (
-      // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions
-      <ul onClick={this.handleMenuClick} id={this.listBoxId}>
-        {(options.length &&
-          options.map((v, i, arr) => (
-            // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
-            <li key={this.getMenuKey(v, i, arr)} data-id={i} tabIndex={0}>
-              {v.text}
-            </li>
-          ))) || <li className={styles.noItems}>No Items</li>}
-      </ul>
-    );
   }
 }
 

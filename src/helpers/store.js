@@ -26,7 +26,7 @@ class DbSet {
     if (this._items === undefined) {
       this._items = CSV.parse(localStorage.getItem(this.name)) || [];
     }
-    return this._items;
+    return this._items || [];
   }
 
   set items(v) {
@@ -127,6 +127,14 @@ class StoreInstance {
   get currentPath() {
     return localStorage.getItem("curPath");
   }
+
+  selectLearners() {}
+
+  selectPersonal() {}
+
+  selectClass() {}
+
+  selectPerson() {}
 
   toString() {
     const obj = {

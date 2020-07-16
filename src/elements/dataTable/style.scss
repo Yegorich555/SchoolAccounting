@@ -38,6 +38,7 @@ $cellTopPadding: 4px;
     overflow-x: hidden; //fix unexpected scroll for FF
     // stylelint-disable-next-line plugin/no-unsupported-browser-features
     width: fit-content;
+    min-width: -webkit-fill-available;
 
     @supports not (width: fit-content) {
       //support: IE doesn't support '@supports'
@@ -51,6 +52,7 @@ $cellTopPadding: 4px;
     border-collapse: collapse;
     border-spacing: 0;
     vertical-align: middle;
+    min-width: -webkit-fill-available;
   }
 
   th {

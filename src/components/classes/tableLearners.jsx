@@ -35,6 +35,13 @@ const dtConfig = {
 
 export default function TableLearners(props) {
   return (
-    <DataTableEdit className={styles.table} config={dtConfig} {...props} />
+    <DataTableEdit
+      className={styles.table}
+      config={dtConfig}
+      {...props}
+      ref={el => {
+        props.refTable && props.refTable(el);
+      }}
+    />
   );
 }

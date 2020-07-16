@@ -47,6 +47,7 @@ export default function ClassesView() {
     Store.currentClassName = (item && item.id) || "";
   }
 
+  Store.selectClass = id => setCurrent(classes.find(v => v.id === id));
   // if (!currentClass) {
   //   // prevent empty selection when forceUpdate happens
   //   const cur = Store.currentClassName || Store.classes.items[0];

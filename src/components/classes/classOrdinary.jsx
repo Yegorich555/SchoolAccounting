@@ -60,6 +60,11 @@ export default function ClassOrdinary({ currentClass, onChanged }) {
         </WarningBtn>
       </div>
       <TableLearners
+        refTable={el => {
+          Store.selectPerson = v => {
+            el.select(v);
+          };
+        }}
         items={getLearners(learners, currentClass)}
         addBtn={() => (
           <AddEditLearnerBtn
