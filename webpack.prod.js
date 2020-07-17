@@ -26,7 +26,7 @@ module.exports = (env, argv) => {
           // speedest alternative of UglifyJS (it improves minifying js files)
           test: /\.m?js(\?.*)?$/i,
           chunkFilter: () => true,
-          warningsFilter: () => true,
+          warningsFilter: () => false,
           extractComments: false, // remove comments from js
           sourceMap: common.enableSourceMap,
           cache: true,
