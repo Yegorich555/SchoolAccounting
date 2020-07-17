@@ -1,9 +1,11 @@
 /* eslint-disable react/no-unescaped-entities */
+import { useState } from "react";
+import { data } from "autoprefixer";
 import Store from "@/helpers/store";
 import DataTableEdit from "@/elements/dataTableEdit";
-import TextInput from "@/elements/inputs/textInput";
-import { DateToString, ParseClassNumber } from "@/helpers/jsExtend";
+import { ParseClassNumber } from "@/helpers/jsExtend";
 import styles from "./view.scss";
+import DatePicker from "@/elements/inputs/datePicker/datePicker";
 
 const dtConfig = {
   headerKeys: [
@@ -33,10 +35,10 @@ function getDateStart() {
   return new Date(year, 8, 1);
 }
 
-function getRows(items) {
+function getRows(items, date) {
   try {
     const rows = [];
-    const now = getDateStart();
+    const now = date;
     const nowYear = now.getFullYear();
 
     const classes = Store.classes.items;
@@ -94,7 +96,9 @@ function getRows(items) {
 }
 
 export default function ClassSummary() {
-  const rows = getRows(Store.learners.items);
+  const [date, setDate] = useState(getDateStart());
+
+  const rows = getRows(Store.learners.items, date);
   if (!rows) {
     return <div>Ошибка в данных</div>;
   }
@@ -102,12 +106,12 @@ export default function ClassSummary() {
     <div className={styles.summaryBox}>
       <div>
         <div className={styles.inline}>
-          <TextInput
+          <DatePicker
             name="data"
-            defaultValue={DateToString(getDateStart())}
+            defaultValue={date}
             label="Дата отсчета"
-            inputFor={{ readOnly: true }}
             className={styles.dateInput}
+            onChange={v => setDate(v)}
           />
           <span>
             Примечание: для подсчета девочек обязательно ФИО должно

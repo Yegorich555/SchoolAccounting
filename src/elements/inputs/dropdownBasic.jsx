@@ -154,7 +154,7 @@ export default class DropdownBasic extends BasicInput {
   }
 
   handleControlKeyDown = e => {
-    if (this.state.isOpen && e.keyCode === 27) {
+    if (this.state.isOpen && (e.keyCode === 27 || e.keyCode === 13)) {
       // arrow-key 'esc'
       e.preventDefault();
       e.stopPropagation();
