@@ -41,6 +41,7 @@ export default function ClassOrdinary({ currentClass, onChanged }) {
           }}
         />
         <Dropdown
+          className={styles.teacherBox}
           updateId={currentClass.id}
           label="Учитель"
           placeholder=""
