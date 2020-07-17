@@ -1,6 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
 import { useState } from "react";
-import { data } from "autoprefixer";
 import Store from "@/helpers/store";
 import DataTableEdit from "@/elements/dataTableEdit";
 import { ParseClassNumber } from "@/helpers/jsExtend";
