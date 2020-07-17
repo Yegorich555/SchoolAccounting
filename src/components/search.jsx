@@ -73,9 +73,9 @@ export class InsideSearch extends InsideDropdown {
       Store.selectPersonal();
     } else {
       Store.selectLearners();
-      Store.selectClass(v.raw.classId);
+      setTimeout(() => Store.selectClass(v.raw.classId), 100);
     }
-    setTimeout(() => Store.selectPerson(v.raw), 100);
+    setTimeout(() => Store.selectPerson(v.raw), 200);
     this.onClose(undefined);
   };
 
