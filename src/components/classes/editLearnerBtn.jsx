@@ -8,6 +8,7 @@ import DatePicker from "@/elements/inputs/datePicker/datePicker";
 import SlideInput from "@/elements/inputs/slideInput";
 import { DateToString } from "@/helpers/jsExtend";
 import styles from "./editLearnerBtn.scss";
+import RadioInput from "@/elements/inputs/radioInput";
 
 function EditLearnerForm(props) {
   const { item, isAdd } = props;
@@ -47,6 +48,16 @@ function EditLearnerForm(props) {
         defaultModel={item}
         validations={{ required: true }}
       />
+      <RadioInput
+        label="Пол"
+        name="isGirl"
+        defaultModel={item}
+        options={[
+          { text: "Авто (вич/вна)", value: undefined },
+          { text: "Муж", value: false },
+          { text: "Жен", value: true },
+        ]}
+      />
       <div className={styles.inputGroup}>
         <SlideInput
           label="Прибыл"
@@ -62,23 +73,21 @@ function EditLearnerForm(props) {
           validations={{ required: isArrived }}
         />
       </div>
-      {!isAdd ? (
-        <div className={styles.inputGroup}>
-          <SlideInput
-            label="Выбыл"
-            name="isNeedRemove"
-            defaultValue={isDeparted}
-            onChanged={v => setDeparted(v)}
-          />
-          <TextInput
-            name="removed"
-            placeholder=""
-            defaultValue={item.removed || DateToString(new Date())}
-            disabled={!isDeparted}
-            validations={{ required: isDeparted }}
-          />
-        </div>
-      ) : null}
+      <div className={styles.inputGroup}>
+        <SlideInput
+          label="Выбыл"
+          name="isNeedRemove"
+          defaultValue={isDeparted}
+          onChanged={v => setDeparted(v)}
+        />
+        <TextInput
+          name="removed"
+          placeholder=""
+          defaultValue={(item && item.removed) || DateToString(new Date())}
+          disabled={!isDeparted}
+          validations={{ required: isDeparted }}
+        />
+      </div>
     </ModalForm>
   );
 }

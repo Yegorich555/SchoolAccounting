@@ -48,7 +48,7 @@ function getRows(items, date) {
         ...v,
         age: nowYear - v.dob.getFullYear(),
         class: ParseClassNumber(classes.find(a => a.id === v.classId).name),
-        isGirl: v.isGirl || v.name.endsWith("вна"),
+        isGirl: v.isGirl || (v.isGirl == null && v.name.endsWith("вна")),
       }));
 
     window.test = preparedItems;
