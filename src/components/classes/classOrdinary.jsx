@@ -24,6 +24,7 @@ const getLearners = memoizeOne(_getLearners);
 
 export default function ClassOrdinary({ currentClass, onChanged }) {
   const [learners, updateLearners] = useState(Store.learners.items);
+  const [selected, setSelected] = useState(null);
 
   function updateClass(obj) {
     Store.classes.update(Object.assign(currentClass, obj));
@@ -74,6 +75,7 @@ export default function ClassOrdinary({ currentClass, onChanged }) {
             el.select(v);
           };
         }}
+        onSelected={item => setSelected(item)}
         items={getLearners(learners, currentClass)}
         addBtn={() => (
           <AddEditLearnerBtn
@@ -83,13 +85,26 @@ export default function ClassOrdinary({ currentClass, onChanged }) {
         )}
         onPaste={v => updateLearners(Store.learners.add(v, currentClass))}
         removeBtn={item => (
-          <AddEditLearnerBtn
-            item={item}
-            onSubmit={v => {
-              Store.learners.update(v);
-              updateLearners(Store.learners.items);
-            }}
-          />
+          <>
+            <AddEditLearnerBtn
+              item={item}
+              onSubmit={v => {
+                Store.learners.update(v);
+                updateLearners(Store.learners.items);
+              }}
+            />
+            <WarningBtn
+              disabled={!selected}
+              onClick={() => {
+                Store.learners.remove(selected);
+                setSelected(null);
+                updateLearners(Store.learners.items);
+              }}
+              messageSuf={`${selected && selected.name}`}
+            >
+              Удалить
+            </WarningBtn>
+          </>
         )}
         getFooter={lst =>
           [
