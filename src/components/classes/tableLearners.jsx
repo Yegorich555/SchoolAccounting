@@ -42,7 +42,10 @@ export default function TableLearners(props) {
 
   return (
     <DataTableEdit
-      className={styles.table}
+      className={[
+        styles.table,
+        props.isHigherTable ? styles.tableHigher : null,
+      ]}
       getRowClassName={v => !props.isRemoved && v.removed && styles.removed}
       config={cfg}
       {...props}

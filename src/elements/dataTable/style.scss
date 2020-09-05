@@ -31,7 +31,7 @@ $cellTopPadding: 4px;
   }
 
   > div {
-    max-height: 400px;
+    max-height: calc(100vh - 410px);
     min-height: 40px;
     overflow-y: auto;
     overflow-y: overlay; //fix scroll issue for Chrome
@@ -65,6 +65,9 @@ $cellTopPadding: 4px;
     line-height: 1.61539;
     overflow: hidden;
     text-overflow: ellipsis;
+    &:last-child {
+      padding-right: 1em;
+    }
   }
   tbody,
   tr,

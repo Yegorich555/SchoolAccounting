@@ -11,4 +11,7 @@
       white-space: inherit;
     }
   }
+  > div {
+    max-height: calc(100vh - 316px) !important;
+  }
 }

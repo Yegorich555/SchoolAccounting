@@ -60,3 +60,7 @@
 table > tbody > tr.removed {
   background-color: #ffc3c3 !important;
 }
+
+.tableHigher > div {
+  max-height: calc(100vh - 316px) !important;
+}

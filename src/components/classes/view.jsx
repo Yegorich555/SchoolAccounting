@@ -29,6 +29,7 @@ export default function ClassesView() {
               className: citems.find(c => c.id === v.classId).name,
             }))}
           showClassName
+          isHigherTable
         />
       ),
     },
@@ -46,6 +47,7 @@ export default function ClassesView() {
               }))}
             isRemoved
             showClassName
+            isHigherTable
           />
         );
       },
@@ -61,7 +63,6 @@ export default function ClassesView() {
   const forceUpdate = useForceUpdate();
 
   function setCurrent(item) {
-    console.warn(item);
     setItem(item);
     forceUpdate();
     Store.currentClassName = (item && item.id) || "";
