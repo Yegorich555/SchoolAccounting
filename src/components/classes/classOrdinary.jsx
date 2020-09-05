@@ -9,7 +9,15 @@ import Store from "@/helpers/store";
 import TableLearners from "./tableLearners";
 
 function _getLearners(arr, curClass) {
-  return arr.filter(a => a.classId === curClass.id);
+  return arr
+    .filter(a => a.classId === curClass.id)
+    .sort((a, b) =>
+      a.name.localeCompare(b.name, undefined, {
+        sensitivity: "base",
+        ignorePunctuation: true,
+        numeric: true,
+      })
+    );
 }
 
 const getLearners = memoizeOne(_getLearners);
