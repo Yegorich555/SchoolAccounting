@@ -160,7 +160,11 @@ class StoreInstance {
     this._onUploaded = callback;
   }
 
+  // required for forceUpdate component when store is changed
+  uploadKey = 0;
+
   uploaded() {
+    ++this.uploadKey;
     this._onUploaded();
   }
 }

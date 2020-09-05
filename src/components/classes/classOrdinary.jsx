@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import memoizeOne from "memoize-one";
 import styles from "./view.scss";
 import TextInput from "@/elements/inputs/textInput";
@@ -25,6 +25,10 @@ const getLearners = memoizeOne(_getLearners);
 export default function ClassOrdinary({ currentClass, onChanged }) {
   const [learners, updateLearners] = useState(Store.learners.items);
   const [selected, setSelected] = useState(null);
+
+  useEffect(() => {
+    updateLearners(Store.learners.items);
+  }, [Store.uploadKey]);
 
   function updateClass(obj) {
     Store.classes.update(Object.assign(currentClass, obj));
