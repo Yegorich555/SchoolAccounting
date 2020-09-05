@@ -25,7 +25,7 @@ function getRows() {
       });
     });
     const teachers = Store.teachers.items;
-    const learners = Store.learners.items.filter(v => !v.removed && !v.added);
+    const learners = Store.learners.items.filter(v => !v.removed);
 
     let prevNumber = 1;
     classes.forEach(cl => {
