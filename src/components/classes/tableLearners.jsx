@@ -34,11 +34,17 @@ const dtConfig = {
 };
 
 export default function TableLearners(props) {
+  let cfg = dtConfig;
+  if (props.showClassName) {
+    cfg = JSON.parse(JSON.stringify(dtConfig));
+    cfg.headerKeys.push({ propName: "className", text: "Класс" });
+  }
+
   return (
     <DataTableEdit
       className={styles.table}
       getRowClassName={v => !props.isRemoved && v.removed && styles.removed}
-      config={dtConfig}
+      config={cfg}
       {...props}
       ref={el => {
         props.refTable && props.refTable(el);

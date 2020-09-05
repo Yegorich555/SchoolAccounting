@@ -14,24 +14,41 @@ function useForceUpdate() {
 }
 
 export default function ClassesView() {
+  const { items: citems } = Store.classes;
   const classes = [
-    ...Store.classes.items,
+    ...citems,
     {
       id: "added",
       label: "Прибыли",
       render: () => (
-        <TableLearners items={Store.learners.items.filter(v => v.added)} />
+        <TableLearners
+          items={Store.learners.items
+            .filter(v => v.added)
+            .map(v => ({
+              ...v,
+              className: citems.find(c => c.id === v.classId).name,
+            }))}
+          showClassName
+        />
       ),
     },
     {
       id: "removed",
       label: "Выбыли",
-      render: () => (
-        <TableLearners
-          items={Store.learners.items.filter(v => v.removed)}
-          isRemoved
-        />
-      ),
+      render: () => {
+        return (
+          <TableLearners
+            items={Store.learners.items
+              .filter(v => v.removed)
+              .map(v => ({
+                ...v,
+                className: citems.find(c => c.id === v.classId).name,
+              }))}
+            isRemoved
+            showClassName
+          />
+        );
+      },
     },
     { id: "common", label: "Итого", render: () => <ClassCommon /> },
     { id: "sum", label: "Сводная", render: () => <ClassSummary /> },
