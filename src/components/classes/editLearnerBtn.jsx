@@ -25,7 +25,10 @@ function EditLearnerForm(props) {
         if (!v.isNeedRemove) {
           v.removed = null;
         }
-
+        // this required for Object.assign when props is not defined at all (it can be with inputValue === undefined)
+        if (v.isGirl === undefined) {
+          v.isGirl = undefined;
+        }
         delete v.isNeedAdd;
         delete v.isNeedRemove;
         v.id = item && item.id;
@@ -49,8 +52,8 @@ function EditLearnerForm(props) {
         validations={{ required: true }}
       />
       <RadioInput
-        label="Пол"
         name="isGirl"
+        label="Пол"
         defaultModel={item}
         options={[
           { text: "Авто (вич/вна)", value: undefined },
