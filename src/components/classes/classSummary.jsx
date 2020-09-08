@@ -34,11 +34,13 @@ function getDateStart() {
   return new Date(year, 8, 1);
 }
 
+function getAge(birthdate, cur) {
+  return Math.floor((cur.getTime() - birthdate.getTime()) / 31557600000); // Divide by 1000*60*60*24*365.25
+}
+
 function getRows(items, date) {
   try {
     const rows = [];
-    const now = date;
-    const nowYear = now.getFullYear();
 
     const classes = Store.classes.items;
 
@@ -46,7 +48,7 @@ function getRows(items, date) {
       .filter(v => !v.removed)
       .map(v => ({
         ...v,
-        age: nowYear - v.dob.getFullYear(),
+        age: getAge(v.dob, date),
         class: ParseClassNumber(classes.find(a => a.id === v.classId).name),
         isGirl: v.isGirl || (v.isGirl == null && v.name.endsWith("вна")),
       }));
