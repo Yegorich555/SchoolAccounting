@@ -49,7 +49,7 @@ function upload() {
 export default function TheHeader({ onSelected, selected }) {
   return (
     <header className={styles.box}>
-      <Search />
+      <Search placeholder="Поиск" />
       {headerConfig.map(v => (
         <NavBtn
           key={v.text}

@@ -112,19 +112,13 @@ export default function ClassSummary() {
   return (
     <div className={styles.summaryBox}>
       <div>
-        <div className={styles.inline}>
-          <DatePicker
-            name="data"
-            defaultValue={date}
-            label="Дата отсчета"
-            className={styles.dateInput}
-            onChange={v => setDate(v)}
-          />
-          <span>
-            Примечание: для подсчета девочек обязательно ФИО должно
-            заканчиваться на 'вна'
-          </span>
-        </div>
+        <DatePicker
+          name="data"
+          defaultValue={date}
+          label="Дата отсчета"
+          className={styles.dateInput}
+          onChange={v => setDate(v)}
+        />
         <DataTableEdit items={rows} config={dtConfig} />
       </div>
     </div>

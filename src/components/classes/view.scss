@@ -38,12 +38,6 @@
     margin: auto;
     max-width: 100%;
   }
-  .inline > * {
-    display: inline-block;
-    + * {
-      margin-left: 20px;
-    }
-  }
   label {
     margin-bottom: 0;
   }
