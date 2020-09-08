@@ -27,7 +27,18 @@ export default function ClassesView() {
             .map(v => ({
               ...v,
               className: citems.find(c => c.id === v.classId).name,
-            }))}
+            }))
+            .sort((a, b) => {
+              const r = a.className.localeCompare(b.className, undefined, {
+                sensitivity: "base",
+                ignorePunctuation: true,
+                numeric: true,
+              });
+              if (r === 0) {
+                return b.added - a.added;
+              }
+              return r;
+            })}
           showClassName
           isHigherTable
         />
@@ -44,7 +55,18 @@ export default function ClassesView() {
               .map(v => ({
                 ...v,
                 className: citems.find(c => c.id === v.classId).name,
-              }))}
+              }))
+              .sort((a, b) => {
+                const r = a.className.localeCompare(b.className, undefined, {
+                  sensitivity: "base",
+                  ignorePunctuation: true,
+                  numeric: true,
+                });
+                if (r === 0) {
+                  return b.removed - a.removed;
+                }
+                return r;
+              })}
             isRemoved
             showClassName
             isHigherTable
