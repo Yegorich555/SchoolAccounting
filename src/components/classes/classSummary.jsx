@@ -88,6 +88,12 @@ function getRows(items, date) {
       }
       rows.push(row);
     }
+    const sumRow = {};
+    dtConfig.headerKeys.forEach(h => {
+      sumRow[h.propName] = rows.reduce((acc, v) => acc + v[h.propName], 0);
+    });
+    sumRow.age = "Итого";
+    rows.push(sumRow);
 
     return rows;
   } catch (ex) {
