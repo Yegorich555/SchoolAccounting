@@ -14,6 +14,7 @@ function tryParseDate(value) {
 
 function toString(v) {
   if (v === undefined) return "";
+  if (v === "") return "";
   if (typeof v === "string") return `'${v}'`;
   if (!v || !(v instanceof Date)) return v;
   return v.toISOString();
@@ -21,12 +22,16 @@ function toString(v) {
 
 function fromString(v) {
   if (typeof v === "string") {
+    if (v === "") {
+      return undefined;
+    }
     if (v.startsWith("'") && v.endsWith("'")) {
       return v.substring(1, v.length - 1);
     }
     if (v === "null") {
       return null;
     }
+
     if (/^\d+$/.test(v)) {
       return Number.parseInt(v, 10);
     }
