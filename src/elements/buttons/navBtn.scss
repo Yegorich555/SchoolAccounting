@@ -1,6 +1,6 @@
 .btn {
-  color: $navBtnColor;
-  background: $navBtnBackground;
+  color: $navBtnColor !important;
+  background: $navBtnBackground !important;
   &[aria-selected="true"] {
     background: $navBtnSelectedBackground;
   }

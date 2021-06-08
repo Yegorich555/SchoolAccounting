@@ -23,7 +23,7 @@ export default function WarningBtn(props) {
       {isOpen ? (
         <Modal onClosed={() => setOpen(false)}>
           <div className={styles.removeDialog}>
-            <h2>Удалить {props.messageSuf}?</h2>
+            <h2>{props.msg || `Удалить ${props.messageSuf}`}</h2>
             <PrimaryBtn
               onClick={() => {
                 setOpen(false);
