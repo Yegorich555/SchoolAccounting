@@ -3,11 +3,12 @@ import DataTableEdit from "@/elements/dataTableEdit";
 import Store from "@/helpers/store";
 import styles from "./personal.scss";
 import EditPersonBtn from "./editPersonBtn";
+import WarningBtn from "@/elements/buttons/warningBtn";
 
 const dtConfig = {
   headerKeys: [
     { propName: "name", text: "ФИО" },
-    { propName: "post", text: "Должность" },
+    { propName: "post", text: "Должность" }
     // { propName: "rate", text: "Ставка" },
     // { propName: "multi", text: "Совместитель" },
     // { propName: "dob", text: "Дата рождения" },
@@ -45,7 +46,7 @@ const dtConfig = {
     // { propName: "numberPassport", text: "Номер паспорта" },
     // { propName: "datePassport", text: "Дата выдачи", title: "паспорта" },
     // { propName: "whomPassport", text: "Кем выдан", title: "паспорт" }
-  ],
+  ]
 };
 
 function useForceUpdate() {
@@ -59,6 +60,7 @@ export default function Personal() {
   function update() {
     forceUpdate();
   }
+  const [selected, setSelected] = useState(null);
 
   return (
     <DataTableEdit
@@ -74,13 +76,26 @@ export default function Personal() {
         <EditPersonBtn isAdd onSubmit={v => update(Store.teachers.add(v))} />
       )}
       onPaste={v => update(v.forEach(a => Store.teachers.add(a)))}
+      onSelected={item => setSelected(item)}
       removeBtn={item => (
-        <EditPersonBtn
-          item={item}
-          onSubmit={v => {
-            update(Store.teachers.update(v));
-          }}
-        />
+        <>
+          <EditPersonBtn
+            item={item}
+            onSubmit={v => {
+              update(Store.teachers.update(v));
+            }}
+          />
+          <WarningBtn
+            disabled={!selected}
+            onClick={() => {
+              Store.teachers.remove(selected);
+              setSelected(null);
+            }}
+            messageSuf={`${selected && selected.name}`}
+          >
+            Удалить
+          </WarningBtn>
+        </>
       )}
     />
   );
