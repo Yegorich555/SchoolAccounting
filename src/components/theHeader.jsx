@@ -8,7 +8,7 @@ import { ParseClassNumber } from "@/helpers/jsExtend";
 
 export const headerConfig = [
   { text: "Классы", component: ClassesView },
-  { text: "Персонал", component: Personal }
+  { text: "Персонал", component: Personal },
 ];
 
 function download(prefix = "") {
@@ -56,7 +56,7 @@ function onGradeUp() {
     return v1.localeCompare(v2, undefined, {
       sensitivity: "base",
       ignorePunctuation: true,
-      numeric: true
+      numeric: true,
     });
   });
   classes.forEach(cl => {
