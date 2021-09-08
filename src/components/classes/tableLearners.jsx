@@ -26,11 +26,11 @@ const dtConfig = {
       propName: "dob",
       text: "Дата рождения",
       pasteFormat: dateFromExcel,
-      formatFn: v => DateToString(v) || `???${v}`
+      formatFn: v => DateToString(v) || `???${v}`,
     },
     { propName: "removed", text: "Выбыл" },
-    { propName: "added", text: "Прибыл" }
-  ]
+    { propName: "added", text: "Прибыл" },
+  ],
 };
 
 export default function TableLearners(props) {
@@ -44,7 +44,7 @@ export default function TableLearners(props) {
     <DataTableEdit
       className={[
         styles.table,
-        props.isHigherTable ? styles.tableHigher : null
+        props.isHigherTable ? styles.tableHigher : null,
       ]}
       getRowClassName={v => !props.isRemoved && v.removed && styles.removed}
       config={cfg}

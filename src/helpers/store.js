@@ -110,6 +110,12 @@ class StoreInstance {
     this.classes = new DbSetClasses(this);
     this.teachers = new DbSet("teachers");
     this.learners = new DbSetLearners();
+
+    // fix for users that doesn't fit classes
+    const classes = this.classes.items;
+    this.learners.items = this.learners.items.filter(l =>
+      classes.find(c => c.id === l.classId)
+    );
   }
 
   set currentClassName(v) {

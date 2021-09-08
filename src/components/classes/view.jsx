@@ -26,7 +26,9 @@ export default function ClassesView() {
             .filter(v => v.added)
             .map(v => ({
               ...v,
-              className: citems.find(c => c.id === v.classId).name,
+              className:
+                // fixes case with wrong items
+                (citems.find(c => c.id === v.classId) || {}).name || "Err",
             }))
             .sort((a, b) => {
               const r = a.className.localeCompare(b.className, undefined, {

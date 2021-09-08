@@ -8,7 +8,7 @@ import WarningBtn from "@/elements/buttons/warningBtn";
 const dtConfig = {
   headerKeys: [
     { propName: "name", text: "ФИО" },
-    { propName: "post", text: "Должность" }
+    { propName: "post", text: "Должность" },
     // { propName: "rate", text: "Ставка" },
     // { propName: "multi", text: "Совместитель" },
     // { propName: "dob", text: "Дата рождения" },
@@ -46,7 +46,7 @@ const dtConfig = {
     // { propName: "numberPassport", text: "Номер паспорта" },
     // { propName: "datePassport", text: "Дата выдачи", title: "паспорта" },
     // { propName: "whomPassport", text: "Кем выдан", title: "паспорт" }
-  ]
+  ],
 };
 
 function useForceUpdate() {
